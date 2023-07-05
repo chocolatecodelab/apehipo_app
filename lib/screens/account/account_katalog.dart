@@ -1,4 +1,5 @@
 import 'package:apehipo_app/models/katalog_item.dart';
+import 'package:apehipo_app/screens/account/catalog_details/catalog_details.dart';
 import 'package:apehipo_app/styles/theme.dart';
 import 'package:flutter/material.dart';
 // import 'package:apehipo_app/models/katalog_item.dart';
@@ -137,7 +138,7 @@ class ManageProductsPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              // onItemClicked(context, items[index]);
+              onItemClicked(context, items[index]);
             },
             child: CatalogItemWidget(
               item: items[index],
@@ -154,16 +155,16 @@ class ManageProductsPage extends StatelessWidget {
     );
   }
 
-  // void onItemClicked(BuildContext context, KatalogItem katalogItem) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //         builder: (context) => ProductDetailsScreen(
-  //               katalogItem,
-  //               heroSuffix: "account_katalog",
-  //             )),
-  //   );
-  // }
+  void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => CatalogDetailsScreen(
+                katalogItem,
+                heroSuffix: "account_katalog",
+              )),
+    );
+  }
 
   Widget subTitle(String text) {
     return Row(

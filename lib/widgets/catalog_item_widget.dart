@@ -4,6 +4,7 @@ import 'package:apehipo_app/styles/theme.dart';
 import 'package:apehipo_app/common_widgets/app_text.dart';
 import 'package:apehipo_app/models/katalog_item.dart';
 import 'package:apehipo_app/styles/colors.dart';
+import 'package:apehipo_app/screens/account/catalog_details/catalog_details.dart';
 
 class CatalogItemWidget extends StatelessWidget {
   CatalogItemWidget({
@@ -158,7 +159,10 @@ class CatalogItemWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getEditButton("Edit"),
+                getEditButton(
+                  "Edit Produk",
+                  onPressed: () => onItemClicked(context, item),
+                ),
                 SizedBox(
                   width: 20,
                 ),
@@ -213,12 +217,13 @@ class CatalogItemWidget extends StatelessWidget {
   }
 }
 
-Widget getEditButton(String label, {Widget? trailingWidget}) {
+Widget getEditButton(String label,
+    {Widget? trailingWidget, required VoidCallback onPressed}) {
   return Container(
     width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
         shape: RoundedRectangleBorder(
@@ -324,5 +329,16 @@ Widget getArsipButton(String label, {Widget? trailingWidget}) {
         ],
       ),
     ),
+  );
+}
+
+void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => CatalogDetailsScreen(
+              katalogItem,
+              heroSuffix: "account_katalog",
+            )),
   );
 }
