@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'LineSeparator.dart';
-import 'package:apehipo_app/styles/theme.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/models/katalog_item.dart';
-import 'package:apehipo_app/styles/colors.dart';
-import 'package:apehipo_app/screens/account/catalog_details/catalog_details.dart';
+import 'package:apehipo_app/widgets/theme.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/modules/account/models/katalog_item.dart';
+import 'package:apehipo_app/widgets/colors.dart';
+import 'package:apehipo_app/modules/account/catalog_details.dart';
 
 class CatalogItemWidget extends StatelessWidget {
   CatalogItemWidget({

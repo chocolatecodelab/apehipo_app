@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/helpers/column_with_seprator.dart';
-import 'package:apehipo_app/screens/account/account_edit.dart';
-import 'package:apehipo_app/screens/account/account_katalog.dart';
-import 'package:apehipo_app/screens/account/account_toko.dart';
-import 'package:apehipo_app/styles/colors.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/widgets/column_with_seprator.dart';
+import 'package:apehipo_app/modules/account/account_edit.dart';
+import 'package:apehipo_app/modules/account/account_katalog.dart';
+import 'package:apehipo_app/modules/account/account_toko.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 
 import 'account_item.dart';
 

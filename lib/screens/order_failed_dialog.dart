@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/common_widgets/app_button.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
+import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/screens/order_accepted_screen.dart';
 
 class OrderFailedDialogue extends StatelessWidget {

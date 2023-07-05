@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/common_widgets/app_button.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/screens/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/styles/colors.dart';
+import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeScreen extends StatelessWidget {

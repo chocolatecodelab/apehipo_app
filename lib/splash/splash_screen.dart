@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/screens/welcome_screen.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/styles/colors.dart';
+import 'package:apehipo_app/splash/welcome_screen.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/screens/splash_screen.dart';
-import 'package:apehipo_app/styles/theme.dart';
+import 'package:apehipo_app/splash/splash_screen.dart';
+import 'package:apehipo_app/widgets/theme.dart';
 
 class MyApp extends StatelessWidget {
   @override

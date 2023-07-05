@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/common_widgets/app_button.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
+import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
 
-import '../order_failed_dialog.dart';
+import '../../screens/order_failed_dialog.dart';
 
 class CheckoutBottomSheet extends StatefulWidget {
   @override

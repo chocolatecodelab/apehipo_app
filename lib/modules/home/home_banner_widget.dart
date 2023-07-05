@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/styles/colors.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 
 class HomeBanner extends StatelessWidget {
   @override

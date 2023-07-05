@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/screens/account/account_screen.dart';
+import 'package:apehipo_app/modules/account/account_screen.dart';
 // import 'package:apehipo_app/screens/cart/cart_screen.dart';
 import 'package:apehipo_app/screens/explore_screen.dart';
-import 'package:apehipo_app/screens/home/home_screen.dart';
+import 'package:apehipo_app/modules/home/home_screen.dart';
 
 // import '../favourite_screen.dart';
 

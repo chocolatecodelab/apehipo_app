@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/models/category_item.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/modules/home/models/category_item.dart';
 
 class CategoryItemCardWidget extends StatelessWidget {
   CategoryItemCardWidget(

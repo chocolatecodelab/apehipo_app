@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:apehipo_app/common_widgets/app_text.dart';
-import 'package:apehipo_app/models/grocery_item.dart';
-import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
+import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:apehipo_app/modules/home/models/grocery_item.dart';
+import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/grocery_item_card_widget.dart';
 
 import 'filter_screen.dart';
