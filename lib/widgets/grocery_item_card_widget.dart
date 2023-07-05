@@ -6,6 +6,7 @@ import 'package:apehipo_app/styles/colors.dart';
 class GroceryItemCardWidget extends StatelessWidget {
   GroceryItemCardWidget({Key? key, required this.item, this.heroSuffix})
       : super(key: key);
+
   final GroceryItem item;
   final String? heroSuffix;
 

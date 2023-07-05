@@ -1,236 +1,186 @@
+import 'package:apehipo_app/models/katalog_item.dart';
+import 'package:apehipo_app/styles/theme.dart';
 import 'package:flutter/material.dart';
+// import 'package:apehipo_app/models/katalog_item.dart';
+// import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
+import 'package:apehipo_app/styles/colors.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+import 'package:apehipo_app/widgets/catalog_item_widget.dart';
+import 'package:apehipo_app/common_widgets/app_button.dart';
 
-class Product {
-  final String id;
-  final String name;
-  final String description;
-  final double price;
-
-  Product({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-  });
-}
-
-class ManageProductsPage extends StatefulWidget {
-  @override
-  _ManageProductsPageState createState() => _ManageProductsPageState();
-}
-
-class _ManageProductsPageState extends State<ManageProductsPage> {
-  List<Product> products = [
-    Product(
-      id: '1',
-      name: 'Product 1',
-      description: 'This is product 1',
-      price: 10.0,
-    ),
-    Product(
-      id: '2',
-      name: 'Product 2',
-      description: 'This is product 2',
-      price: 20.0,
-    ),
-    Product(
-      id: '3',
-      name: 'Product 3',
-      description: 'This is product 3',
-      price: 30.0,
-    ),
-  ];
-
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _priceController = TextEditingController();
-
-  bool _isEditMode = false;
-  late Product _selectedProduct;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
-    _priceController.dispose();
-    super.dispose();
-  }
-
-  void _addProduct() {
-    String name = _nameController.text.trim();
-    String description = _descriptionController.text.trim();
-    double price = double.parse(_priceController.text);
-
-    Product newProduct = Product(
-      id: DateTime.now().toString(),
-      name: name,
-      description: description,
-      price: price,
-    );
-
-    setState(() {
-      products.add(newProduct);
-    });
-
-    _clearForm();
-  }
-
-  void _updateProduct() {
-    String name = _nameController.text.trim();
-    String description = _descriptionController.text.trim();
-    double price = double.parse(_priceController.text);
-
-    Product updatedProduct = Product(
-      id: _selectedProduct.id,
-      name: name,
-      description: description,
-      price: price,
-    );
-
-    int productIndex =
-        products.indexWhere((product) => product.id == _selectedProduct.id);
-
-    setState(() {
-      products[productIndex] = updatedProduct;
-    });
-
-    _clearForm();
-    _toggleEditMode(false);
-  }
-
-  void _deleteProduct(Product product) {
-    setState(() {
-      products.remove(product);
-    });
-  }
-
-  void _editProduct(Product product) {
-    _nameController.text = product.name;
-    _descriptionController.text = product.description;
-    _priceController.text = product.price.toString();
-
-    _selectedProduct = product;
-
-    _toggleEditMode(true);
-  }
-
-  void _clearForm() {
-    _nameController.text = '';
-    _descriptionController.text = '';
-    _priceController.text = '';
-  }
-
-  void _toggleEditMode(bool isEditMode) {
-    setState(() {
-      _isEditMode = isEditMode;
-    });
-
-    if (!isEditMode) {
-      _selectedProduct = Product(
-        id: '',
-        name: '',
-        description: '',
-        price: 0.0,
-      );
-    }
-  }
-
+class ManageProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kelola Produk'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Daftar Produk',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Product product = products[index];
-
-                  return ListTile(
-                    title: Text(product.name),
-                    subtitle: Text(product.description),
-                    trailing: Text('\$${product.price.toStringAsFixed(2)}'),
-                    onTap: () {
-                      _editProduct(product);
-                    },
-                    onLongPress: () {
-                      _deleteProduct(product);
-                    },
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              _isEditMode ? 'Edit Produk' : 'Tambah Produk',
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Nama Produk',
-              ),
-            ),
-            SizedBox(height: 8.0),
-            TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Deskripsi Produk',
-              ),
-            ),
-            SizedBox(height: 8.0),
-            TextField(
-              controller: _priceController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Harga Produk',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: _isEditMode ? _updateProduct : _addProduct,
-                  child: Text(_isEditMode ? 'Simpan' : 'Tambah'),
+        title: Text(
+          'Katalog',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(4.0),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 0,
+                  offset: Offset(0, 0), // Controls the position of the shadow
                 ),
-                SizedBox(width: 8.0),
-                if (_isEditMode)
-                  ElevatedButton(
-                    onPressed: () {
-                      _toggleEditMode(false);
-                      _clearForm();
-                    },
-                    child: Text('Batal'),
-                  ),
               ],
             ),
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 22, 22, 22),
+        ),
+      ),
+      body: SafeArea(
+        child: Container(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  padded(subTitle("Produk Anda")),
+                  getVerticalItemSlider(penawaranSpesial),
+                  getTambahButton("Tambah Produk Baru")
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getTambahButton(String label, {Widget? trailingWidget}) {
+    return Container(
+      width: 400,
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          visualDensity: VisualDensity.compact,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          elevation: 0,
+          backgroundColor: AppColors.primaryColor,
+          textStyle: TextStyle(
+            color: Colors.white,
+            fontFamily: gilroyFontFamily,
+          ),
+          padding: EdgeInsets.symmetric(vertical: 24),
+          minimumSize: const Size.fromHeight(50),
+        ),
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: <Widget>[
+            Center(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Icon(
+                  Icons.add,
+                  size: 18,
+                  color: Colors.white,
+                ),
+              ],
+            )),
+            if (trailingWidget != null)
+              Positioned(
+                top: 0,
+                right: 25,
+                child: trailingWidget,
+              ),
           ],
         ),
       ),
     );
   }
-}
 
-void main() {
-  runApp(MaterialApp(
-    home: ManageProductsPage(),
-  ));
+  Widget padded(Widget widget) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 25),
+      child: widget,
+    );
+  }
+
+  Widget getVerticalItemSlider(List<KatalogItem> items) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      height: 530,
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        itemCount: items.length,
+        scrollDirection:
+            Axis.vertical, // Mengubah scrollDirection menjadi vertical
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              // onItemClicked(context, items[index]);
+            },
+            child: CatalogItemWidget(
+              item: items[index],
+              heroSuffix: "account_katalog",
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 20, // Mengubah width menjadi height
+          );
+        },
+      ),
+    );
+  }
+
+  // void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => ProductDetailsScreen(
+  //               katalogItem,
+  //               heroSuffix: "account_katalog",
+  //             )),
+  //   );
+  // }
+
+  Widget subTitle(String text) {
+    return Row(
+      children: [
+        Text(
+          text,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        Spacer(),
+        // Text(
+        //   "See All",
+        //   style: TextStyle(
+        //       fontSize: 18,
+        //       fontWeight: FontWeight.bold,
+        //       color: AppColors.primaryColor),
+        // ),
+      ],
+    );
+  }
 }
