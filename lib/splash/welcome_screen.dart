@@ -1,3 +1,4 @@
+import 'package:apehipo_app/auth/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
@@ -99,7 +100,7 @@ class WelcomeScreen extends StatelessWidget {
   void onGetStartedClicked(BuildContext context) {
     Navigator.of(context).pushReplacement(new MaterialPageRoute(
       builder: (BuildContext context) {
-        return DashboardScreen();
+        return LoginPage();
       },
     ));
   }
