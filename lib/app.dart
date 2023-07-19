@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:apehipo_app/widgets/theme.dart';

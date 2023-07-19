@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
@@ -5,6 +6,7 @@ import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/grocery_item_card_widget.dart';
 import 'package:apehipo_app/widgets/search_bar_widget.dart';
+import 'package:get/get.dart';
 
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
@@ -19,14 +21,44 @@ class HomeScreen extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 15,
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+  children: [
+    Padding(
+      padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {
+          // Handle the tap event for the first SVG icon
+          // Add your desired action here
+        },
+        child: SvgPicture.asset("assets/icons/account_icons/notification_icon.svg"),
+      ),
+    ),
+    SizedBox(
+      width: 8,
+    ),
+    Padding(
+      padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => CartScreen(),
+          ));
+        },
+        child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+      ),
+    ),
+  ],
+
                   ),
-                  SvgPicture.asset("assets/icons/app_icon_color.svg"),
+                  // SvgPicture.asset("assets/icons/app_icon_color.svg"),
                   SizedBox(
                     height: 5,
                   ),
-                  padded(locationWidget()),
+                  // padded(locationWidget()),
                   SizedBox(
                     height: 15,
                   ),
