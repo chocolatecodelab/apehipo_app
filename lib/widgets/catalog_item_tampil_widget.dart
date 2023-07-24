@@ -6,8 +6,8 @@ import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/modules/account/catalog_details.dart';
 
-class CatalogItemWidget extends StatelessWidget {
-  CatalogItemWidget({
+class CatalogItemTampilWidget extends StatelessWidget {
+  CatalogItemTampilWidget({
     Key? key,
     required this.item,
     this.heroSuffix,
@@ -197,14 +197,6 @@ class CatalogItemWidget extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text(
-            //   "Edit",
-            //   style: TextStyle(
-            //     color: Colors.white,
-            //     fontSize: 12,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
             Icon(
               Icons.edit_square,
               color: Colors.white,

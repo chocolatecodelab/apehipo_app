@@ -18,7 +18,9 @@ dependencies:
   http: ^1.0.0
   get: ^4.6.5
   get_storage: ^2.1.1
-  image_picker: ^1.0.0
+  image_picker: ^0.8.4+3
+  path_provider: ^2.0.5
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
