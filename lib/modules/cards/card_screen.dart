@@ -1,7 +1,7 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card.dart';
-import 'package:apehipo_app/widgets/catalog_item_widget.dart';
+import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 
 import '../../widgets/search_bar.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
@@ -19,6 +19,7 @@ class CardScreen extends StatelessWidget {
 }
 
 enum SampleItem { itemOne, itemTwo, itemThree }
+
 class FilterButton extends StatefulWidget {
   const FilterButton({super.key});
 
@@ -40,13 +41,12 @@ class _FilterButtonState extends State<FilterButton> {
               selectedMenu = item;
             });
           },
-
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>> [
-            const PopupMenuItem<SampleItem> (
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+            const PopupMenuItem<SampleItem>(
               value: SampleItem.itemOne,
               child: Text("Item 1"),
             ),
-            const PopupMenuItem<SampleItem> (
+            const PopupMenuItem<SampleItem>(
               value: SampleItem.itemTwo,
               child: Text("Item 2"),
             )
@@ -72,10 +72,10 @@ class ScaffoldExample extends StatelessWidget {
           color: Colors.black,
           onPressed: () {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return DashboardScreen();
-                },
-              ));
+              builder: (BuildContext context) {
+                return DashboardScreen();
+              },
+            ));
           },
         ),
         title: Container(
@@ -83,54 +83,55 @@ class ScaffoldExample extends StatelessWidget {
           child: SearchBarWidgets(),
         ),
         actions: [
-           PopupMenuButton(
-            icon: Icon(Icons.filter_list_alt, color: Colors.black,),
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              const PopupMenuItem(
-                child: Text('Working a lot harder'),
+          PopupMenuButton(
+              icon: Icon(
+                Icons.filter_list_alt,
+                color: Colors.black,
               ),
-              const PopupMenuItem(
-                child: Text('Being a lot smarter'),
-              ),
-              const PopupMenuItem(
-                child: Text('Being a self-starter'),
-              ),
-              const PopupMenuItem(
-                child: Text('Placed in charge of trading charter'),
-              ),
-            ]
-           ),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    const PopupMenuItem(
+                      child: Text('Working a lot harder'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('Being a lot smarter'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('Being a self-starter'),
+                    ),
+                    const PopupMenuItem(
+                      child: Text('Placed in charge of trading charter'),
+                    ),
+                  ]),
         ],
       ),
       body: SafeArea(
-        child: Container(
-          child: getItemWidget(demoItems),
+          child: Container(
+        child: getItemWidget(demoItems),
       )),
     );
   }
 
   Widget getItemWidget(List<GroceryItem> items) {
     return Container(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(30),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              onItemClicked(context, items[index]);
-            },
-            child: CardItem(
-              item: items[index],
-            ),
-          );
-        },
-      )
-    );
+        child: GridView.builder(
+      padding: const EdgeInsets.all(30),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+      ),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            onItemClicked(context, items[index]);
+          },
+          child: CardItem(
+            item: items[index],
+          ),
+        );
+      },
+    ));
   }
 
   void onItemClicked(BuildContext context, GroceryItem groceryItem) {
