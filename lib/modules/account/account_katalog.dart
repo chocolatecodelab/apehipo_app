@@ -6,61 +6,124 @@ import 'package:flutter/material.dart';
 // import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
-import 'package:apehipo_app/widgets/catalog_item_widget.dart';
+import 'package:apehipo_app/widgets/catalog_item_arsip_widget.dart';
+import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 
 class ManageProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Katalog',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(4.0),
-          child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 0,
-                  offset: Offset(0, 0), // Controls the position of the shadow
-                ),
-              ],
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Katalog",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
-          ),
-        ),
-        iconTheme: IconThemeData(
-          color: Color.fromARGB(255, 22, 22, 22),
-        ),
-      ),
-      body: SafeArea(
-        child: Container(
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back, // Replace this with your custom icon
+                color: Colors.black, // Customize the color of the icon
+              ),
+              onPressed: () {
+                // Handle the back button press
+                Navigator.of(context).pop();
+              },
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(50),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.black.withOpacity(
+                          0.2), // Customize the color of the top border
+                      width: 2.0, // Customize the width of the top border
+                    ),
+                    bottom: BorderSide(
+                      color: const Color.fromARGB(255, 165, 163,
+                          163), // Customize the color of the border
+                      width: 1.0, // Customize the width of the border
+                    ),
                   ),
-                  padded(subTitle("Produk Anda")),
-                  getVerticalItemSlider(penawaranSpesial),
-                  getTambahButton("Tambah Produk Baru")
-                ],
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          Color.fromARGB(255, 255, 255, 255).withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 0,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: TabBar(
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        'Produk Tampil',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        'Produk Arsip',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+          body: TabBarView(children: [
+            SafeArea(
+                child: Container(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      padded(subTitle("Produk Anda")),
+                      getVerticalItemSlider(penawaranSpesial),
+                      getTambahButton("Tambah Produk Baru")
+                    ],
+                  ),
+                ),
+              ),
+            )),
+            SafeArea(
+                child: Container(
+              child: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      padded(subTitle("Arsip Anda")),
+                      getVerticalItemSliderArsip(penjualanTerbaik),
+                      getTambahButton("Tambah Produk Baru")
+                    ],
+                  ),
+                ),
+              ),
+            ))
+          ]),
+        ));
   }
 
   Widget getTambahButton(String label, {Widget? trailingWidget}) {
@@ -129,7 +192,7 @@ class ManageProductsPage extends StatelessWidget {
   Widget getVerticalItemSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 530,
+      height: 480,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -140,7 +203,36 @@ class ManageProductsPage extends StatelessWidget {
             onTap: () {
               onItemClicked(context, items[index]);
             },
-            child: CatalogItemWidget(
+            child: CatalogItemTampilWidget(
+              item: items[index],
+              heroSuffix: "account_katalog",
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 20, // Mengubah width menjadi height
+          );
+        },
+      ),
+    );
+  }
+
+  Widget getVerticalItemSliderArsip(List<KatalogItem> items) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      height: 480,
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        itemCount: items.length,
+        scrollDirection:
+            Axis.vertical, // Mengubah scrollDirection menjadi vertical
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              onItemClicked(context, items[index]);
+            },
+            child: CatalogItemArsipWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
