@@ -1,6 +1,5 @@
 import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/auth/roles/role.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 class RegisterHydroponicFarmer extends StatefulWidget {
@@ -39,7 +38,7 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
             onPressed: () => 
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return DashboardScreen();
+                  return RolePage();
                 },
               )),
           ),

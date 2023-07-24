@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -219,6 +220,10 @@ class AccountScreen extends StatelessWidget {
           case "Katalog":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ManageProductsPage()));
+            break;
+          case "Notifikasi":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()));
             break;
         }
       },
