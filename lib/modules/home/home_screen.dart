@@ -1,3 +1,7 @@
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
+import 'package:apehipo_app/modules/home/offer/exclusive_screen.dart';
+import 'package:apehipo_app/modules/home/offer/groceries_screen.dart';
+import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
@@ -5,6 +9,8 @@ import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/grocery_item_card_widget.dart';
 import 'package:apehipo_app/widgets/search_bar_widget.dart';
+import 'package:get/get.dart';
+import 'package:apehipo_app/modules/home/offer/best_selling_screen.dart';
 
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
@@ -19,14 +25,49 @@ class HomeScreen extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 15,
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+  children: [
+    Padding(
+      padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {
+          // Handle the tap event for the first SVG icon
+          // Add your desired action here
+          Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => NotificationScreen(),
+          ));
+        },
+        child: SvgPicture.asset("assets/icons/account_icons/notification_icon.svg"),
+      ),
+    ),
+    SizedBox(
+      width: 8,
+    ),
+    Padding(
+      padding: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => CartScreen(),
+          ));
+        },
+        child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+      ),
+    ),
+  ],
+
                   ),
-                  SvgPicture.asset("assets/icons/app_icon_color.svg"),
+                  // SvgPicture.asset("assets/icons/app_icon_color.svg"),
                   SizedBox(
                     height: 5,
                   ),
-                  padded(locationWidget()),
+                  // padded(locationWidget()),
                   SizedBox(
                     height: 15,
                   ),
@@ -38,17 +79,17 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 25,
                   ),
-                  padded(subTitle("Exclusive Order")),
+                  padded(subTitle(context, "Exclusive Order", key: "exclusive")),
                   getHorizontalItemSlider(exclusiveOffers),
                   SizedBox(
                     height: 15,
                   ),
-                  padded(subTitle("Best Selling")),
+                  padded(subTitle(context, "Best Selling", key: "best_selling")),
                   getHorizontalItemSlider(bestSelling),
                   SizedBox(
                     height: 15,
                   ),
-                  padded(subTitle("Groceries")),
+                  padded(subTitle(context, "Groceries", key: "groceries")),
                   SizedBox(
                     height: 15,
                   ),
@@ -100,7 +141,7 @@ class HomeScreen extends StatelessWidget {
       child: widget,
     );
   }
-
+  
   Widget getHorizontalItemSlider(List<GroceryItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -140,7 +181,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget subTitle(String text) {
+  Widget subTitle(BuildContext context, String text, {String? key}) {
     return Row(
       children: [
         Text(
@@ -148,13 +189,35 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         Spacer(),
-        Text(
+        GestureDetector(
+          onTap: () => {
+            if(key == "best_selling") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BestSellingOffer()),
+              )
+            } else if(key == "exclusive") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ExclusiveOffer()),
+              )
+            } else if(key == "groceries") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GroceriesOffer()),
+              )
+            } else {
+
+            }
+          },
+          child: Text(
           "See All",
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.primaryColor),
-        ),
+              color: AppColors.primaryColor)
+          ),
+        )
       ],
     );
   }

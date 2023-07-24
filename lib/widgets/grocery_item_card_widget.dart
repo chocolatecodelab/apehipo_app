@@ -38,10 +38,7 @@ class GroceryItemCardWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Center(
-                child: Hero(
-                  tag: "GroceryItem:" + item.name + "-" + (heroSuffix ?? ""),
-                  child: imageWidget(),
-                ),
+                child: imageWidget(),
               ),
             ),
             SizedBox(
