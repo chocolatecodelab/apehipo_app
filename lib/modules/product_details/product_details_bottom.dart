@@ -1,15 +1,15 @@
-import 'package:apehipo_app/modules/cart/payment_method.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
+
 import '../../screens/order_failed_dialog.dart';
 
-class CheckoutBottomSheet extends StatefulWidget {
+class ProductDetailBottom extends StatefulWidget {
   @override
-  _CheckoutBottomSheetState createState() => _CheckoutBottomSheetState();
+  _ProductDetailBottomState createState() => _ProductDetailBottomState();
 }
 
-class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
+class _ProductDetailBottomState extends State<ProductDetailBottom> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           Row(
             children: [
               AppText(
-                text: "Checkout",
+                text: "Product Details",
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -40,41 +40,10 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   ))
             ],
           ),
+          Divider(),
+          productDescription(),
           SizedBox(
             height: 45,
-          ),
-          getDivider(),
-          checkoutRow("Delivery", trailingText: "Select Method"),
-          getDivider(),
-          checkoutRow(
-            "Payment",
-            trailingWidget: Icon(
-              Icons.payment,
-            ),
-          ),
-          getDivider(),
-          checkoutRow("Promo Code", trailingText: "Pick Discount"),
-          getDivider(),
-          checkoutRow("Total Cost", trailingText: "\$13.97"),
-          getDivider(),
-          SizedBox(
-            height: 30,
-          ),
-          termsAndConditionsAgreement(context),
-          Container(
-            margin: EdgeInsets.only(
-              top: 25,
-            ),
-            child: AppButton(
-              label: "Place Order",
-              // fontWeight: FontWeight.w600,
-              padding: EdgeInsets.symmetric(
-                vertical: 25,
-              ),
-              onPressed: () {
-                onPlaceOrderClicked();
-              },
-            ),
           ),
         ],
       ),
@@ -115,28 +84,20 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           ]),
     );
   }
-    void showBottomSheets(context, {String? key}) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) {
-          if(key == "payment") {
-            return PaymentDetail();
-          } else {
-            
-          }
-          return SizedBox.shrink();
-        });
+
+  Widget productDescription() {
+    return RichText(text: 
+    TextSpan(
+      text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+      style: TextStyle(
+        fontSize: 16
+      ),
+    ));
   }
 
   Widget checkoutRow(String label,
       {String? trailingText, Widget? trailingWidget}) {
-    return InkWell(
-      onTap: () => {
-        showBottomSheets(context, key: "payment"),
-      },
-      child: Container(
+    return Container(
       margin: EdgeInsets.symmetric(
         vertical: 15,
       ),
@@ -166,7 +127,6 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           )
         ],
       ),
-    ),
     );
   }
 

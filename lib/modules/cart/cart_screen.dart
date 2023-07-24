@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/column_with_seprator.dart';
@@ -10,19 +11,33 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
+            onPressed: () => {
+              Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return DashboardScreen();
+                },
+              )),
+            },
+          ),
+          title: Text(
+            'My Cart',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(
                 height: 25,
-              ),
-              Text(
-                "My Cart",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 20,
               ),
               Column(
                 children: getChildrenWithSeperator(
@@ -41,9 +56,6 @@ class CartScreen extends StatelessWidget {
                   seperator: Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
-                    ),
-                    child: Divider(
-                      thickness: 1,
                     ),
                   ),
                 ),

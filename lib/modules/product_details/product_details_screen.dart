@@ -1,8 +1,13 @@
+import 'package:apehipo_app/modules/product_details/nutritions_bottom.dart';
+import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
+import 'package:apehipo_app/screens/profile_screen.dart';
+import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
+import 'package:get/get.dart';
 
 import 'favourite_toggle_icon_widget.dart';
 
@@ -22,6 +27,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Edit Profil',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(4.0),
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 0,
+                  offset: Offset(0, 4), // Controls the position of the shadow
+                ),
+              ],
+            ),
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 22, 22, 22),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -68,10 +102,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     Spacer(),
                     Divider(thickness: 1),
-                    getProductDataRowWidget("Product Details"),
+                    getProfile(),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget("Product Details", key: "products"),
                     Divider(thickness: 1),
                     getProductDataRowWidget("Nutritions",
-                        customWidget: nutritionWidget()),
+                        customWidget: nutritionWidget(), key: "nutritions"),
                     Divider(thickness: 1),
                     getProductDataRowWidget(
                       "Review",
@@ -125,26 +161,134 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget getProductDataRowWidget(String label, {Widget? customWidget}) {
-    return Container(
-      margin: EdgeInsets.only(
-        top: 20,
-        bottom: 20,
+  Widget getProductDataRowWidget(String label,
+      {Widget? customWidget, String? key}) {
+    return InkWell(
+      onTap: () => {
+        if (key == "products")
+          {showBottomSheets(context, key: "products")}
+        else if (key == "nutritions")
+          {showBottomSheets(context, key: "nutritions")}
+        else if (key == "reviews")
+          {showBottomSheets(context, key: "reviews")}
+        else
+          {}
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          top: 20,
+          bottom: 20,
+        ),
+        child: Row(
+          children: [
+            AppText(text: label, fontWeight: FontWeight.w600, fontSize: 16),
+            Spacer(),
+            if (customWidget != null) ...[
+              customWidget,
+              SizedBox(
+                width: 20,
+              )
+            ],
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 20,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  void showBottomSheets(context, {String? key}) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          if (key == "products") {
+            return ProductDetailBottom();
+          } else if (key == "nutritions") {
+            return NutritionsBottom();
+          } else if (key == "review") {}
+
+          return SizedBox.shrink();
+        });
+  }
+
+  // Widget getProductDetails(context) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.end,
+  //     children: [
+  //       IconButton(
+  //       onPressed: () => {
+  //         showBottomSheets(context)
+  //       },
+  //       icon: Icon(Icons.arrow_forward_ios),
+  //     ),
+  //     ],
+  //   );
+  // }
+
+  Widget getProfile() {
+    return InkWell(
+      onTap: () => {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfileScreen(),
+            ))
+      },
       child: Row(
         children: [
-          AppText(text: label, fontWeight: FontWeight.w600, fontSize: 16),
-          Spacer(),
-          if (customWidget != null) ...[
-            customWidget,
-            SizedBox(
-              width: 20,
-            )
-          ],
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 20,
-          )
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/images/account_image.jpg"))),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Petani Kode",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        // Add other text styles as needed
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: "Banjarmasin",
+                        style: TextStyle(
+                          color: Colors
+                              .black, // Ganti warna teks "Banjarmasin" dengan warna lain sesuai keinginan Anda
+                          fontSize: 14, // Ukuran font "Banjarmasin"
+                          fontWeight:
+                              FontWeight.normal, // Gaya teks "Banjarmasin"
+                          // Add other text styles as needed
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 20,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

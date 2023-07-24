@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-
 import 'dart:io';
+import 'package:apehipo_app/widgets/confirmation_dialog.dart';
+import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:apehipo_app/widgets/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../widgets/theme.dart';
 
 class StoreManagementPage extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, {Widget? trailingWidget}) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -74,27 +75,9 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                getImageHeader(),
                 SizedBox(
-                  width: 128,
-                  height: 128,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      if (_selectedImage != null) ...[
-                        CircleAvatar(
-                          radius: 64.0,
-                          backgroundImage: _selectedImage != null
-                              ? FileImage(File(_selectedImage!.path))
-                              : AssetImage(_dummyImagePath) as ImageProvider,
-                        ),
-                        if (_selectedImage == null)
-                          Icon(
-                            Icons.store,
-                            size: 64.0,
-                          ),
-                      ],
-                    ],
-                  ),
+                  height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -127,89 +110,64 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
                       },
                     );
                   },
-                  child: Text('Pilih Foto Toko'),
+                  style: ElevatedButton.styleFrom(
+                    visualDensity: VisualDensity.compact,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    elevation: 0,
+                    backgroundColor: AppColors.darkGrey,
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: gilroyFontFamily,
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 24),
+                    maximumSize: Size(200, 50),
+                  ),
+                  child: Stack(
+                    fit: StackFit.passthrough,
+                    children: <Widget>[
+                      Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Pilih Foto Toko",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Icon(Icons.add_a_photo_outlined)
+                        ],
+                      )),
+                      if (trailingWidget != null)
+                        Positioned(
+                          top: 0,
+                          right: 25,
+                          child: trailingWidget,
+                        ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 16.0),
-                TextField(
-                  controller: _storeNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Nama Toko',
-                    floatingLabelStyle: TextStyle(
-                      color: AppColors.primaryColor,
-                    ),
-                    border: _getRoundedBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: _getRoundedBorder(),
-                  ),
-                  cursorColor: AppColors.primaryColor,
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _storeDescriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Deskripsi Toko',
-                    floatingLabelStyle: TextStyle(
-                      color: AppColors.primaryColor,
-                    ),
-                    border: _getRoundedBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: _getRoundedBorder(),
-                  ),
-                  cursorColor: AppColors.primaryColor,
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _storeAddressController,
-                  decoration: InputDecoration(
-                    labelText: 'Alamat Toko',
-                    floatingLabelStyle: TextStyle(
-                      color: AppColors.primaryColor,
-                    ),
-                    border: _getRoundedBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: _getRoundedBorder(),
-                  ),
-                  cursorColor: AppColors.primaryColor,
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _storePhoneNumberController,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: 'Nomor Telepon Toko',
-                    floatingLabelStyle: TextStyle(
-                      color: AppColors.primaryColor,
-                    ),
-                    border: _getRoundedBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: AppColors.primaryColor,
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: _getRoundedBorder(),
-                  ),
-                  cursorColor: AppColors.primaryColor,
-                ),
+                Divider(thickness: 1),
+                getRowTextField(
+                    "Nama Toko", _storeNameController, "Masukkan Nama Toko"),
+                Divider(thickness: 1),
+                getRowTextField("Deskripsi Toko", _storeDescriptionController,
+                    "Masukkan Deskripsi Toko"),
+                Divider(thickness: 1),
+                getRowTextField("Alamat Toko", _storeAddressController,
+                    "Masukkan Alamat Toko"),
+                Divider(thickness: 1),
+                getRowTextField("Nomor Telepon Toko",
+                    _storePhoneNumberController, "Masukkan Nomor Telepon Toko"),
+                Divider(thickness: 1),
                 SizedBox(height: 24.0),
                 getButton(context, "Simpan", onPressed: () {}),
                 SizedBox(height: 24.0),
@@ -222,13 +180,104 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
   }
 }
 
+Widget getImageHeader() {
+  String imagePath = "assets/images/account_image.jpg";
+  return CircleAvatar(
+    radius: 64.0,
+    backgroundImage: AssetImage(imagePath),
+    backgroundColor: AppColors.primaryColor.withOpacity(0.7),
+  );
+}
+
+Widget getRowTextField(
+    String label, TextEditingController? controller, String? hintText,
+    {Widget? customWidget}) {
+  return Container(
+    margin: EdgeInsets.only(
+      top: 20,
+      bottom: 20,
+    ),
+    child: Row(
+      children: [
+        if (customWidget != null) ...[
+          customWidget,
+          SizedBox(
+            width: 20,
+          ),
+        ],
+        SizedBox(
+          width: 5,
+        ),
+        Container(
+          width: 120, // Gunakan nilai labelWidth untuk lebar label
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Flexible(
+          child: TextField(
+            controller: controller,
+            textAlign: TextAlign.left,
+            decoration: InputDecoration(
+              hintText: hintText,
+              labelText: null,
+              contentPadding: EdgeInsets.only(left: 40.0),
+              floatingLabelStyle: TextStyle(
+                color: AppColors.primaryColor,
+              ),
+              filled: true,
+              fillColor: Colors.transparent,
+              border: InputBorder.none,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.primaryColor,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+            cursorColor: AppColors.primaryColor,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 Widget getButton(BuildContext context, String label,
     {required Function() onPressed}) {
   return AppButton(
     label: label,
     fontWeight: FontWeight.w300,
     padding: EdgeInsets.symmetric(vertical: 25),
-    onPressed: onPressed,
+    onPressed: () async {
+      bool? confirmationResult = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ConfirmationDialog(
+              message: "Apakah anda yakin ingin menyimpan perubahan?");
+        },
+      );
+      if (confirmationResult == true) {
+        print("Hello");
+      } else {
+        print("gagal");
+      }
+    },
   );
 }
 
