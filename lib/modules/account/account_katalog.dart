@@ -1,14 +1,11 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
+import '../../modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:flutter/material.dart';
-// import 'package:apehipo_app/models/katalog_item.dart';
-// import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/catalog_item_arsip_widget.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
 
 class ManageProductsPage extends StatelessWidget {
   @override
@@ -99,7 +96,7 @@ class ManageProductsPage extends StatelessWidget {
                       ),
                       padded(subTitle("Produk Anda")),
                       getVerticalItemSlider(penawaranSpesial),
-                      getTambahButton("Tambah Produk Baru")
+                      getTambahButton(context, "Tambah Produk Baru")
                     ],
                   ),
                 ),
@@ -116,7 +113,7 @@ class ManageProductsPage extends StatelessWidget {
                       ),
                       padded(subTitle("Arsip Anda")),
                       getVerticalItemSliderArsip(penjualanTerbaik),
-                      getTambahButton("Tambah Produk Baru")
+                      getTambahButton(context, "Tambah Produk Baru")
                     ],
                   ),
                 ),
@@ -126,11 +123,19 @@ class ManageProductsPage extends StatelessWidget {
         ));
   }
 
-  Widget getTambahButton(String label, {Widget? trailingWidget}) {
+  Widget getTambahButton(BuildContext context, label,
+      {Widget? trailingWidget}) {
     return Container(
       width: 400,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CatalogTambahScreen(),
+            ),
+          );
+        },
         style: ElevatedButton.styleFrom(
           visualDensity: VisualDensity.compact,
           shape: RoundedRectangleBorder(
@@ -251,7 +256,7 @@ class ManageProductsPage extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CatalogDetailsScreen(
+          builder: (context) => CatalogEditScreen(
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),
@@ -266,13 +271,6 @@ class ManageProductsPage extends StatelessWidget {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         Spacer(),
-        // Text(
-        //   "See All",
-        //   style: TextStyle(
-        //       fontSize: 18,
-        //       fontWeight: FontWeight.bold,
-        //       color: AppColors.primaryColor),
-        // ),
       ],
     );
   }

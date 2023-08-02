@@ -2,6 +2,7 @@ import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/home/offer/exclusive_screen.dart';
 import 'package:apehipo_app/modules/home/offer/groceries_screen.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
+import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
@@ -28,40 +29,40 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-  children: [
-    Padding(
-      padding: EdgeInsets.all(8),
-      child: InkWell(
-        onTap: () {
-          // Handle the tap event for the first SVG icon
-          // Add your desired action here
-          Navigator.push(
-          context,
-          MaterialPageRoute(
-          builder: (context) => NotificationScreen(),
-          ));
-        },
-        child: SvgPicture.asset("assets/icons/account_icons/notification_icon.svg"),
-      ),
-    ),
-    SizedBox(
-      width: 8,
-    ),
-    Padding(
-      padding: EdgeInsets.all(8),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-          context,
-          MaterialPageRoute(
-          builder: (context) => CartScreen(),
-          ));
-        },
-        child: SvgPicture.asset("assets/icons/cart_icon.svg"),
-      ),
-    ),
-  ],
-
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: InkWell(
+                          onTap: () {
+                            // Handle the tap event for the first SVG icon
+                            // Add your desired action here
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NotificationScreen(),
+                                ));
+                          },
+                          child: SvgPicture.asset(
+                              "assets/icons/account_icons/notification_icon.svg"),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartScreen(),
+                                ));
+                          },
+                          child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+                        ),
+                      ),
+                    ],
                   ),
                   // SvgPicture.asset("assets/icons/app_icon_color.svg"),
                   SizedBox(
@@ -138,7 +139,7 @@ class HomeScreen extends StatelessWidget {
       child: widget,
     );
   }
-  
+
   Widget getHorizontalItemSlider(List<GroceryItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -148,15 +149,15 @@ class HomeScreen extends StatelessWidget {
         itemCount: items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              onItemClicked(context, items[index]);
-            },
-            child: GroceryItemCardWidget(
-              item: items[index],
-              heroSuffix: "home_screen",
-            ),
-          );
+          // return GestureDetector(
+          //   onTap: () {
+          //     onItemClicked(context, items[index]);
+          //   },
+          //   child: GroceryItemCardWidget(
+          //     item: items[index],
+          //     heroSuffix: "home_screen",
+          //   ),
+          // );
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
@@ -167,12 +168,12 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+  void onItemClicked(BuildContext context, ProductModel productItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => ProductDetailsScreen(
-                groceryItem,
+                productItem,
                 heroSuffix: "home_screen",
               )),
     );
@@ -188,32 +189,35 @@ class HomeScreen extends StatelessWidget {
         Spacer(),
         GestureDetector(
           onTap: () => {
-            if(key == "best_selling") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BestSellingOffer()),
-              )
-            } else if(key == "exclusive") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ExclusiveOffer()),
-              )
-            } else if(key == "groceries") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => GroceriesOffer()),
-              )
-            } else {
-
-            }
+            if (key == "best_selling")
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BestSellingOffer()),
+                )
+              }
+            else if (key == "exclusive")
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ExclusiveOffer()),
+                )
+              }
+            else if (key == "groceries")
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GroceriesOffer()),
+                )
+              }
+            else
+              {}
           },
-          child: Text(
-          "See All",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryColor)
-          ),
+          child: Text("See All",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryColor)),
         )
       ],
     );

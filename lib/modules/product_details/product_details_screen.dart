@@ -1,23 +1,24 @@
+
+import 'package:apehipo_app/modules/product/product_model.dart';
+import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
+import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
 import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
 import 'package:apehipo_app/screens/profile_screen.dart';
-import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
-import 'package:get/get.dart';
 
 import 'favourite_toggle_icon_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final GroceryItem groceryItem;
+  final ProductModel productItem;
   final String? heroSuffix;
 
-  const ProductDetailsScreen(this.groceryItem, {this.heroSuffix});
+  const ProductDetailsScreen(this.productItem, {this.heroSuffix});
 
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
@@ -46,9 +47,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 1,
+                  spreadRadius: 2,
                   blurRadius: 0,
-                  offset: Offset(0, 4), // Controls the position of the shadow
+                  offset: Offset(0, 0), // Controls the position of the shadow
                 ),
               ],
             ),
@@ -59,45 +60,73 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            getImageHeaderWidget(),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: [
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        widget.groceryItem.name,
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: AppText(
-                        text: widget.groceryItem.description,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff7C7C7C),
-                      ),
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        ItemCounterWidget(
-                          onAmountChanged: (newAmount) {
-                            setState(() {
-                              amount = newAmount;
-                            });
-                          },
-                        ),
-                        Spacer(),
-                        Text(
-                          "\$${getTotalPrice().toStringAsFixed(2)}",
+        child: Container(
+          child: Column(
+            children: [
+              getImageHeaderWidget(),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(
+                          widget.productItem.nama,
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: AppText(
+                          text: widget.productItem.jenis,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff7C7C7C),
+                        ),
+                        trailing: FavoriteToggleIcon(),
+                      ),
+                      Row(
+                        children: [
+                          ItemCounterWidget(
+                            onAmountChanged: (newAmount) {
+                              setState(() {
+                                amount = newAmount;
+                              });
+                            },
                           ),
+                          Spacer(),
+                          Text(
+                            "Rp${getTotalPrice().toStringAsFixed(0)}",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                      Spacer(),
+                      Divider(thickness: 1),
+                      getProfile(),
+                      Divider(thickness: 1),
+                      getProductDataRowWidget("Deskripsi",
+                          rincian: widget.productItem.deskripsi,
+                          key: "products"),
+                      Divider(thickness: 1),
+                      getProductDataRowWidget("Spesifikasi",
+                          customWidget: spesifikasiWidget(),
+                          stok: widget.productItem.stok,
+                          key: "nutritions"),
+                      Divider(thickness: 1),
+                      // getProductDataRowWidget(
+                      //   "Review",
+                      //   customWidget: ratingWidget(),
+                      // ),
+                      Spacer(),
+                      AppButton(
+                        label: "Add To Basket",
+                      ),
+                      Spacer(),
+                    ],
+                  ),
                         )
                       ],
                     ),
@@ -129,8 +158,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -156,24 +185,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             stops: [0.0, 1.0],
             tileMode: TileMode.clamp),
       ),
-      child: Hero(
-        tag: "GroceryItem:" +
-            widget.groceryItem.name +
-            "-" +
-            (widget.heroSuffix ?? ""),
-        child: CarouselImage(),
+      child: ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(10),
+        ),
+        child: Image.network(
+          "https://asset.kompas.com/crops/fIaNWDAjRZ8OzH-6PTSsBisOyA0=/87x0:759x448/750x500/data/photo/2023/03/05/64049a48c2ac7.jpg",
+          width: MediaQuery.of(context).size.width,
+          height: 75,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
 
   Widget getProductDataRowWidget(String label,
-      {Widget? customWidget, String? key}) {
+      {Widget? customWidget, String? stok, String? rincian, String? key}) {
     return InkWell(
       onTap: () => {
         if (key == "products")
-          {showBottomSheets(context, key: "products")}
-        else if (key == "stocks")
-          {showBottomSheets(context, key: "stocks")}
+          {showBottomSheets(context, rincian: rincian, key: "products")}
+        else if (key == "nutritions")
+          {showBottomSheets(context, rincian: stok, key: "nutritions")}
         else if (key == "reviews")
           {showBottomSheets(context, key: "reviews")}
         else
@@ -204,16 +237,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  void showBottomSheets(context, {String? key}) {
+  void showBottomSheets(context, {String? stok, String? rincian, String? key}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
           if (key == "products") {
-            return ProductDetailBottom();
-          } else if (key == "stocks") {
-            return StocksBottom();
+            return DeskripsiBottom(rincian);
+          } else if (key == "nutritions") {
+            return SpesifikasiBottom(stok);
           } else if (key == "review") {}
 
           return SizedBox.shrink();
@@ -299,7 +332,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget stockWidget() {
+  Widget spesifikasiWidget() {
     return Container(
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
@@ -315,28 +348,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget ratingWidget() {
-    Widget starIcon() {
-      return Icon(
-        Icons.star,
-        color: Color(0xffF3603F),
-        size: 20,
-      );
-    }
+  // Widget ratingWidget() {
+  //   Widget starIcon() {
+  //     return Icon(
+  //       Icons.star,
+  //       color: Color(0xffF3603F),
+  //       size: 20,
+  //     );
+  //   }
 
-    return Row(
-      children: [
-        starIcon(),
-        starIcon(),
-        starIcon(),
-        starIcon(),
-        starIcon(),
-      ],
-    );
-  }
+  //   return Row(
+  //     children: [
+  //       starIcon(),
+  //       starIcon(),
+  //       starIcon(),
+  //       starIcon(),
+  //       starIcon(),
+  //     ],
+  //   );
+  // }
 
-  double getTotalPrice() {
-    return amount * widget.groceryItem.price;
+  int getTotalPrice() {
+    int harga = int.parse(widget.productItem.harga);
+    return amount * harga;
   }
 }
 

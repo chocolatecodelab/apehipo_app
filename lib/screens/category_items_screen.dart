@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
@@ -60,21 +61,21 @@ class CategoryItemsScreen extends StatelessWidget {
         child: StaggeredGrid.count(
           crossAxisCount: 2,
           // I only need two card horizontally
-          children: beverages.asMap().entries.map<Widget>((e) {
-            GroceryItem groceryItem = e.value;
-            return GestureDetector(
-              onTap: () {
-                onItemClicked(context, groceryItem);
-              },
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: GroceryItemCardWidget(
-                  item: groceryItem,
-                  heroSuffix: "explore_screen",
-                ),
-              ),
-            );
-          }).toList(),
+          // children: beverages.asMap().entries.map<Widget>((e) {
+          //   ProductItem groceryItem = e.value;
+          //   // return GestureDetector(
+          //   //   onTap: () {
+          //   //     onItemClicked(context, groceryItem);
+          //   //   },
+          //   //   child: Container(
+          //   //     padding: EdgeInsets.all(10),
+          //   //     child: GroceryItemCardWidget(
+          //   //       item: groceryItem,
+          //   //       heroSuffix: "explore_screen",
+          //   //     ),
+          //   //   ),
+          //   // );
+          // }).toList(),
           mainAxisSpacing: 3.0,
           crossAxisSpacing: 0.0, // add some space
         ),
@@ -82,12 +83,12 @@ class CategoryItemsScreen extends StatelessWidget {
     );
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+  void onItemClicked(BuildContext context, ProductModel productItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ProductDetailsScreen(
-          groceryItem,
+          productItem,
           heroSuffix: "explore_screen",
         ),
       ),

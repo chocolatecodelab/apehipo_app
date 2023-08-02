@@ -1,4 +1,5 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:apehipo_app/screens/custom_binary_option.dart';
 import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -28,11 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: Icon(Icons.arrow_back),
             color: Colors.black,
             onPressed: () {
-              Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return DashboardScreen();
-                },
-              ));
+              Get.back();
             },
           ),
           actions: [
@@ -228,24 +226,24 @@ Widget getItemWidget(List<GroceryItem> items) {
     ),
     itemCount: items.length,
     itemBuilder: (context, index) {
-      return GestureDetector(
-        onTap: () {
-          onItemClicked(context, items[index]);
-        },
-        child: CardItem(
-          item: items[index],
-        ),
-      );
+      // return GestureDetector(
+      //   onTap: () {
+      //     onItemClicked(context, items[index]);
+      //   },
+      //   child: CardItem(
+      //     item: items[index],
+      //   ),
+      // );
     },
   ));
 }
 
-void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+void onItemClicked(BuildContext context, ProductModel productItem) {
   Navigator.push(
     context,
     MaterialPageRoute(
         builder: (context) => ProductDetailsScreen(
-              groceryItem,
+              productItem,
               heroSuffix: "home_screen",
             )),
   );

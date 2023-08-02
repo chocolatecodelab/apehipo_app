@@ -1,67 +1,19 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card.dart';
+import '../product/product_controller.dart';
+import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/search_bar.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:flutter/material.dart';
 
 class CardScreen extends StatelessWidget {
-  const CardScreen({super.key});
+  CardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ScaffoldExample(),
-    );
-  }
-}
-
-enum SampleItem { itemOne, itemTwo, itemThree }
-
-class FilterButton extends StatefulWidget {
-  const FilterButton({super.key});
-
-  @override
-  State<FilterButton> createState() => _FilterButtonState();
-}
-
-class _FilterButtonState extends State<FilterButton> {
-  SampleItem? selectedMenu;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: PopupMenuButton<SampleItem>(
-          initialValue: selectedMenu,
-          onSelected: (SampleItem item) {
-            setState(() {
-              selectedMenu = item;
-            });
-          },
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
-            const PopupMenuItem<SampleItem>(
-              value: SampleItem.itemOne,
-              child: Text("Item 1"),
-            ),
-            const PopupMenuItem<SampleItem>(
-              value: SampleItem.itemTwo,
-              child: Text("Item 2"),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ScaffoldExample extends StatelessWidget {
-  const ScaffoldExample({super.key});
-
-  @override
+  var controller = Get.put(ProductController());
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -72,11 +24,7 @@ class ScaffoldExample extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return DashboardScreen();
-              },
-            ));
+            Get.back();
           },
         ),
         title: Container(
@@ -103,50 +51,53 @@ class ScaffoldExample extends StatelessWidget {
                   ]),
         ],
       ),
-      body: SafeArea(
-          child: Container(
-        child: getItemWidget(demoItems),
-      )),
+      body: Container(
+        child: Obx(
+          () => controller.isLoading.value
+              ? Center(child: CircularProgressIndicator())
+              : controller.dataList!.isEmpty
+                  ? Center(child: Text("Tidak ada data."))
+                  : GridView.builder(
+                      padding: const EdgeInsets.all(30),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                      ),
+                      itemCount: controller.dataList!.length,
+                      itemBuilder: (context, i) {
+                        // String id = controller.dataList![i].kode;
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(ProductDetailsScreen(
+                              controller.dataList![i],
+                              heroSuffix: "home screen",
+                            ));
+                          },
+                          child: AspectRatio(
+                            aspectRatio: 3 / 4,
+                            child: CardItem(
+                              item: controller.dataList![i],
+                              context: context,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+        ),
+      ),
     );
   }
 
-  Widget getItemWidget(List<GroceryItem> items) {
-    return Container(
-        child: GridView.builder(
-      padding: const EdgeInsets.all(30),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-      ),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            onItemClicked(context, items[index]);
-          },
-          child: CardItem(
-            item: items[index],
-          ),
-        );
-      },
-    ));
-  }
-
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+  void onItemClicked(BuildContext context, ProductModel productModel) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => ProductDetailsScreen(
-                groceryItem,
+                productModel,
                 heroSuffix: "home_screen",
               )),
     );
   }
 }
-
-  // Widget getItemCard(List<GroceryItem> items) {
-  //   return Container(
-  //     child: CardWidget(),
-  //   );
-  // 
