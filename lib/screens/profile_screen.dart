@@ -1,5 +1,6 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/screens/custom_binary_option.dart';
+import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
@@ -85,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: 15,
                           ),
                           Text(
-                            "Products",
+                            "Produk",
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w300,
@@ -104,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: 15,
                           ),
                           Text(
-                            "Followers",
+                            "Terjual",
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w300,
@@ -114,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Column(
                         children: [
-                          Text("0",
+                          Text("100",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -123,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             height: 15,
                           ),
                           Text(
-                            "Following",
+                            "Pembeli",
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w300,
@@ -140,8 +141,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 350,
                     height: 50,
                     child: AppButton(
-                      label: "Follow",
+                      label: "Chat on WhatsApp",
                       onPressed: () => {},
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                   const SizedBox(
@@ -155,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         children: [
                           TabBar(
-                            labelColor: Colors.green,
+                            labelColor: Colors.black,
                             unselectedLabelColor: Colors.grey,
                             tabs: [
                               Tab(text: "Best Seller"),

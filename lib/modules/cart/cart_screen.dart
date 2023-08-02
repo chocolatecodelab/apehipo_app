@@ -25,7 +25,7 @@ class CartScreen extends StatelessWidget {
             },
           ),
           title: Text(
-            'My Cart',
+            'Keranjang Belanja',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -75,7 +75,7 @@ class CartScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: AppButton(
-        label: "Go To Check Out",
+        label: "Check Out",
         fontWeight: FontWeight.w600,
         padding: EdgeInsets.symmetric(vertical: 30),
         trailingWidget: getButtonPriceWidget(),

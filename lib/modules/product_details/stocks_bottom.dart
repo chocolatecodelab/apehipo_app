@@ -4,12 +4,12 @@ import 'package:apehipo_app/widgets/app_text.dart';
 
 import '../../screens/order_failed_dialog.dart';
 
-class NutritionsBottom extends StatefulWidget {
+class StocksBottom extends StatefulWidget {
   @override
-  _NutritionsBottomState createState() => _NutritionsBottomState();
+  _StocksBottomState createState() => _StocksBottomState();
 }
 
-class _NutritionsBottomState extends State<NutritionsBottom> {
+class _StocksBottomState extends State<StocksBottom> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class _NutritionsBottomState extends State<NutritionsBottom> {
           Row(
             children: [
               AppText(
-                text: "Nutritions",
+                text: "Stocks",
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),

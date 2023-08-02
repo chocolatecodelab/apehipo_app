@@ -2,6 +2,7 @@ import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
+import 'package:get/get.dart';
 
 import '../../widgets/search_bar.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
@@ -88,18 +89,16 @@ class ScaffoldExample extends StatelessWidget {
                 Icons.filter_list_alt,
                 color: Colors.black,
               ),
+              offset: Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                     const PopupMenuItem(
-                      child: Text('Working a lot harder'),
+                      child: Text('Terbaru'),
                     ),
                     const PopupMenuItem(
-                      child: Text('Being a lot smarter'),
+                      child: Text('Terlaris'),
                     ),
                     const PopupMenuItem(
-                      child: Text('Being a self-starter'),
-                    ),
-                    const PopupMenuItem(
-                      child: Text('Placed in charge of trading charter'),
+                      child: Text('Termurah'),
                     ),
                   ]),
         ],
