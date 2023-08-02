@@ -1,6 +1,11 @@
+
 import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
 import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
+import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
+import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
+import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
 import 'package:apehipo_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -27,7 +32,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Edit Profil',
+          'Product Detail',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -122,6 +127,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Spacer(),
                     ],
                   ),
+                        )
+                      ],
+                    ),
+                    Spacer(),
+                    Divider(thickness: 1),
+                    getProfile(),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget("Product Details", key: "products"),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget("Stocks",
+                        customWidget: stockWidget(), key: "stocks"),
+                    Divider(thickness: 1),
+                    getProductDataRowWidget(
+                      "Review",
+                      customWidget: ratingWidget(),
+                    ),
+                    Spacer(),
+                    AppButton(
+                      label: "Add To Basket",
+                      onPressed: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartScreen(),
+                            ))
+                      },
+                    ),
+                    Spacer(),
+                  ],
                 ),
               ),
             ],
@@ -133,9 +167,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Widget getImageHeaderWidget() {
     return Container(
-      height: 200,
+      height: 250,
+      width: double.maxFinite,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.white,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
@@ -305,7 +340,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         borderRadius: BorderRadius.circular(5),
       ),
       child: AppText(
-        text: "100gm",
+        text: "100",
         fontWeight: FontWeight.w600,
         fontSize: 12,
         color: Color(0xff7C7C7C),
@@ -336,5 +371,37 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int getTotalPrice() {
     int harga = int.parse(widget.productItem.harga);
     return amount * harga;
+  }
+}
+
+class CarouselImage extends StatefulWidget {
+  const CarouselImage({super.key});
+
+  @override
+  State<CarouselImage> createState() => _CarouselImageState();
+}
+
+class _CarouselImageState extends State<CarouselImage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 250,
+            width: double.infinity,
+            child: AnotherCarousel(
+              images: const [
+                AssetImage("assets/images/role_consumer.jpg"),
+                AssetImage("assets/images/role_hydroponic_farmer.jpg"),
+              ],
+              dotSize: 6,
+              dotBgColor: Colors.transparent,
+              borderRadius: true,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

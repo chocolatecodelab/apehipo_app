@@ -80,50 +80,45 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 25,
                   ),
-                  padded(
-                      subTitle(context, "Exclusive Order", key: "exclusive")),
+                  padded(subTitle(context, "Penjualan Ekslusif", key: "exclusive")),
                   getHorizontalItemSlider(exclusiveOffers),
                   SizedBox(
                     height: 15,
                   ),
-                  padded(
-                      subTitle(context, "Best Selling", key: "best_selling")),
+                  padded(subTitle(context, "Penjualan Terbaik", key: "best_selling")),
                   getHorizontalItemSlider(bestSelling),
                   SizedBox(
                     height: 15,
                   ),
-                  padded(subTitle(context, "Groceries", key: "groceries")),
+                  padded(subTitle(context, "Bahan Makanan", key: "groceries")),
                   SizedBox(
                     height: 15,
                   ),
                   Container(
-                    height: 105,
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        GroceryFeaturedCard(
-                          groceryFeaturedItems[0],
-                          color: Color(0xffF8A44C),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        GroceryFeaturedCard(
-                          groceryFeaturedItems[1],
-                          color: AppColors.primaryColor,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
+                    // height: 105,
+                    // child: ListView(
+                    //   padding: EdgeInsets.zero,
+                    //   scrollDirection: Axis.horizontal,
+                    //   children: [
+                    //     SizedBox(
+                    //       width: 20,
+                    //     ),
+                    //     GroceryFeaturedCard(
+                    //       groceryFeaturedItems[0],
+                    //       color: Color(0xffF8A44C),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 20,
+                    //     ),
+                    //     GroceryFeaturedCard(
+                    //       groceryFeaturedItems[1],
+                    //       color: AppColors.primaryColor,
+                    //     ),
+                    //     SizedBox(
+                    //       width: 20,
+                    //     ),
+                    //   ],
+                    // ),
                   ),
                   getHorizontalItemSlider(groceries),
                   SizedBox(

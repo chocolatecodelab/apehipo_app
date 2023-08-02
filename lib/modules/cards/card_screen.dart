@@ -37,18 +37,16 @@ class CardScreen extends StatelessWidget {
                 Icons.filter_list_alt,
                 color: Colors.black,
               ),
+              offset: Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                     const PopupMenuItem(
-                      child: Text('Working a lot harder'),
+                      child: Text('Terbaru'),
                     ),
                     const PopupMenuItem(
-                      child: Text('Being a lot smarter'),
+                      child: Text('Terlaris'),
                     ),
                     const PopupMenuItem(
-                      child: Text('Being a self-starter'),
-                    ),
-                    const PopupMenuItem(
-                      child: Text('Placed in charge of trading charter'),
+                      child: Text('Termurah'),
                     ),
                   ]),
         ],

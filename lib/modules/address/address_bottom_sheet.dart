@@ -1,19 +1,16 @@
 import 'package:apehipo_app/modules/address/address_screen.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/order/order_screen.dart';
-import 'package:apehipo_app/modules/payment/payment_method_screen.dart';
-import 'package:apehipo_app/modules/track/track_method_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
+
 import '../../screens/order_failed_dialog.dart';
 
-class CheckoutBottomSheet extends StatefulWidget {
+class AddressBottom extends StatefulWidget {
   @override
-  _CheckoutBottomSheetState createState() => _CheckoutBottomSheetState();
+  _AddressBottomState createState() => _AddressBottomState();
 }
 
-class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
+class _AddressBottomState extends State<AddressBottom> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +26,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           Row(
             children: [
               AppText(
-                text: "Check Out",
+                text: "Tambah Alamat",
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -44,45 +41,44 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   ))
             ],
           ),
+          Divider(),
           SizedBox(
             height: 45,
           ),
-          getDivider(),
-          checkoutRow("Pengiriman", trailingText: "Pilih Metode"),
-          getDivider(),
-          checkoutRow(
-            "Pembayaran",
-            trailingWidget: Icon(
-              Icons.payment,
-            ),
-          ),
-          getDivider(),
-          checkoutRow("Alamat", trailingText: "Pilih Alamat"),
-          getDivider(),
-          checkoutRow("Total Pembelian", trailingText: "\$13.97"),
-          getDivider(),
-          SizedBox(
-            height: 30,
-          ),
-          termsAndConditionsAgreement(context),
-          Container(
-            margin: EdgeInsets.only(
-              top: 25,
-            ),
-            child: AppButton(
-              label: "Buat Pesanan",
-              // fontWeight: FontWeight.w600,
-              padding: EdgeInsets.symmetric(
-                vertical: 25,
+          TextFormField(
+            maxLines: 20,
+            minLines: 10,
+            keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+              hintStyle: TextStyle(
+                color: Colors.grey,
               ),
-              onPressed: () {
-                // onPlaceOrderClicked();
-              },
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
             ),
+          ),
+          Divider(),
+          SizedBox(height: 15,),
+          AppButton(
+            label: "Tambah",
+            onPressed: () => {
+              AddressScreen(),
+            },
           ),
         ],
       ),
     );
+  }
+
+  void showBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          return AddressBottom();
+        });
   }
 
   Widget getDivider() {
@@ -95,7 +91,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
   Widget termsAndConditionsAgreement(BuildContext context) {
     return RichText(
       text: TextSpan(
-          text: 'Dengan melakukan pemesanan, Anda setuju dengan',
+          text: 'By placing an order you agree to our',
           style: TextStyle(
             color: Color(0xFF7C7C7C),
             fontSize: 14,
@@ -108,7 +104,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
-            TextSpan(text: " dan"),
+            TextSpan(text: " And"),
             TextSpan(
               text: " Conditions",
               style: TextStyle(
@@ -119,42 +115,36 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           ]),
     );
   }
-    void showBottomSheets(context, {String? key}) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) {
-          if(key == "payment") {
-            return PaymentMethod();
-          } else if(key == "delivery") {
-            return TrackMethod();
-          } else if(key == "alamat") {
-            return AddressScreen();
-          } 
-          return SizedBox.shrink();
-        });
+
+  Widget inputAddressForm() {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFormField(
+              minLines: 2,
+              maxLines: 10,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                hintText: 'Enter a message here',
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget checkoutRow(String label,
       {String? trailingText, Widget? trailingWidget}) {
-    return InkWell(
-      onTap: () => {
-        if(label == "Pengiriman") {
-          showBottomSheets(context, key: "delivery")
-        } else if(label == "Pembayaran") {
-          showBottomSheets(context, key: "payment"),
-        } else if(label == "Alamat") {
-          showBottomSheets(context, key: "alamat")
-        } else if(label == "Total Pembelian") {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CartScreen();
-                },
-              )),
-        }
-      },
-      child: Container(
+    return Container(
       margin: EdgeInsets.symmetric(
         vertical: 15,
       ),
@@ -181,12 +171,9 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           Icon(
             Icons.arrow_forward_ios,
             size: 20,
-          ),
-
-          
+          )
         ],
       ),
-    ),
     );
   }
 

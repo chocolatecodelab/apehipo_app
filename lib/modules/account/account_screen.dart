@@ -1,4 +1,6 @@
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
+import 'package:apehipo_app/modules/order/order_screen.dart';
+import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,6 +42,7 @@ class AccountScreen extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
+              SizedBox(height: 15,),
               getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
               Column(
                 children: getChildrenWithSeperator(
@@ -224,6 +227,14 @@ class AccountScreen extends StatelessWidget {
           case "Notifikasi":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()));
+            break;
+          case "Transaksi":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TransactionScreen()));
+            break;
+          case "Status Pembelian":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => OrderScreen()));
             break;
         }
       },

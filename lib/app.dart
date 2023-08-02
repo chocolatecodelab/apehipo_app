@@ -5,6 +5,7 @@ import 'package:apehipo_app/modules/product/product_view.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/theme.dart';
+import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
   @override

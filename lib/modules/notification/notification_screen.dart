@@ -14,7 +14,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Notification",
+          "Notifikasi",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -99,7 +99,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           text: TextSpan(
-              text: "message ",
+              text: "Pesanan #183729 sudah sampai, nih!",
               style: TextStyle(
                 fontSize: textSize,
                 color: Colors.black,
@@ -107,7 +107,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
               children: [
                 TextSpan(
-                    text: "message description",
+                    text: "\nSegera konfirmasi pesananmu melalui menu transaksi, ya!",
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                     ))
