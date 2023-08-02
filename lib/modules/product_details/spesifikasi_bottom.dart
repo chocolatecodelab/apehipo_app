@@ -1,15 +1,19 @@
+import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 
 import '../../screens/order_failed_dialog.dart';
 
-class NutritionsBottom extends StatefulWidget {
+class SpesifikasiBottom extends StatefulWidget {
+  final String? stok;
+
+  const SpesifikasiBottom(this.stok);
   @override
-  _NutritionsBottomState createState() => _NutritionsBottomState();
+  _SpesifikasiBottomState createState() => _SpesifikasiBottomState();
 }
 
-class _NutritionsBottomState extends State<NutritionsBottom> {
+class _SpesifikasiBottomState extends State<SpesifikasiBottom> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +29,7 @@ class _NutritionsBottomState extends State<NutritionsBottom> {
           Row(
             children: [
               AppText(
-                text: "Nutritions",
+                text: "Spesifikasi",
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -41,7 +45,7 @@ class _NutritionsBottomState extends State<NutritionsBottom> {
             ],
           ),
           Divider(),
-          productDescription(),
+          productDescription(widget.stok),
           SizedBox(
             height: 45,
           ),
@@ -85,14 +89,56 @@ class _NutritionsBottomState extends State<NutritionsBottom> {
     );
   }
 
-  Widget productDescription() {
-    return RichText(text: 
-    TextSpan(
-      text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
-      style: TextStyle(
-        fontSize: 16
-      ),
-    ));
+  Widget productDescription(stok) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 80,
+              child: AppText(
+                text: "Stok",
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(
+              width: 100,
+            ), // Gunakan nilai labelWidth untuk lebar label
+            AppText(text: stok, fontSize: 18),
+          ],
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Row(
+          children: [
+            Container(
+              width: 180,
+              child: AppText(
+                text: "Dikirim dari ",
+                fontSize: 18,
+              ),
+            ),
+            AppText(text: "Kabupaten Banjarbaru", fontSize: 18),
+          ],
+        ),
+
+        // ListTile(
+        //   contentPadding: EdgeInsets.zero,
+        //   title: Text(
+        //     "Stok: ",
+        //     style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
+        //   ),
+        //   subtitle: AppText(
+        //     text: stok,
+        //     fontSize: 16,
+        //     fontWeight: FontWeight.w600,
+        //     color: Color(0xff7C7C7C),
+        //   ),
+        //   // trailing: Icon(icons),
+        // ),
+      ],
+    );
   }
 
   Widget checkoutRow(String label,

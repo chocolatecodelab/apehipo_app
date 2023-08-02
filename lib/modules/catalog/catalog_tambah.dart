@@ -1,3 +1,5 @@
+import 'package:apehipo_app/widgets/confirmation_dialog.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/dynamic_button.dart';
@@ -6,23 +8,20 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import 'models/katalog_item.dart';
-import 'favourite_toggle_icon_widget.dart';
+import '../account/models/katalog_item.dart';
+import '../account/favourite_toggle_icon_widget.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
 
 // import 'favourite_toggle_icon_widget.dart';
 
-class CatalogDetailsScreen extends StatefulWidget {
-  final KatalogItem katalogItem;
-  final String? heroSuffix;
-
-  const CatalogDetailsScreen(this.katalogItem, {this.heroSuffix});
+class CatalogTambahScreen extends StatefulWidget {
+  const CatalogTambahScreen();
 
   @override
-  _CatalogDetailsScreenState createState() => _CatalogDetailsScreenState();
+  _CatalogTambahScreenState createState() => _CatalogTambahScreenState();
 }
 
-class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
+class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
   int amount = 1;
   bool isPreOrder = false;
 
@@ -54,7 +53,7 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Edit Produk',
+          'Tambah Produk',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -100,7 +99,7 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      Image(image: AssetImage(widget.katalogItem.imagePath)),
+                      // Image(image: AssetImage(widget.katalogItem.imagePath)),
                       SizedBox(
                         height: 5,
                       ),
@@ -114,7 +113,7 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      Image(image: AssetImage(widget.katalogItem.imagePath)),
+                      // Image(image: AssetImage(widget.katalogItem.imagePath)),
                       SizedBox(
                         height: 5,
                       ),
@@ -128,7 +127,7 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      Image(image: AssetImage(widget.katalogItem.imagePath)),
+                      // Image(image: AssetImage(widget.katalogItem.imagePath)),
                       SizedBox(
                         height: 5,
                       ),
@@ -163,16 +162,24 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
                     textColor: Colors.white,
                     backgroundColor: AppColors.primaryColor,
                     iconData: Icons.add,
-                    onPressed: () {},
+                    onPressed: () async {
+                      bool? confirmationResult = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ConfirmationDialog(
+                              message:
+                                  "Apakah anda yakin ingin menyimpan perubahan?");
+                        },
+                      );
+                      if (confirmationResult == true) {
+                        SuccessConfirmationDialog(
+                            message: "Anda berhasil menyimpan perubahan");
+                      } else {
+                        print("Gagal");
+                      }
+                    },
                   ),
                   SizedBox(height: 8),
-                  DynamicButtonWidget(
-                    label: "Batalkan",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.red.shade400,
-                    iconData: Icons.cancel_outlined,
-                    onPressed: () {},
-                  ),
                   SizedBox(height: 16),
                 ],
               ),
@@ -372,15 +379,15 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
             stops: [0.0, 1.0],
             tileMode: TileMode.clamp),
       ),
-      child: Hero(
-        tag: "KatalogItem:" +
-            widget.katalogItem.name +
-            "-" +
-            (widget.heroSuffix ?? ""),
-        child: Image(
-          image: AssetImage(widget.katalogItem.imagePath),
-        ),
-      ),
+      // child: Hero(
+      //   tag: "KatalogItem:" +
+      //       widget.katalogItem.name +
+      //       "-" +
+      //       (widget.heroSuffix ?? ""),
+      //   child: Image(
+      //     image: AssetImage(widget.katalogItem.imagePath),
+      //   ),
+      // ),
     );
   }
 
@@ -723,11 +730,11 @@ class _CatalogDetailsScreenState extends State<CatalogDetailsScreen> {
     );
   }
 
-  double getTotalPrice() {
-    return amount * widget.katalogItem.price;
-  }
+  // double getTotalPrice() {
+  //   return amount * widget.katalogItem.price;
+  // }
 
-  double getTotalStock() {
-    return amount * widget.katalogItem.stock;
-  }
+  // double getTotalStock() {
+  //   return amount * widget.katalogItem.stock;
+  // }
 }

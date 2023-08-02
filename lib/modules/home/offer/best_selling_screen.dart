@@ -1,4 +1,5 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
@@ -62,24 +63,24 @@ class ScaffoldExample extends StatelessWidget {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            onItemClicked(context, items[index]);
-          },
-          child: CardItem(
-            item: items[index],
-          ),
-        );
+        // return GestureDetector(
+        //   onTap: () {
+        //     onItemClicked(context, items[index]);
+        //   },
+        //   child: CardItem(
+        //     item: items[index],
+        //   ),
+        // );
       },
     ));
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+  void onItemClicked(BuildContext context, ProductModel productItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => ProductDetailsScreen(
-                groceryItem,
+                productItem,
                 heroSuffix: "home_screen",
               )),
     );

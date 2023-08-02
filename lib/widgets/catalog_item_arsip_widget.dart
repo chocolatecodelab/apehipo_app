@@ -4,7 +4,9 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+import '../modules/catalog/catalog_edit.dart';
+import '../widgets/delete_confirmation_dialog.dart';
+import '../widgets/success_confirmation_dialog.dart';
 
 class CatalogItemArsipWidget extends StatelessWidget {
   CatalogItemArsipWidget({
@@ -68,6 +70,31 @@ class CatalogItemArsipWidget extends StatelessWidget {
                   ),
                 ],
               )),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: InkWell(
+                  onTap: () async {
+                    bool? confirmationResult = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return DeleteConfirmationDialog(
+                            message:
+                                "Apakah anda yakin ingin menghapus produk?");
+                      },
+                    );
+                    if (confirmationResult == true) {
+                      SuccessConfirmationDialog(
+                          message: "Anda berhasil menyimpan perubahan");
+                    } else {
+                      print("Gagal");
+                    }
+                  },
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: const Color.fromARGB(255, 193, 45, 34),
+                  ),
+                ),
+              ),
             ]),
             SizedBox(
               height: 15,
@@ -328,7 +355,7 @@ void onItemClicked(BuildContext context, KatalogItem katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => CatalogDetailsScreen(
+        builder: (context) => CatalogEditScreen(
               katalogItem,
               heroSuffix: "account_katalog",
             )),
