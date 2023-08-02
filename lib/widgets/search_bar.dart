@@ -68,7 +68,7 @@ class _SearchBarWidgetState extends State<SearchBarWidgets> {
                 onChanged: _onSearchTextChanged,
                 onSubmitted: (_) => _submitSearch(),
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Search',
+                  hintText: 'Cari',
                   hintStyle: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

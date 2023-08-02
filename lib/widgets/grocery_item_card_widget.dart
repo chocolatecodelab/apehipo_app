@@ -66,7 +66,6 @@ class GroceryItemCardWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 Spacer(),
-                addWidget()
               ],
             )
           ],
