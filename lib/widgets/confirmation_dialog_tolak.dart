@@ -92,5 +92,6 @@ class _ConfirmationDialogTolakState extends State<ConfirmationDialogTolak> {
         ),
       ),
     );
+    
   }
 }
