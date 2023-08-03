@@ -59,7 +59,9 @@ class _AddressBottomState extends State<AddressBottom> {
             ),
           ),
           Divider(),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           AppButton(
             label: "Tambah",
             onPressed: () => {

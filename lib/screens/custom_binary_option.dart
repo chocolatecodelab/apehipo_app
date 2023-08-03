@@ -32,7 +32,7 @@ class _CustomBinaryOptionState extends State<CustomBinaryOption> {
         child: Row(
           children: [
             Expanded(
-              child: InkWell(
+                child: InkWell(
               onTap: () {
                 setState(() {
                   lr = false;
@@ -55,7 +55,7 @@ class _CustomBinaryOptionState extends State<CustomBinaryOption> {
               ),
             )),
             Expanded(
-              child: InkWell(
+                child: InkWell(
               onTap: () {
                 setState(() {
                   lr = true;

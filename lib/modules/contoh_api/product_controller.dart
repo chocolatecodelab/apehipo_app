@@ -1,8 +1,8 @@
 import 'dart:convert';
 // import 'dart:io';
 
-import 'package:apehipo_app/modules/product/product_model.dart';
-import 'package:apehipo_app/modules/product/product_show.dart';
+import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/contoh_api/product_show.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

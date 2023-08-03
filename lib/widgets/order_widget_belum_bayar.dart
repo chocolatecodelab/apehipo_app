@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
@@ -7,7 +8,7 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+// import 'package:apehipo_app/modules/account/catalog_details.dart';
 import '.././widgets/confirmation_dialog.dart';
 
 class OrderBelumBayarWidget extends StatelessWidget {
@@ -93,13 +94,17 @@ class OrderBelumBayarWidget extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             AppText(
               text: "Total: \$${item.price.toString()}",
               textAlign: TextAlign.right,
-              fontWeight: FontWeight.bold, 
+              fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -159,20 +164,19 @@ Widget getCancelButton(BuildContext context, label, {Widget? trailingWidget}) {
     height: 50,
     child: ElevatedButton(
       onPressed: () async {
-      bool? confirmationResult = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ConfirmationDialogBatal(
-              message: "Apakah anda yakin ingin membatalkan pesanan?"
-          );
-        },
-      );
-      if (confirmationResult == true) {
-        print("Hello");
-      } else {
-        print("gagal");
-      }
-    },
+        bool? confirmationResult = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialogBatal(
+                message: "Apakah anda yakin ingin membatalkan pesanan?");
+          },
+        );
+        if (confirmationResult == true) {
+          print("Hello");
+        } else {
+          print("gagal");
+        }
+      },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
         shape: RoundedRectangleBorder(
@@ -231,10 +235,10 @@ Widget getBayarButton(BuildContext context, label, {Widget? trailingWidget}) {
     child: ElevatedButton(
       onPressed: () => {
         Navigator.push(
-        context,
-        MaterialPageRoute(
-        builder: (context) => PaymentScreen(),
-        )),
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentScreen(),
+            )),
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
@@ -291,11 +295,9 @@ void onItemClicked(BuildContext context, KatalogItem katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => CatalogDetailsScreen(
+        builder: (context) => CatalogEditScreen(
               katalogItem,
               heroSuffix: "account_katalog",
             )),
   );
 }
-
-

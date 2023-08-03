@@ -42,7 +42,9 @@ class AccountScreen extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
               Column(
                 children: getChildrenWithSeperator(
@@ -228,14 +230,14 @@ class AccountScreen extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()));
             break;
-          case "Transaksi":
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TransactionScreen()));
-            break;
-          case "Status Pembelian":
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => OrderScreen()));
-            break;
+          // case "Transaksi":
+          //   Navigator.push(context,
+          //       MaterialPageRoute(builder: (context) => TransactionScreen()));
+          //   break;
+          // case "Status Pembelian":
+          //   Navigator.push(context,
+          //       MaterialPageRoute(builder: (context) => OrderScreen()));
+          //   break;
         }
       },
       child: Container(

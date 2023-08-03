@@ -1,4 +1,4 @@
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
 import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -11,19 +11,19 @@ import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
 
-import 'favourite_toggle_icon_widget.dart';
+// import '../favourite_toggle_icon_widget.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
-  final ProductModel productItem;
+class DashboardDetailScreen extends StatefulWidget {
+  final DashboardModel productItem;
   final String? heroSuffix;
 
-  const ProductDetailsScreen(this.productItem, {this.heroSuffix});
+  const DashboardDetailScreen(this.productItem, {this.heroSuffix});
 
   @override
-  _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
+  _DashboardDetailScreenState createState() => _DashboardDetailScreenState();
 }
 
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
   int amount = 1;
 
   @override
@@ -80,7 +80,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         fontWeight: FontWeight.w600,
                         color: Color(0xff7C7C7C),
                       ),
-                      trailing: FavoriteToggleIcon(),
+                      // trailing: FavoriteToggleIcon(),
                     ),
                     Row(
                       children: [

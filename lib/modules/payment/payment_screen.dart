@@ -74,13 +74,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
-            Divider(thickness: 1, color: Colors.grey,),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
+            Divider(
+              thickness: 1,
+              color: Colors.grey,
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
                 Icon(Icons.payment),
-                SizedBox(width: 20,),
+                SizedBox(
+                  width: 20,
+                ),
                 AppText(
                   text: "Midtrans",
                   fontWeight: FontWeight.bold,
@@ -89,10 +98,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Row(
               children: [
-                SizedBox(width: 40,),
+                SizedBox(
+                  width: 40,
+                ),
                 AppText(
                   text: "Kode Pembayaran",
                   fontWeight: FontWeight.normal,
@@ -101,7 +114,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -112,86 +127,103 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   fontSize: 25,
                   textAlign: TextAlign.start,
                 ),
-                SizedBox(width: 20,),
-                Icon(Icons.copy,),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(
+                  Icons.copy,
+                ),
               ],
             ),
-            SizedBox(height: 10,),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(width: 40),
-              Expanded(
-                child: AppText(
-                  text: "Proses verifikasi kurang dari 10 menit setelah pembayaran berhasil.",
-                  fontSize: 14,
-                ),
-              ),
-            ],
-            ),
-            SizedBox(height: 10,),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(width: 40),
-              Expanded(
-                child: AppText(
-                  text: "Bayar pesanan ke Virtual Account di atas sebelum membuat pesanan kembali dengan Virtual Account agar nomor tetap sama.",
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20,),
-          Divider(thickness: 1, color: Colors.grey,),
-          SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: AppText(
-                  text: "Petunjuk Transfer\n",
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+            SizedBox(
+              height: 10,
             ),
             Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: AppText(
-                  text: "1. Petunjuk transfer",
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(width: 40),
+                Expanded(
+                  child: AppText(
+                    text:
+                        "Proses verifikasi kurang dari 10 menit setelah pembayaran berhasil.",
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            SizedBox(
+              height: 10,
             ),
             Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: AppText(
-                  text: "2. New Petunjuk transfer",
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(width: 40),
+                Expanded(
+                  child: AppText(
+                    text:
+                        "Bayar pesanan ke Virtual Account di atas sebelum membuat pesanan kembali dengan Virtual Account agar nomor tetap sama.",
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Divider(
+              thickness: 1,
+              color: Colors.grey,
+            ),
+            SizedBox(
+              height: 20,
             ),
             Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: AppText(
-                  text: "3. New New Petunjuk transfer",
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: AppText(
+                    text: "Petunjuk Transfer\n",
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: AppText(
+                    text: "1. Petunjuk transfer",
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: AppText(
+                    text: "2. New Petunjuk transfer",
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: AppText(
+                    text: "3. New New Petunjuk transfer",
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/widgets/order_widget_petani_masuk.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
@@ -210,7 +210,7 @@ class PesananPetaniScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CatalogDetailsScreen(
+          builder: (context) => CatalogEditScreen(
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),

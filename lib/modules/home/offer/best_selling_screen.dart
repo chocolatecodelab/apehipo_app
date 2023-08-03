@@ -1,28 +1,29 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/product/product_model.dart';
+import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/home/dashboard_controller.dart';
+import 'package:apehipo_app/modules/home/dashboard_detail.dart';
+import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/card.dart';
+import 'package:apehipo_app/widgets/card_item.dart';
+import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 import 'package:apehipo_app/widgets/search_bar_widget.dart';
-
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class BestSellingOffer extends StatelessWidget {
-  const BestSellingOffer({super.key});
+class BestSellingOffer extends StatefulWidget {
+  final String? klasifikasi;
+
+  const BestSellingOffer(this.klasifikasi);
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ScaffoldExample(),
-    );
-  }
+  State<BestSellingOffer> createState() => _BestSellingOfferState();
 }
 
-class ScaffoldExample extends StatelessWidget {
-  const ScaffoldExample({super.key});
-
+class _BestSellingOfferState extends State<BestSellingOffer> {
   @override
+  var controller = Get.put(DashboardController());
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -47,12 +48,12 @@ class ScaffoldExample extends StatelessWidget {
       ),
       body: SafeArea(
           child: Container(
-        child: getItemWidget(bestSelling),
+        child: getItemWidget(controller.dataList!),
       )),
     );
   }
 
-  Widget getItemWidget(List<GroceryItem> items) {
+  Widget getItemWidget(List<DashboardModel> items) {
     return Container(
         child: GridView.builder(
       padding: const EdgeInsets.all(30),
@@ -63,24 +64,29 @@ class ScaffoldExample extends StatelessWidget {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        // return GestureDetector(
-        //   onTap: () {
-        //     onItemClicked(context, items[index]);
-        //   },
-        //   child: CardItem(
-        //     item: items[index],
-        //   ),
-        // );
+        if (items[index].klasifikasi == widget.klasifikasi) {
+          return GestureDetector(
+            onTap: () {
+              onItemClicked(context, items[index]);
+            },
+            child: CardItemDashboard(
+              item: items[index],
+              context: context,
+            ),
+          );
+        } else {
+          return null;
+        }
       },
     ));
   }
 
-  void onItemClicked(BuildContext context, ProductModel productItem) {
+  void onItemClicked(BuildContext context, DashboardModel dashboardItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(
-                productItem,
+          builder: (context) => DashboardDetailScreen(
+                dashboardItem,
                 heroSuffix: "home_screen",
               )),
     );
