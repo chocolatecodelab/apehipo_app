@@ -1,5 +1,7 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/widgets/order_widget_petani_diterima.dart';
+import 'package:apehipo_app/widgets/order_widget_petani_ditolak.dart';
 import 'package:apehipo_app/widgets/order_widget_petani_masuk.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
@@ -124,7 +126,7 @@ class PesananPetaniScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      getVerticalTransaksiSelesaiSlider(penjualanTerbaik),
+                      getVerticalPesananDiterima(penjualanTerbaik),
                     ],
                   ),
                 ),
@@ -138,7 +140,7 @@ class PesananPetaniScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      getVerticalPesananMasuk(penawaranSpesial),
+                      getVerticalPesananDitolak(penawaranSpesial),
                     ],
                   ),
                 ),
@@ -160,7 +162,7 @@ class PesananPetaniScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
             child: PesananMasukPetaniWidget(
               item: items[index],
@@ -177,7 +179,7 @@ class PesananPetaniScreen extends StatelessWidget {
     );
   }
 
-  Widget getVerticalTransaksiSelesaiSlider(List<KatalogItem> items) {
+  Widget getVerticalPesananDiterima(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 750,
@@ -189,9 +191,38 @@ class PesananPetaniScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
-            child: TransactionSelesaiWidget(
+            child: PesananDiterimaPetaniWidget(
+              item: items[index],
+              heroSuffix: "account_katalog",
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 20, // Mengubah width menjadi height
+          );
+        },
+      ),
+    );
+  }
+
+    Widget getVerticalPesananDitolak(List<KatalogItem> items) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      height: 750,
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        itemCount: items.length,
+        scrollDirection:
+            Axis.vertical, // Mengubah scrollDirection menjadi vertical
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              // onItemClicked(context, items[index]);
+            },
+            child: PesananDitolakPetaniWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
@@ -210,7 +241,7 @@ class PesananPetaniScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CatalogDetailsScreen(
+          builder: (context) => CatalogEditScreen(
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),

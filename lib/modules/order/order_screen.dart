@@ -1,5 +1,5 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/widgets/order_widget_belum_bayar.dart';
 import 'package:apehipo_app/widgets/order_widget_dibatalkan.dart';
 import 'package:apehipo_app/widgets/order_widget_sudah_bayar.dart';
@@ -163,7 +163,7 @@ class OrderScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
             child: OrderBelumBayarWidget(
               item: items[index],
@@ -192,7 +192,7 @@ class OrderScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
             child: OrderSudahBayarWidget(
               item: items[index],
@@ -221,7 +221,7 @@ class OrderScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
             child: OrderDibatalkanWidget(
               item: items[index],
@@ -242,7 +242,7 @@ class OrderScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => CatalogDetailsScreen(
+          builder: (context) => CatalogEditScreen(
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),

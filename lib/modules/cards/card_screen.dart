@@ -1,6 +1,6 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/card.dart';
+import 'package:apehipo_app/widgets/card_item.dart';
 import '../product/product_controller.dart';
 import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
@@ -58,7 +58,7 @@ class CardScreen extends StatelessWidget {
               : controller.dataList!.isEmpty
                   ? Center(child: Text("Tidak ada data."))
                   : GridView.builder(
-                      padding: const EdgeInsets.all(30),
+                      padding: const EdgeInsets.all(10),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

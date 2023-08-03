@@ -1,6 +1,8 @@
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen.dart';
+import 'package:apehipo_app/modules/order/order_screen_petani.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
+import 'package:apehipo_app/modules/transaction/transcation_screen_petani.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,10 +27,19 @@ class AccountScreen extends StatelessWidget {
                 height: 20,
               ),
               ListTile(
-                leading: SizedBox(
-                  width: 65,
-                  height: 65,
-                  child: getImageHeader(),
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditProfilePage(),
+                    ));
+                  },
+                  child: SizedBox(
+                    width: 65,
+                    height: 65,
+                    child: getImageHeader(),
+                  ),
                 ),
                 title: AppText(
                   text: "Muhammad Nazar Gunawan",
@@ -36,13 +47,15 @@ class AccountScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 subtitle: AppText(
-                  text: "Petani Pakcoy",
+                  text: "Petani",
                   color: Color(0xff7C7C7C),
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 15,
+              ),
               getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
               Column(
                 children: getChildrenWithSeperator(
@@ -235,6 +248,14 @@ class AccountScreen extends StatelessWidget {
           case "Status Pembelian":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => OrderScreen()));
+            break;
+          case "Pesanan Masuk":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PesananPetaniScreen()));
+            break;
+          case "Transaksi Petani":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TransactionPetaniScreen()));
             break;
         }
       },

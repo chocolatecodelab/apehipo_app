@@ -1,11 +1,11 @@
 
+import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/modules/product/product_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
 import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
-import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
 import 'package:apehipo_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -125,44 +125,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         label: "Add To Basket",
                       ),
                       Spacer(),
-                    ],
+                          ],
+                        ),
+                      ),
+                    ),                
+                  ]),
                   ),
-                        )
-                      ],
-                    ),
-                    Spacer(),
-                    Divider(thickness: 1),
-                    getProfile(),
-                    Divider(thickness: 1),
-                    getProductDataRowWidget("Product Details", key: "products"),
-                    Divider(thickness: 1),
-                    getProductDataRowWidget("Stocks",
-                        customWidget: stockWidget(), key: "stocks"),
-                    Divider(thickness: 1),
-                    getProductDataRowWidget(
-                      "Review",
-                      customWidget: ratingWidget(),
-                    ),
-                    Spacer(),
-                    AppButton(
-                      label: "Add To Basket",
-                      onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CartScreen(),
-                            ))
-                      },
-                    ),
-                    Spacer(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                ));
   }
 
   Widget getImageHeaderWidget() {
@@ -206,7 +175,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         if (key == "products")
           {showBottomSheets(context, rincian: rincian, key: "products")}
         else if (key == "nutritions")
-          {showBottomSheets(context, rincian: stok, key: "nutritions")}
+          {showBottomSheets(context, stok: stok, key: "nutritions")}
         else if (key == "reviews")
           {showBottomSheets(context, key: "reviews")}
         else

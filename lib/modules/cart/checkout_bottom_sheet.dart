@@ -3,6 +3,7 @@ import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:apehipo_app/modules/payment/payment_method_screen.dart';
 import 'package:apehipo_app/modules/track/track_method_screen.dart';
+import 'package:apehipo_app/screens/order_accepted_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
@@ -76,7 +77,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                 vertical: 25,
               ),
               onPressed: () {
-                // onPlaceOrderClicked();
+                onPlaceOrderClicked();
               },
             ),
           ),
@@ -195,7 +196,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return OrderFailedDialogue();
+          return OrderAcceptedScreen();
         });
   }
 }

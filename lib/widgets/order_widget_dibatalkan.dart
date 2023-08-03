@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
@@ -9,7 +10,6 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
 import '.././widgets/confirmation_dialog.dart';
 
 class OrderDibatalkanWidget extends StatelessWidget {
@@ -281,7 +281,7 @@ void onItemClicked(BuildContext context, KatalogItem katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => CatalogDetailsScreen(
+        builder: (context) => CatalogEditScreen(
               katalogItem,
               heroSuffix: "account_katalog",
             )),

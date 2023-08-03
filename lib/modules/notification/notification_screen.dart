@@ -24,11 +24,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return DashboardScreen();
-              },
-            ));
+              Navigator.of(context).pop();
           },
         ),
       ),

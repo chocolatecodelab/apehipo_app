@@ -1,13 +1,19 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
-import '../../modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/widgets/theme.dart';
+import 'package:apehipo_app/widgets/transaction_proses_petani.dart';
+import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
+import 'package:apehipo_app/widgets/transaction_widget_selesai.dart';
 import 'package:flutter/material.dart';
+// import 'package:apehipo_app/models/katalog_item.dart';
+// import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/catalog_item_arsip_widget.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
+import 'package:apehipo_app/widgets/app_button.dart';
 
-class ManageProductsPage extends StatelessWidget {
+class TransactionPetaniScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -15,7 +21,7 @@ class ManageProductsPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "Katalog",
+              "Transaksi",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
@@ -61,7 +67,7 @@ class ManageProductsPage extends StatelessWidget {
                   tabs: [
                     Tab(
                       child: Text(
-                        'Produk Tampil',
+                        'Proses',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -71,7 +77,7 @@ class ManageProductsPage extends StatelessWidget {
                     ),
                     Tab(
                       child: Text(
-                        'Produk Arsip',
+                        'Selesai',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -86,22 +92,19 @@ class ManageProductsPage extends StatelessWidget {
           ),
           body: TabBarView(children: [
             SafeArea(
-                child: Container(
-              child: SingleChildScrollView(
+              child: Container(
                 child: Center(
                   child: Column(
                     children: [
                       SizedBox(
                         height: 20,
                       ),
-                      padded(subTitle("Produk Anda")),
-                      getVerticalItemSlider(penawaranSpesial),
-                      getTambahButton(context, "Tambah Produk Baru")
+                      getVerticalTransaksiProsesSlider(penawaranSpesial),
                     ],
                   ),
                 ),
               ),
-            )),
+            ),
             SafeArea(
                 child: Container(
               child: SingleChildScrollView(
@@ -111,9 +114,7 @@ class ManageProductsPage extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      padded(subTitle("Arsip Anda")),
-                      getVerticalItemSliderArsip(penjualanTerbaik),
-                      getTambahButton(context, "Tambah Produk Baru")
+                      getVerticalTransaksiSelesaiSlider(penjualanTerbaik),
                     ],
                   ),
                 ),
@@ -123,81 +124,10 @@ class ManageProductsPage extends StatelessWidget {
         ));
   }
 
-  Widget getTambahButton(BuildContext context, label,
-      {Widget? trailingWidget}) {
-    return Container(
-      width: 400,
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CatalogTambahScreen(),
-            ),
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          visualDensity: VisualDensity.compact,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-          elevation: 0,
-          backgroundColor: AppColors.primaryColor,
-          textStyle: TextStyle(
-            color: Colors.white,
-            fontFamily: gilroyFontFamily,
-          ),
-          padding: EdgeInsets.symmetric(vertical: 24),
-          minimumSize: const Size.fromHeight(50),
-        ),
-        child: Stack(
-          fit: StackFit.passthrough,
-          children: <Widget>[
-            Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Icon(
-                  Icons.add,
-                  size: 18,
-                  color: Colors.white,
-                ),
-              ],
-            )),
-            if (trailingWidget != null)
-              Positioned(
-                top: 0,
-                right: 25,
-                child: trailingWidget,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget padded(Widget widget) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
-      child: widget,
-    );
-  }
-
-  Widget getVerticalItemSlider(List<KatalogItem> items) {
+  Widget getVerticalTransaksiProsesSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 650,
+      height: 750,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -206,9 +136,9 @@ class ManageProductsPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
-            child: CatalogItemTampilWidget(
+            child: TransactionProsesPetaniWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
@@ -223,10 +153,10 @@ class ManageProductsPage extends StatelessWidget {
     );
   }
 
-  Widget getVerticalItemSliderArsip(List<KatalogItem> items) {
+  Widget getVerticalTransaksiSelesaiSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 650,
+      height: 750,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -235,9 +165,9 @@ class ManageProductsPage extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
-            child: CatalogItemArsipWidget(
+            child: TransactionSelesaiWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
@@ -260,18 +190,6 @@ class ManageProductsPage extends StatelessWidget {
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),
-    );
-  }
-
-  Widget subTitle(String text) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        Spacer(),
-      ],
     );
   }
 }

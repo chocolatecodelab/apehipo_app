@@ -1,7 +1,6 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/payment/payment_screen.dart';
-import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
+import 'package:apehipo_app/modules/track/track_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +11,8 @@ import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import '.././widgets/confirmation_dialog.dart';
 
-class OrderSudahBayarWidget extends StatelessWidget {
-  OrderSudahBayarWidget({
+class TransactionProsesPetaniWidget extends StatelessWidget {
+  TransactionProsesPetaniWidget({
     Key? key,
     required this.item,
     this.heroSuffix,
@@ -25,7 +24,7 @@ class OrderSudahBayarWidget extends StatelessWidget {
   final VoidCallback? onAddPressed;
 
   final double width = 174;
-  final double height = 300;
+  final double height = 250;
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
@@ -88,31 +87,26 @@ class OrderSudahBayarWidget extends StatelessWidget {
               color: const Color.fromARGB(255, 211, 211, 211),
             ),
             SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(Icons.delivery_dining),
+                SizedBox(width: 5,),
+                AppText(
+                  text: "Produk Anda disortir dari Bandung",
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
+            SizedBox(
               height: 15,
             ),
-            AppText(
-              text: "Batas akhir pembayaran: 12 Agustus 2023",
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-            SizedBox(height: 15,),
-            AppText(
-              text: "Total: \$${item.price.toString()}",
-              textAlign: TextAlign.right,
-              fontWeight: FontWeight.bold, 
-            ),
-            SizedBox(height: 15,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getBeliLagi(
-                  context,
-                  "Beli Lagi",
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                getTrackButton(context, "Track")
+                getTrackButton(context, "Status")
               ],
             )
           ],
@@ -155,17 +149,24 @@ class OrderSudahBayarWidget extends StatelessWidget {
   }
 }
 
-Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
+Widget getSelesaiButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed: () => {
-        Navigator.push(
-        context,
-        MaterialPageRoute(
-        builder: (context) => DashboardScreen(),
-        )),
+      onPressed: () async {
+        bool? confirmationResult = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialogBatal(
+                message: "Apakah anda yakin ingin menyelesaikan transaksi?");
+          },
+        );
+        if (confirmationResult == true) {
+          print("Hello");
+        } else {
+          print("gagal");
+        }
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
@@ -173,7 +174,7 @@ Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
           borderRadius: BorderRadius.circular(18),
         ),
         elevation: 0,
-        backgroundColor: Colors.green[400],
+        backgroundColor: Colors.green,
         textStyle: TextStyle(
           color: Colors.white,
           fontFamily: gilroyFontFamily,
@@ -200,7 +201,7 @@ Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
                 width: 8,
               ),
               Icon(
-                Icons.card_travel_rounded,
+                Icons.done,
                 size: 18,
                 color: Colors.white,
               ),
@@ -220,15 +221,15 @@ Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
 
 Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
-    width: 150,
+    width: 340,
     height: 50,
     child: ElevatedButton(
       onPressed: () => {
         Navigator.push(
-        context,
-        MaterialPageRoute(
-        builder: (context) => TransactionScreen(),
-        )),
+            context,
+            MaterialPageRoute(
+              builder: (context) => TrackScreen(),
+            )),
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
@@ -263,7 +264,7 @@ Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
                 width: 8,
               ),
               Icon(
-                Icons.track_changes_outlined,
+                Icons.track_changes,
                 size: 18,
                 color: Colors.white,
               ),
@@ -291,5 +292,3 @@ void onItemClicked(BuildContext context, KatalogItem katalogItem) {
             )),
   );
 }
-
-

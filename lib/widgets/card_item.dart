@@ -18,8 +18,8 @@ class CardItem extends StatelessWidget {
   final String? heroSuffix;
 
   final BuildContext context;
-  final double width = 174;
-  final double height = 250;
+  final double width = 160;
+  final double height = 274;
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
@@ -99,8 +99,8 @@ class CardItem extends StatelessWidget {
 
   Widget addWidget() {
     return Container(
-      height: 45,
-      width: 45,
+      height: 25,
+      width: 25,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17),
           color: AppColors.primaryColor),

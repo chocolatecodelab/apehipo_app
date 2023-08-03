@@ -15,6 +15,8 @@ List<AccountItem> accountItems = [
   AccountItem("Notifikasi", "assets/icons/account_icons/notification_icon.svg"),
   AccountItem("Status Pembelian", "../assets/icons/account_icons/copy-success-svgrepo-com.svg"),
   AccountItem("Transaksi", "../assets/icons/account_icons/delivery-truck-svgrepo-com.svg"),
+  AccountItem("Transaksi Petani", "../assets/icons/account_icons/delivery-truck-svgrepo-com.svg"),
+  AccountItem("Pesanan Masuk", "../assets/icons/account_icons/copy-success-svgrepo-com.svg"),
   AccountItem("Bantuan", "assets/icons/account_icons/help_icon.svg"),
   AccountItem("Tentang", "assets/icons/account_icons/about_icon.svg"),
 ];
