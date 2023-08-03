@@ -230,14 +230,14 @@ class AccountScreen extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()));
             break;
-          // case "Transaksi":
-          //   Navigator.push(context,
-          //       MaterialPageRoute(builder: (context) => TransactionScreen()));
-          //   break;
-          // case "Status Pembelian":
-          //   Navigator.push(context,
-          //       MaterialPageRoute(builder: (context) => OrderScreen()));
-          //   break;
+          case "Transaksi":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TransactionScreen()));
+            break;
+          case "Status Pembelian":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => OrderScreen()));
+            break;
         }
       },
       child: Container(
