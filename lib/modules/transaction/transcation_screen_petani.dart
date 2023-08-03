@@ -1,10 +1,9 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-// import 'package:apehipo_app/modules/account/catalog_details.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/widgets/order_widget_belum_bayar.dart';
-import 'package:apehipo_app/widgets/order_widget_dibatalkan.dart';
-import 'package:apehipo_app/widgets/order_widget_sudah_bayar.dart';
 import 'package:apehipo_app/widgets/theme.dart';
+import 'package:apehipo_app/widgets/transaction_proses_petani.dart';
+import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
+import 'package:apehipo_app/widgets/transaction_widget_selesai.dart';
 import 'package:flutter/material.dart';
 // import 'package:apehipo_app/models/katalog_item.dart';
 // import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
@@ -13,17 +12,16 @@ import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/catalog_item_arsip_widget.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
-import '../../widgets/confirmation_dialog.dart';
 
-class OrderScreen extends StatelessWidget {
+class TransactionPetaniScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              "Status Pembelian",
+              "Transaksi",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
@@ -69,7 +67,7 @@ class OrderScreen extends StatelessWidget {
                   tabs: [
                     Tab(
                       child: Text(
-                        'Belum Bayar',
+                        'Proses',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -79,17 +77,7 @@ class OrderScreen extends StatelessWidget {
                     ),
                     Tab(
                       child: Text(
-                        'Sudah Bayar',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        'Dibatalkan',
+                        'Selesai',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -104,20 +92,19 @@ class OrderScreen extends StatelessWidget {
           ),
           body: TabBarView(children: [
             SafeArea(
-                child: Container(
-              child: SingleChildScrollView(
+              child: Container(
                 child: Center(
                   child: Column(
                     children: [
                       SizedBox(
                         height: 20,
                       ),
-                      getVerticalItemSliderBelumBayar(penawaranSpesial),
+                      getVerticalTransaksiProsesSlider(penawaranSpesial),
                     ],
                   ),
                 ),
               ),
-            )),
+            ),
             SafeArea(
                 child: Container(
               child: SingleChildScrollView(
@@ -127,35 +114,20 @@ class OrderScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      getVerticalItemSliderSudahBayar(penawaranSpesial),
+                      getVerticalTransaksiSelesaiSlider(penjualanTerbaik),
                     ],
                   ),
                 ),
               ),
-            )),
-            SafeArea(
-                child: Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      getVerticalItemSliderDibatalkan(penjualanTerbaik),
-                    ],
-                  ),
-                ),
-              ),
-            )),
+            ))
           ]),
         ));
   }
 
-  Widget getVerticalItemSliderBelumBayar(List<KatalogItem> items) {
+  Widget getVerticalTransaksiProsesSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 1000,
+      height: 750,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -166,7 +138,7 @@ class OrderScreen extends StatelessWidget {
             onTap: () {
               // onItemClicked(context, items[index]);
             },
-            child: OrderBelumBayarWidget(
+            child: TransactionProsesPetaniWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
@@ -181,10 +153,10 @@ class OrderScreen extends StatelessWidget {
     );
   }
 
-  Widget getVerticalItemSliderSudahBayar(List<KatalogItem> items) {
+  Widget getVerticalTransaksiSelesaiSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 1000,
+      height: 750,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -195,36 +167,7 @@ class OrderScreen extends StatelessWidget {
             onTap: () {
               // onItemClicked(context, items[index]);
             },
-            child: OrderSudahBayarWidget(
-              item: items[index],
-              heroSuffix: "account_katalog",
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 20, // Mengubah width menjadi height
-          );
-        },
-      ),
-    );
-  }
-
-  Widget getVerticalItemSliderDibatalkan(List<KatalogItem> items) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: 1000,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
-        scrollDirection:
-            Axis.vertical, // Mengubah scrollDirection menjadi vertical
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // onItemClicked(context, items[index]);
-            },
-            child: OrderDibatalkanWidget(
+            child: TransactionSelesaiWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
@@ -247,29 +190,6 @@ class OrderScreen extends StatelessWidget {
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),
-    );
-  }
-
-  Widget getButton(BuildContext context, String label,
-      {required Function() onPressed}) {
-    return AppButton(
-      label: label,
-      fontWeight: FontWeight.w300,
-      padding: EdgeInsets.symmetric(vertical: 25),
-      onPressed: () async {
-        bool? confirmationResult = await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return ConfirmationDialog(
-                message: "Apakah Anda yakin ingin membatalkan pembelian?");
-          },
-        );
-        if (confirmationResult == true) {
-          print("Hello");
-        } else {
-          print("gagal");
-        }
-      },
     );
   }
 }

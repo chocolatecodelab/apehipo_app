@@ -138,7 +138,7 @@ class TransactionScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
             child: TransactionProsesWidget(
               item: items[index],
@@ -167,7 +167,7 @@ class TransactionScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              onItemClicked(context, items[index]);
+              // onItemClicked(context, items[index]);
             },
             child: TransactionSelesaiWidget(
               item: items[index],

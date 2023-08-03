@@ -34,10 +34,10 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                 // bottomRight: Radius.circular(30), // Atur radius sudut kanan bawah
                 ),
           ),
-          backgroundColor: Color(0xFFF53B175),
+          backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
             onPressed: () =>
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) {
@@ -47,7 +47,10 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
           ),
           title: Text(
             'APEHIPO',
-            style: TextStyle(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
           ),
           centerTitle: true,
         ),
@@ -65,7 +68,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                 Row(
                   children: const [
                     const Text(
-                      "Sign up as Consumer",
+                      "Daftar sebagai Konsumen",
                       style: TextStyle(
                         color: Color(0xFF404653),
                         letterSpacing: 0.5,
@@ -90,7 +93,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                           borderSide: BorderSide(color: Colors.green),
                         ),
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        hintText: "Full name",
+                        hintText: "Nama",
                         // hintStyle: TextStyle(fontFamily: "PoppinsRegular")
                       ),
                     ),
@@ -170,7 +173,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                           borderSide: BorderSide(color: Colors.green),
                         ),
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        hintText: "Confirm password",
+                        hintText: "Konfirmasi Password",
                         // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
                       ),
                     ),
@@ -184,10 +187,10 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                             elevation: 0,
                             backgroundColor: Color(0xFFF53B175),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(15),
                             )),
                         child: const Text(
-                          'Sign Up',
+                          'Daftar',
                           style: TextStyle(
                             // fontFamily: "PoppinsRegular",
                             fontSize: 20,

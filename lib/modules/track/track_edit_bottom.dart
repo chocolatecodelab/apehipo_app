@@ -1,19 +1,16 @@
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/address/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 
 import '../../screens/order_failed_dialog.dart';
 
-class SpesifikasiBottom extends StatefulWidget {
-  final String? stok;
-
-  const SpesifikasiBottom(this.stok);
+class TrackEditBottom extends StatefulWidget {
   @override
-  _SpesifikasiBottomState createState() => _SpesifikasiBottomState();
+  _TrackEditBottomState createState() => _TrackEditBottomState();
 }
 
-class _SpesifikasiBottomState extends State<SpesifikasiBottom> {
+class _TrackEditBottomState extends State<TrackEditBottom> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +26,7 @@ class _SpesifikasiBottomState extends State<SpesifikasiBottom> {
           Row(
             children: [
               AppText(
-                text: "Spesifikasi",
+                text: "Edit Status Pesanan",
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -45,13 +42,43 @@ class _SpesifikasiBottomState extends State<SpesifikasiBottom> {
             ],
           ),
           Divider(),
-          productDescription(widget.stok),
           SizedBox(
             height: 45,
+          ),
+          TextFormField(
+            maxLines: 20,
+            minLines: 10,
+            keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+              hintStyle: TextStyle(
+                color: Colors.grey,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
+          ),
+          Divider(),
+          SizedBox(height: 15,),
+          AppButton(
+            label: "Edit",
+            onPressed: () => {
+              AddressScreen(),
+            },
           ),
         ],
       ),
     );
+  }
+
+  void showBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          return TrackEditBottom();
+        });
   }
 
   Widget getDivider() {
@@ -89,55 +116,29 @@ class _SpesifikasiBottomState extends State<SpesifikasiBottom> {
     );
   }
 
-  Widget productDescription(stok) {
-    return Column(
-      children: [
-        Row(
+  Widget inputAddressForm() {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 80,
-              child: AppText(
-                text: "Stok",
-                fontSize: 18,
+            TextFormField(
+              minLines: 2,
+              maxLines: 10,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                hintText: 'Enter a message here',
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 100,
-            ), // Gunakan nilai labelWidth untuk lebar label
-            AppText(text: stok, fontSize: 18),
+            )
           ],
         ),
-        SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Container(
-              width: 120,
-              child: AppText(
-                text: "Dikirim dari ",
-                fontSize: 18,
-              ),
-            ),
-            AppText(text: "Kabupaten Banjarbaru", fontSize: 18),
-          ],
-        ),
-
-        // ListTile(
-        //   contentPadding: EdgeInsets.zero,
-        //   title: Text(
-        //     "Stok: ",
-        //     style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-        //   ),
-        //   subtitle: AppText(
-        //     text: stok,
-        //     fontSize: 16,
-        //     fontWeight: FontWeight.w600,
-        //     color: Color(0xff7C7C7C),
-        //   ),
-        //   // trailing: Icon(icons),
-        // ),
-      ],
+      ),
     );
   }
 

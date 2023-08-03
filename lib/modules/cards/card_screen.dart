@@ -59,7 +59,7 @@ class CardScreen extends StatelessWidget {
               : controller.dataList!.isEmpty
                   ? Center(child: Text("Tidak ada data."))
                   : GridView.builder(
-                      padding: const EdgeInsets.all(30),
+                      padding: const EdgeInsets.all(10),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

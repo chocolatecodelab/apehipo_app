@@ -197,7 +197,7 @@ class ManageProductsPage extends StatelessWidget {
   Widget getVerticalItemSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 480,
+      height: 650,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -226,7 +226,7 @@ class ManageProductsPage extends StatelessWidget {
   Widget getVerticalItemSliderArsip(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 480,
+      height: 650,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
