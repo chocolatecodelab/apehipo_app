@@ -120,19 +120,20 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           ]),
     );
   }
-    void showBottomSheets(context, {String? key}) {
+
+  void showBottomSheets(context, {String? key}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
-          if(key == "payment") {
+          if (key == "payment") {
             return PaymentMethod();
-          } else if(key == "delivery") {
+          } else if (key == "delivery") {
             return TrackMethod();
-          } else if(key == "alamat") {
+          } else if (key == "alamat") {
             return AddressScreen();
-          } 
+          }
           return SizedBox.shrink();
         });
   }
@@ -141,53 +142,54 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
       {String? trailingText, Widget? trailingWidget}) {
     return InkWell(
       onTap: () => {
-        if(label == "Pengiriman") {
-          showBottomSheets(context, key: "delivery")
-        } else if(label == "Pembayaran") {
-          showBottomSheets(context, key: "payment"),
-        } else if(label == "Alamat") {
-          showBottomSheets(context, key: "alamat")
-        } else if(label == "Total Pembelian") {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CartScreen();
-                },
-              )),
-        }
+        if (label == "Pengiriman")
+          {showBottomSheets(context, key: "delivery")}
+        else if (label == "Pembayaran")
+          {
+            showBottomSheets(context, key: "payment"),
+          }
+        else if (label == "Alamat")
+          {showBottomSheets(context, key: "alamat")}
+        else if (label == "Total Pembelian")
+          {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) {
+                return CartScreen();
+              },
+            )),
+          }
       },
       child: Container(
-      margin: EdgeInsets.symmetric(
-        vertical: 15,
+        margin: EdgeInsets.symmetric(
+          vertical: 15,
+        ),
+        child: Row(
+          children: [
+            AppText(
+              text: label,
+              fontSize: 18,
+              color: Color(0xFF7C7C7C),
+              fontWeight: FontWeight.w600,
+            ),
+            Spacer(),
+            trailingText == null
+                ? (trailingWidget ?? Container())
+                : AppText(
+                    text: trailingText,
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+            SizedBox(
+              width: 20,
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 20,
+            ),
+          ],
+        ),
       ),
-      child: Row(
-        children: [
-          AppText(
-            text: label,
-            fontSize: 18,
-            color: Color(0xFF7C7C7C),
-            fontWeight: FontWeight.w600,
-          ),
-          Spacer(),
-          trailingText == null
-              ? (trailingWidget ?? Container())
-              : AppText(
-                  text: trailingText,
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-          SizedBox(
-            width: 20,
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 20,
-          ),
-
-          
-        ],
-      ),
-    ),
     );
   }
 

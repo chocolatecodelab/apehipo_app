@@ -1,5 +1,8 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
+// import 'package:apehipo_app/modules/account/catalog_details.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
 import 'package:apehipo_app/widgets/transaction_widget_selesai.dart';

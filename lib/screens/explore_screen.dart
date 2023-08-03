@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/home/models/category_item.dart';
+import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
+import '../modules/home/models/category_item.dart';
 import 'package:apehipo_app/widgets/category_item_card_widget.dart';
 import 'package:apehipo_app/widgets/search_bar_widget.dart';
 

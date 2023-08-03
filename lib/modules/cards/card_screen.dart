@@ -1,8 +1,8 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card_item.dart';
-import '../product/product_controller.dart';
-import 'package:apehipo_app/modules/product/product_model.dart';
+import '../contoh_api/product_controller.dart';
+import 'package:apehipo_app/modules/contoh_api/product_model.dart';
 import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +37,8 @@ class CardScreen extends StatelessWidget {
                 Icons.filter_list_alt,
                 color: Colors.black,
               ),
-              offset: Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
+              offset:
+                  Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
               itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                     const PopupMenuItem(
                       child: Text('Terbaru'),
@@ -80,6 +81,7 @@ class CardScreen extends StatelessWidget {
                             child: CardItem(
                               item: controller.dataList![i],
                               context: context,
+                              heroSuffix: "product_search",
                             ),
                           ),
                         );

@@ -10,6 +10,7 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+// import 'package:apehipo_app/modules/account/catalog_details.dart';
 import '.././widgets/confirmation_dialog.dart';
 
 class PesananMasukPetaniWidget extends StatelessWidget {
@@ -93,7 +94,9 @@ class PesananMasukPetaniWidget extends StatelessWidget {
             Row(
               children: [
                 Icon(Icons.delivery_dining),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 AppText(
                   text: "Menunggu konfirmasi petani",
                   fontSize: 12,

@@ -34,50 +34,49 @@ class _PaymentMethodState extends State<PaymentMethod> {
         backgroundColor: Colors.white,
       ),
       body: Container(
-        margin: EdgeInsets.only(
-          top: 20,
-          bottom: 0,
-        ),
-        padding: EdgeInsets.all(20),
-        child: ListView(
-          padding: EdgeInsets.all(8),
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xffE2E2E2),
+          margin: EdgeInsets.only(
+            top: 20,
+            bottom: 0,
+          ),
+          padding: EdgeInsets.all(20),
+          child: ListView(
+            padding: EdgeInsets.all(8),
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xffE2E2E2),
+                    ),
+                    borderRadius: BorderRadius.circular(18)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/ic_google.png"),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(18)
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/images/ic_google.png"),
-                ],
+              SizedBox(
+                height: 15,
               ),
-            ),
-            SizedBox(height: 15,),
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xffE2E2E2),
+              Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xffE2E2E2),
+                    ),
+                    borderRadius: BorderRadius.circular(18)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/ic_google.png"),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(18)
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/images/ic_google.png"),
-                ],
-              ),
-            ),
-          ],
-        )
-      ),
+            ],
+          )),
     );
   }
 }

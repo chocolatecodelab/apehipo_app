@@ -1,7 +1,5 @@
-import 'package:apehipo_app/modules/product/product_add.dart';
-import 'package:apehipo_app/modules/product/product_delete.dart';
-import 'package:apehipo_app/modules/product/product_show.dart';
-import 'package:apehipo_app/modules/product/product_ubah.dart';
+import 'package:apehipo_app/modules/contoh_api/product_add.dart';
+import 'package:apehipo_app/modules/contoh_api/product_ubah.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 

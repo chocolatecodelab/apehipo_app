@@ -1,5 +1,5 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/product/product_model.dart';
+import 'package:apehipo_app/modules/contoh_api/product_model.dart';
 import 'package:apehipo_app/screens/custom_binary_option.dart';
 import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';

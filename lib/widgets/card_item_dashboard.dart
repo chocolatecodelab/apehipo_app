@@ -1,6 +1,7 @@
 import 'dart:js';
 
 import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
@@ -8,17 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 
-class CardItem extends StatelessWidget {
-  CardItem(
+class CardItemDashboard extends StatelessWidget {
+  CardItemDashboard(
       {Key? key, required this.item, this.heroSuffix, required this.context})
       : super(key: key);
 
-  final ProductModel item;
+  final DashboardModel item;
   final String? heroSuffix;
 
   final BuildContext context;
-  final double width = 160;
-  final double height = 274;
+  final double width = 174;
+  final double height = 250;
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
@@ -98,8 +99,8 @@ class CardItem extends StatelessWidget {
 
   Widget addWidget() {
     return Container(
-      height: 25,
-      width: 25,
+      height: 45,
+      width: 45,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17),
           color: AppColors.primaryColor),

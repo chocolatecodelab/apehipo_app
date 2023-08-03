@@ -15,22 +15,22 @@ class CartScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
-            onPressed: () => {
-              Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return DashboardScreen();
-                },
-              )),
-            },
+          icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
+          onPressed: () => {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) {
+                return DashboardScreen();
+              },
+            )),
+          },
+        ),
+        title: Text(
+          'Keranjang Belanja',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
-          title: Text(
-            'Keranjang Belanja',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -101,12 +101,12 @@ class CartScreen extends StatelessWidget {
   }
 
   void showBottomSheet(context) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) {
-          return CheckoutBottomSheet();
-        });
+    // showModalBottomSheet(
+    //     context: context,
+    //     isScrollControlled: true,
+    //     backgroundColor: Colors.transparent,
+    //     builder: (BuildContext bc) {
+    //       return CheckoutBottomSheet();
+    //     });
   }
 }

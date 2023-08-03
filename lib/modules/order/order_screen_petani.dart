@@ -208,7 +208,7 @@ class PesananPetaniScreen extends StatelessWidget {
     );
   }
 
-    Widget getVerticalPesananDitolak(List<KatalogItem> items) {
+  Widget getVerticalPesananDitolak(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 750,

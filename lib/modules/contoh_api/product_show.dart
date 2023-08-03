@@ -1,4 +1,4 @@
-import 'package:apehipo_app/modules/product/product_controller.dart';
+import 'package:apehipo_app/modules/contoh_api/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';

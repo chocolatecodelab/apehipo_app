@@ -1,33 +1,27 @@
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/product/product_model.dart';
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/card_item.dart';
-import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
-import 'package:apehipo_app/widgets/search_bar_widget.dart';
-
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
+import 'package:apehipo_app/modules/home/dashboard_controller.dart';
+import 'package:apehipo_app/modules/home/dashboard_detail.dart';
+import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
+import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ExclusiveOffer extends StatelessWidget {
-  const ExclusiveOffer({super.key});
+class ExclusiveOffer extends StatefulWidget {
+  final String? klasifikasi;
 
+  const ExclusiveOffer(this.klasifikasi);
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: ScaffoldExample(),
-    );
-  }
+  State<ExclusiveOffer> createState() => _ExclusiveOfferState();
 }
 
-class ScaffoldExample extends StatelessWidget {
-  const ScaffoldExample({super.key});
-
+class _ExclusiveOfferState extends State<ExclusiveOffer> {
   @override
+  var controller = Get.put(DashboardController());
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Exclusive Offer",
+          "Penjualan Eksklusif",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -37,22 +31,18 @@ class ScaffoldExample extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return DashboardScreen();
-              },
-            ));
+            Get.back();
           },
         ),
       ),
       body: SafeArea(
           child: Container(
-        child: getItemWidget(exclusiveOffers),
+        child: getItemWidget(controller.dataList!),
       )),
     );
   }
 
-  Widget getItemWidget(List<GroceryItem> items) {
+  Widget getItemWidget(List<DashboardModel> items) {
     return Container(
         child: GridView.builder(
       padding: const EdgeInsets.all(30),
@@ -63,30 +53,34 @@ class ScaffoldExample extends StatelessWidget {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        // return GestureDetector(
-        //   onTap: () {
-        //     onItemClicked(context, items[index]);
-        //   },
-        //   child: CardItem(
-        //     item: items[index],
-        //   ),
-        // );
+        if (items[index].klasifikasi == widget.klasifikasi) {
+          return GestureDetector(
+            onTap: () {
+              onItemClicked(context, items[index]);
+            },
+            child: CardItemDashboard(
+              item: items[index],
+              context: context,
+            ),
+          );
+        } else {
+          return null;
+        }
       },
     ));
   }
 
-  void onItemClicked(BuildContext context, ProductModel productItem) {
+  void onItemClicked(BuildContext context, DashboardModel dashboardItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(
-                productItem,
+          builder: (context) => DashboardDetailScreen(
+                dashboardItem,
                 heroSuffix: "home_screen",
               )),
     );
   }
 }
-
   // Widget getItemCard(List<GroceryItem> items) {
   //   return Container(
   //     child: CardWidget(),

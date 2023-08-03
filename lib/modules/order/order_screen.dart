@@ -1,4 +1,5 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
+// import 'package:apehipo_app/modules/account/catalog_details.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/widgets/order_widget_belum_bayar.dart';
 import 'package:apehipo_app/widgets/order_widget_dibatalkan.dart';
@@ -103,7 +104,7 @@ class OrderScreen extends StatelessWidget {
           ),
           body: TabBarView(children: [
             SafeArea(
-              child: Container(
+                child: Container(
               child: SingleChildScrollView(
                 child: Center(
                   child: Column(
@@ -133,7 +134,7 @@ class OrderScreen extends StatelessWidget {
               ),
             )),
             SafeArea(
-              child: Container(
+                child: Container(
               child: SingleChildScrollView(
                 child: Center(
                   child: Column(
@@ -250,25 +251,25 @@ class OrderScreen extends StatelessWidget {
   }
 
   Widget getButton(BuildContext context, String label,
-    {required Function() onPressed}) {
-  return AppButton(
-    label: label,
-    fontWeight: FontWeight.w300,
-    padding: EdgeInsets.symmetric(vertical: 25),
-    onPressed: () async {
-      bool? confirmationResult = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ConfirmationDialog(
-              message: "Apakah Anda yakin ingin membatalkan pembelian?");
-        },
-      );
-      if (confirmationResult == true) {
-        print("Hello");
-      } else {
-        print("gagal");
-      }
-    },
-  );
-}
+      {required Function() onPressed}) {
+    return AppButton(
+      label: label,
+      fontWeight: FontWeight.w300,
+      padding: EdgeInsets.symmetric(vertical: 25),
+      onPressed: () async {
+        bool? confirmationResult = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialog(
+                message: "Apakah Anda yakin ingin membatalkan pembelian?");
+          },
+        );
+        if (confirmationResult == true) {
+          print("Hello");
+        } else {
+          print("gagal");
+        }
+      },
+    );
+  }
 }
