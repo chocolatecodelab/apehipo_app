@@ -3,6 +3,7 @@ import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/modules/track/track_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
+import 'package:apehipo_app/widgets/confirmation_dialog_konfirmasi.dart';
 import 'package:flutter/material.dart';
 import 'LineSeparator.dart';
 import 'package:apehipo_app/widgets/theme.dart';
@@ -111,12 +112,8 @@ class TransactionProsesWidget extends StatelessWidget {
               children: [
                 getSelesaiButton(
                   context,
-                  "Selesai",
+                  "Konfirmasi Pesanan",
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                getTrackButton(context, "Status")
               ],
             )
           ],
@@ -161,15 +158,15 @@ class TransactionProsesWidget extends StatelessWidget {
 
 Widget getSelesaiButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
-    width: 150,
+    width: 150*2,
     height: 50,
     child: ElevatedButton(
       onPressed: () async {
         bool? confirmationResult = await showDialog(
           context: context,
           builder: (BuildContext context) {
-            return ConfirmationDialogBatal(
-                message: "Apakah anda yakin ingin menyelesaikan transaksi?");
+            return ConfirmationDialogKonfirmasi(
+                message: "Apakah anda yakin ingin mengonfirmasi pesanan?");
           },
         );
         if (confirmationResult == true) {

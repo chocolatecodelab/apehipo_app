@@ -70,7 +70,7 @@ class _ConfirmationDialogBatalState extends State<ConfirmationDialogBatal> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                            message: "Anda telah menyelesaikan transaksi");
+                            message: "Anda telah membatalkan pesanan");
                       },
                     );
                     if (confirmationResult == true) {

@@ -1,4 +1,5 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/modules/track/track_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -25,7 +26,7 @@ class TransactionSelesaiWidget extends StatelessWidget {
   final VoidCallback? onAddPressed;
 
   final double width = 174;
-  final double height = 200;
+  final double height = 250;
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
@@ -109,9 +110,7 @@ class TransactionSelesaiWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
-                  width: 20,
-                ),
+                getBeliLagi(context, "Beli Lagi"),
               ],
             )
           ],
@@ -119,6 +118,70 @@ class TransactionSelesaiWidget extends StatelessWidget {
       ),
     );
   }
+
+  Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
+  return Container(
+    width: 300,
+    height: 50,
+    child: ElevatedButton(
+      onPressed: () => {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DashboardScreen(),
+            )),
+      },
+      style: ElevatedButton.styleFrom(
+        visualDensity: VisualDensity.compact,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.green[400],
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontFamily: gilroyFontFamily,
+        ),
+        padding: EdgeInsets.symmetric(vertical: 24),
+        minimumSize: const Size.fromHeight(50),
+      ),
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: <Widget>[
+          Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Icon(
+                Icons.card_travel_rounded,
+                size: 18,
+                color: Colors.white,
+              ),
+            ],
+          )),
+          if (trailingWidget != null)
+            Positioned(
+              top: 0,
+              right: 25,
+              child: trailingWidget,
+            ),
+        ],
+      ),
+    ),
+  );
+}
+
 
   Widget imageWidget() {
     return Container(

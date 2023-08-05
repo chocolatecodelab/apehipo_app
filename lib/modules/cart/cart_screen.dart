@@ -101,12 +101,12 @@ class CartScreen extends StatelessWidget {
   }
 
   void showBottomSheet(context) {
-    // showModalBottomSheet(
-    //     context: context,
-    //     isScrollControlled: true,
-    //     backgroundColor: Colors.transparent,
-    //     builder: (BuildContext bc) {
-    //       return CheckoutBottomSheet();
-    //     });
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          return CheckoutBottomSheet();
+        });
   }
 }

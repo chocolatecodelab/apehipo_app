@@ -1,3 +1,5 @@
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -46,6 +48,11 @@ class OrderAcceptedScreen extends StatelessWidget {
               label: "Lihat Pesanan",
               onPressed: () {
                 Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return OrderScreen();
+                    });
               },
             ),
             Spacer(
@@ -54,6 +61,11 @@ class OrderAcceptedScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.pop(context);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return DashboardScreen();
+                    });
               },
               child: Text(
                 "Kembali ke Hidrocommerce",
