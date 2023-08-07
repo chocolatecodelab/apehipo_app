@@ -1,3 +1,4 @@
+import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen_petani.dart';
@@ -56,7 +57,7 @@ class AccountScreen extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
+              // getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
               Column(
                 children: getChildrenWithSeperator(
                   widgets: accountItems.map((e) {
@@ -70,7 +71,7 @@ class AccountScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              logoutButton(),
+              logoutButton(context),
               SizedBox(
                 height: 20,
               ),
@@ -167,7 +168,7 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
-  Widget logoutButton() {
+  Widget logoutButton(BuildContext context) {
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.symmetric(horizontal: 25),
@@ -206,7 +207,13 @@ class AccountScreen extends StatelessWidget {
             Container()
           ],
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+                MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                ));
+        },
       ),
     );
   }
