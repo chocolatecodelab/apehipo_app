@@ -1,3 +1,4 @@
+import 'package:apehipo_app/widgets/confirmation_dialog_arsip.dart';
 import 'package:apehipo_app/widgets/delete_confirmation_dialog.dart';
 import '../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
@@ -193,7 +194,7 @@ class CatalogItemTampilWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                getArsipButton("Arsipkan")
+                getArsipButton(context, "Arsipkan")
               ],
             )
           ],
@@ -294,12 +295,25 @@ Widget getEditButton(String label,
   );
 }
 
-Widget getArsipButton(String label, {Widget? trailingWidget}) {
+Widget getArsipButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed:  () async {
+        bool? confirmationResult = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialogArsip(
+                message: "Apakah anda yakin ingin mengarsipkan produk #?");
+          },
+        );
+        if (confirmationResult == true) {
+          print("Hello");
+        } else {
+          print("gagal");
+        }
+      },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
         shape: RoundedRectangleBorder(

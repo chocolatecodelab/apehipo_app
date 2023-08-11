@@ -41,7 +41,7 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Kelola Toko',
+          'Kelola Kebun',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Pilih Foto Toko",
+                            "Pilih Foto",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 14,
@@ -157,16 +157,16 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
                 SizedBox(height: 16.0),
                 Divider(thickness: 1),
                 getRowTextField(
-                    "Nama Toko", _storeNameController, "Masukkan Nama Toko"),
+                    "Nama Kebun", _storeNameController, "Masukkan Nama Kebun"),
                 Divider(thickness: 1),
-                getRowTextField("Deskripsi Toko", _storeDescriptionController,
-                    "Masukkan Deskripsi Toko"),
+                getRowTextField("Deskripsi Kebun", _storeDescriptionController,
+                    "Masukkan Deskripsi Kebun"),
                 Divider(thickness: 1),
-                getRowTextField("Alamat Toko", _storeAddressController,
-                    "Masukkan Alamat Toko"),
+                getRowTextField("Alamat Kebun", _storeAddressController,
+                    "Masukkan Alamat Kebun"),
                 Divider(thickness: 1),
-                getRowTextField("Nomor Telepon Toko",
-                    _storePhoneNumberController, "Masukkan Nomor Telepon Toko"),
+                getRowTextField("Nomor Telepon Kebun",
+                    _storePhoneNumberController, "Masukkan Nomor Telepon Kebun"),
                 Divider(thickness: 1),
                 SizedBox(height: 24.0),
                 getButton(context, "Simpan", onPressed: () {}),

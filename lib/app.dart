@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: themeData,
-      home: CartScreen(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

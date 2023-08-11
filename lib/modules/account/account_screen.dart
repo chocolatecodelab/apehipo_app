@@ -4,6 +4,7 @@ import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen_petani.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
 import 'package:apehipo_app/modules/transaction/transcation_screen_petani.dart';
+import 'package:apehipo_app/widgets/confirmation_dialog_logout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -207,13 +208,20 @@ class AccountScreen extends StatelessWidget {
             Container()
           ],
         ),
-        onPressed: () {
-          Navigator.push(
-              context,
-                MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                ));
-        },
+        onPressed: () async {
+        bool? confirmationResult = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialogLogout(
+                message: "Apakah anda yakin ingin keluar?");
+          },
+        );
+        if (confirmationResult == true) {
+          print("Hello");
+        } else {
+          print("gagal");
+        }
+      },
       ),
     );
   }
@@ -236,7 +244,7 @@ class AccountScreen extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => EditProfilePage()));
             break;
-          case "Edit Toko":
+          case "Edit Kebun":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => StoreManagementPage()));
             break;
