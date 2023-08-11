@@ -1,12 +1,7 @@
-import 'dart:js';
-
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
-import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 
 class CardItemDashboard extends StatelessWidget {
@@ -14,7 +9,7 @@ class CardItemDashboard extends StatelessWidget {
       {Key? key, required this.item, this.heroSuffix, required this.context})
       : super(key: key);
 
-  final DashboardModel item;
+  final HomeModel item;
   final String? heroSuffix;
 
   final BuildContext context;

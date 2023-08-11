@@ -1,28 +1,29 @@
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/home/dashboard_controller.dart';
-import 'package:apehipo_app/modules/home/dashboard_detail.dart';
-import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
+import 'package:apehipo_app/modules/home/home_controller.dart';
+import 'package:apehipo_app/modules/home/home_detail.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OnTrending extends StatefulWidget {
+class BestSellingOffer extends StatefulWidget {
   final String? klasifikasi;
+  final String title;
+  final List<HomeModel>? items;
 
-  const OnTrending(this.klasifikasi);
+  const BestSellingOffer(this.klasifikasi, this.title, this.items);
 
   @override
-  State<OnTrending> createState() => _OnTrendingState();
+  State<BestSellingOffer> createState() => _BestSellingOfferState();
 }
 
-class _OnTrendingState extends State<OnTrending> {
+class _BestSellingOfferState extends State<BestSellingOffer> {
   @override
-  var controller = Get.put(DashboardController());
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Sedang laris",
+          widget.title,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
@@ -32,22 +33,18 @@ class _OnTrendingState extends State<OnTrending> {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return DashboardScreen();
-              },
-            ));
+            Get.back();
           },
         ),
       ),
       body: SafeArea(
           child: Container(
-        child: getItemWidget(controller.dataList!),
+        child: getItemWidget(widget.items!),
       )),
     );
   }
 
-  Widget getItemWidget(List<DashboardModel> items) {
+  Widget getItemWidget(List<HomeModel> items) {
     return Container(
         child: GridView.builder(
       padding: const EdgeInsets.all(30),
@@ -58,24 +55,20 @@ class _OnTrendingState extends State<OnTrending> {
       ),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        if (items[index].klasifikasi == widget.klasifikasi) {
-          return GestureDetector(
-            onTap: () {
-              onItemClicked(context, items[index]);
-            },
-            child: CardItemDashboard(
-              item: items[index],
-              context: context,
-            ),
-          );
-        } else {
-          return null;
-        }
+        return GestureDetector(
+          onTap: () {
+            onItemClicked(context, items[index]);
+          },
+          child: CardItemDashboard(
+            item: items[index],
+            context: context,
+          ),
+        );
       },
     ));
   }
 
-  void onItemClicked(BuildContext context, DashboardModel dashboardItem) {
+  void onItemClicked(BuildContext context, HomeModel dashboardItem) {
     Navigator.push(
       context,
       MaterialPageRoute(

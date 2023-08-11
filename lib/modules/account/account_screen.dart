@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/column_with_seprator.dart';
 import 'package:apehipo_app/modules/account/account_edit.dart';
-import 'package:apehipo_app/modules/account/account_katalog.dart';
+import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/modules/account/account_toko.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 
@@ -30,10 +30,10 @@ class AccountScreen extends StatelessWidget {
                 leading: GestureDetector(
                   onTap: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                        context,
+                        MaterialPageRoute(
                           builder: (context) => EditProfilePage(),
-                    ));
+                        ));
                   },
                   child: SizedBox(
                     width: 65,
@@ -235,7 +235,7 @@ class AccountScreen extends StatelessWidget {
             break;
           case "Katalog":
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ManageProductsPage()));
+                MaterialPageRoute(builder: (context) => CatalogScreen()));
             break;
           case "Notifikasi":
             Navigator.push(context,
@@ -254,8 +254,10 @@ class AccountScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => PesananPetaniScreen()));
             break;
           case "Transaksi Petani":
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TransactionPetaniScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => TransactionPetaniScreen()));
             break;
         }
       },

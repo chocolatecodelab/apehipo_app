@@ -1,9 +1,9 @@
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/modules/home/home_controller.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card_item.dart';
 import '../contoh_api/product_controller.dart';
 import 'package:apehipo_app/modules/contoh_api/product_model.dart';
-import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/search_bar.dart';
@@ -13,7 +13,7 @@ class CardScreen extends StatelessWidget {
   CardScreen({super.key});
 
   @override
-  var controller = Get.put(ProductController());
+  var controller = Get.put(HomeController());
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -92,7 +92,7 @@ class CardScreen extends StatelessWidget {
     );
   }
 
-  void onItemClicked(BuildContext context, ProductModel productModel) {
+  void onItemClicked(BuildContext context, HomeModel productModel) {
     Navigator.push(
       context,
       MaterialPageRoute(

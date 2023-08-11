@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
+import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
@@ -6,6 +11,7 @@ import 'package:apehipo_app/widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import '../account/models/katalog_item.dart';
@@ -15,7 +21,7 @@ import 'package:apehipo_app/widgets/item_counter_widget.dart';
 // import 'favourite_toggle_icon_widget.dart';
 
 class CatalogEditScreen extends StatefulWidget {
-  final KatalogItem katalogItem;
+  final CatalogModel katalogItem;
   final String? heroSuffix;
 
   const CatalogEditScreen(this.katalogItem, {this.heroSuffix});
@@ -27,21 +33,25 @@ class CatalogEditScreen extends StatefulWidget {
 class _CatalogEditScreenState extends State<CatalogEditScreen> {
   int amount = 1;
   bool isPreOrder = false;
-
-  TextEditingController _priceController = TextEditingController();
-  TextEditingController _stockController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
   XFile? _selectedImage;
+  var controller = Get.put(CatalogController());
+  final formFieldKey = GlobalKey<FormState>();
+
+  // TextEditingController _priceController = TextEditingController();
+  // TextEditingController _stockController = TextEditingController();
+  // TextEditingController _descriptionController = TextEditingController();
+  // TextEditingController _nameController = TextEditingController();
+  // XFile? _selectedImage;
 
   void initState() {
     super.initState();
 
     // Set nilai awal _nameController jika widget.katalogItem tidak null
-    _nameController.text = widget.katalogItem.name;
-    _descriptionController.text = widget.katalogItem.description;
-    _priceController.text = widget.katalogItem.price.toString();
-    _stockController.text = widget.katalogItem.stock.toString();
+    controller.nama.text = widget.katalogItem.nama;
+    controller.deskripsi.text = widget.katalogItem.deskripsi;
+    controller.harga.text = widget.katalogItem.harga.toString();
+    controller.stok.text = widget.katalogItem.stok.toString();
+    controller.foto.text = widget.katalogItem.foto;
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -63,6 +73,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
 
   @override
   Widget build(BuildContext context) {
+    controller = Get.put(CatalogController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -71,6 +82,25 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+          onPressed: () async {
+            bool? confirmationResult = await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ConfirmationDialog(
+                    message: "Apakah anda yakin ingin meninggalkan perubahan?");
+              },
+            );
+            if (confirmationResult == true) {
+              controller.clearData();
+              Get.to(CatalogScreen());
+              // SuccessConfirmationDialog(
+              //     message: "Anda berhasil menyimpan perubahan");
+            }
+          },
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -109,45 +139,45 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image(image: AssetImage(widget.katalogItem.imagePath)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getPilihGambar("Pilih gambar")
-                    ],
-                  ),
-                ),
+                // Expanded(
+                //   child: Column(
+                //     children: [
+                //       Image(image: AssetImage(widget.katalogItem.imagePath)),
+                //       SizedBox(
+                //         height: 5,
+                //       ),
+                //       getPilihGambar("Pilih gambar")
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: 5,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image(image: AssetImage(widget.katalogItem.imagePath)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getPilihGambar("Pilih gambar")
-                    ],
-                  ),
-                ),
+                // Expanded(
+                //   child: Column(
+                //     children: [
+                //       Image(image: AssetImage(widget.katalogItem.imagePath)),
+                //       SizedBox(
+                //         height: 5,
+                //       ),
+                //       getPilihGambar("Pilih gambar")
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: 5,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Image(image: AssetImage(widget.katalogItem.imagePath)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getPilihGambar("Pilih gambar")
-                    ],
-                  ),
-                ),
+                // Expanded(
+                //   child: Column(
+                //     children: [
+                //       Image(image: AssetImage(widget.katalogItem.imagePath)),
+                //       SizedBox(
+                //         height: 5,
+                //       ),
+                //       getPilihGambar("Pilih gambar")
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: 10,
                 ),
@@ -155,46 +185,53 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                children: [
-                  SizedBox(height: 16),
-                  Divider(thickness: 1),
-                  getCatalogRowName("Nama"),
-                  Divider(thickness: 1),
-                  getCatalogRowDeskripsi("Deskripsi"),
-                  Divider(thickness: 1),
-                  getCatalogRowHarga("Harga"),
-                  Divider(thickness: 1),
-                  getCatalogRowStok("Stok"),
-                  Divider(thickness: 1),
-                  getCatalogRowPreOrder("Pre-Order"),
-                  Divider(thickness: 1),
-                  SizedBox(height: 16),
-                  DynamicButtonWidget(
-                    label: "Simpan Perubahan",
-                    textColor: Colors.white,
-                    backgroundColor: AppColors.primaryColor,
-                    iconData: Icons.add,
-                    onPressed: () async {
-                      bool? confirmationResult = await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ConfirmationDialog(
-                              message:
-                                  "Apakah anda yakin ingin menyimpan perubahan?");
-                        },
-                      );
-                      if (confirmationResult == true) {
-                        SuccessConfirmationDialog(
-                            message: "Anda berhasil menyimpan perubahan");
-                      } else {
-                        print("Gagal");
-                      }
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  SizedBox(height: 16),
-                ],
+              child: Form(
+                key: formFieldKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 16),
+                    Divider(thickness: 1),
+                    getCatalogRowName("Nama"),
+                    Divider(thickness: 1),
+                    getCatalogRowDeskripsi("Deskripsi"),
+                    Divider(thickness: 1),
+                    getCatalogRowHarga("Harga"),
+                    Divider(thickness: 1),
+                    getCatalogRowStok("Stok"),
+                    Divider(thickness: 1),
+                    getCatalogRowPreOrder("Pre-Order"),
+                    Divider(thickness: 1),
+                    SizedBox(height: 16),
+                    DynamicButtonWidget(
+                      label: "Simpan Perubahan",
+                      textColor: Colors.white,
+                      backgroundColor: AppColors.primaryColor,
+                      iconData: Icons.add,
+                      onPressed: () async {
+                        bool? confirmationResult = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ConfirmationDialog(
+                                message:
+                                    "Apakah anda yakin ingin menyimpan perubahan?");
+                          },
+                        );
+                        if (confirmationResult == true) {
+                          controller.updateData(
+                            widget.katalogItem.kode,
+                            _selectedImage!,
+                          );
+                          // SuccessConfirmationDialog(
+                          //     message: "Anda berhasil menyimpan perubahan");
+                        } else {
+                          print("Gagal");
+                        }
+                      },
+                    ),
+                    SizedBox(height: 8),
+                    SizedBox(height: 16),
+                  ],
+                ),
               ),
             ),
           ],
@@ -394,12 +431,12 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
       ),
       child: Hero(
         tag: "KatalogItem:" +
-            widget.katalogItem.name +
+            widget.katalogItem.nama +
             "-" +
             (widget.heroSuffix ?? ""),
-        child: Image(
-          image: AssetImage(widget.katalogItem.imagePath),
-        ),
+        child: _selectedImage == null
+            ? Image.network(widget.katalogItem.foto)
+            : Image.file(File(_selectedImage!.path)),
       ),
     );
   }
@@ -434,7 +471,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _priceController,
+              controller: controller.harga,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -500,7 +537,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _stockController,
+              controller: controller.stok,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -607,7 +644,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _descriptionController,
+              controller: controller.deskripsi,
               maxLines: 5,
               textAlign: TextAlign.left,
               decoration: InputDecoration(
@@ -672,7 +709,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _nameController,
+              controller: controller.nama,
               textAlign: TextAlign.left,
               decoration: InputDecoration(
                 hintText: 'Masukkan Nama Produk',
@@ -744,10 +781,12 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
   }
 
   double getTotalPrice() {
-    return amount * widget.katalogItem.price;
+    double harga = double.parse(widget.katalogItem.harga);
+    return amount * harga;
   }
 
   double getTotalStock() {
-    return amount * widget.katalogItem.stock;
+    double stok = double.parse(widget.katalogItem.stok);
+    return amount * stok;
   }
 }

@@ -31,6 +31,7 @@ class ProductController extends GetxController {
       if (response.statusCode == 200) {
         List data = jsonDecode(response.body); // Ubah 'result' menjadi 'data'
         dataList = data.map((x) => ProductModel.fromJson(x)).toList();
+        print(dataList);
         // Konversi nilai harga dan stok sesuai tipe yang diinginkan
         // double harga = double.parse(element['harga']);
         // int stok = int.parse(element['stok']);

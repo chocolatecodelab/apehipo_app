@@ -1,8 +1,7 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/modules/payment/payment_screen.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/track/track_edit.dart';
 import 'package:apehipo_app/modules/track/track_screen.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_tolak.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-import '.././widgets/confirmation_dialog.dart';
 
 class PesananDitolakPetaniWidget extends StatelessWidget {
   PesananDitolakPetaniWidget({
@@ -94,7 +92,9 @@ class PesananDitolakPetaniWidget extends StatelessWidget {
             Row(
               children: [
                 Icon(Icons.delivery_dining),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 AppText(
                   text: "Produk ditolak oleh penjual",
                   fontSize: 12,
@@ -293,7 +293,8 @@ Widget getTerimaButton(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-Widget getEdiStatusButton(BuildContext context, label, {Widget? trailingWidget}) {
+Widget getEdiStatusButton(BuildContext context, label,
+    {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
@@ -419,7 +420,7 @@ Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+void onItemClicked(BuildContext context, CatalogModel katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(

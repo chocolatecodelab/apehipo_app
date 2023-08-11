@@ -1,9 +1,7 @@
 import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/home/dashboard_controller.dart';
-import 'package:apehipo_app/modules/home/dashboard_detail.dart';
-import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
-import 'package:apehipo_app/modules/home/offer/exclusive_screen.dart';
-import 'package:apehipo_app/modules/home/offer/ontrending_screen.dart';
+import 'package:apehipo_app/modules/home/home_controller.dart';
+import 'package:apehipo_app/modules/home/home_detail.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +9,12 @@ import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/search_bar_widget.dart';
 import 'package:get/get.dart';
-import 'package:apehipo_app/modules/home/offer/best_selling_screen.dart';
+import 'package:apehipo_app/modules/home/klasifikasi_screen.dart';
 import 'home_banner_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
-  var controller = Get.put(DashboardController());
+  var controller = Get.put(HomeController());
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -24,8 +22,8 @@ class HomeScreen extends StatelessWidget {
             child: Obx(
           () => controller.isLoading.value
               ? Center(child: CircularProgressIndicator())
-              : controller.dataList!.isEmpty
-                  ? Center(child: Text("Tidak ada adata"))
+              : controller.dataListEksklusif!.isEmpty
+                  ? Center(child: Text("Tidak ada data"))
                   : SingleChildScrollView(
                       child: Center(
                         child: Column(
@@ -87,23 +85,27 @@ class HomeScreen extends StatelessWidget {
                               height: 25,
                             ),
                             padded(subTitle(context, "Penjualan Ekslusif",
-                                key: "penjualan eksklusif")),
+                                key: "penjualan eksklusif",
+                                items: controller.dataListEksklusif)),
                             getHorizontalItemSlider(
-                                controller.dataList!, "penjualan eksklusif"),
+                                controller.dataListEksklusif!,
+                                "penjualan eksklusif"),
                             SizedBox(
                               height: 15,
                             ),
                             padded(subTitle(context, "Penjualan Terbaik",
-                                key: "penjualan terbaik")),
-                            getHorizontalItemSlider(
-                                controller.dataList!, "penjualan terbaik"),
+                                key: "penjualan terbaik",
+                                items: controller.dataListTerbaik)),
+                            getHorizontalItemSlider(controller.dataListTerbaik!,
+                                "penjualan terbaik"),
                             SizedBox(
                               height: 15,
                             ),
                             padded(subTitle(context, "Sedang Laris",
-                                key: "sedang laris")),
+                                key: "sedang laris",
+                                items: controller.dataListLaris)),
                             getHorizontalItemSlider(
-                                controller.dataList!, "sedang laris"),
+                                controller.dataListLaris!, "sedang laris"),
                             SizedBox(
                               height: 15,
                             ),
@@ -124,10 +126,10 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget getHorizontalItemSlider(
-      List<DashboardModel> items, String klasifikasi) {
-    List<DashboardModel> filteredItems =
+  Widget getHorizontalItemSlider(List<HomeModel> items, String klasifikasi) {
+    List<HomeModel> filteredItems =
         items.where((item) => item.klasifikasi == klasifikasi).toList();
+    filteredItems = filteredItems.take(3).toList();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 250,
@@ -156,52 +158,31 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void onItemClicked(BuildContext context, DashboardModel dashboardItem) {
+  void onItemClicked(BuildContext context, HomeModel homeItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => DashboardDetailScreen(
-                dashboardItem,
+                homeItem,
                 heroSuffix: "home_screen",
               )),
     );
   }
 
-  Widget subTitle(BuildContext context, String text, {String? key}) {
+  Widget subTitle(BuildContext context, String text,
+      {String? key, List<HomeModel>? items}) {
     return Row(
       children: [
         Text(
           text,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Spacer(),
         GestureDetector(
-          onTap: () => {
-            if (key == "penjualan terbaik")
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BestSellingOffer(key)),
-                )
-              }
-            else if (key == "penjualan eksklusif")
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ExclusiveOffer(key)),
-                )
-              }
-            else if (key == "sedang laris")
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnTrending(key)),
-                )
-              }
-            else
-              {}
-          },
+          onTap: () => {Get.to(BestSellingOffer(key, text, items))},
           child: Text("See All",
               style: TextStyle(
                   fontSize: 18,

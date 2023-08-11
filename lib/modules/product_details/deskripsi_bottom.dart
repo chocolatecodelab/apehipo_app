@@ -93,7 +93,7 @@ class _DeskripsiBottomState extends State<DeskripsiBottom> {
     return RichText(
         text: TextSpan(
       text: rincian,
-      style: TextStyle(fontSize: 16),
+      style: TextStyle(fontSize: 16, color: Colors.black),
     ));
   }
 
