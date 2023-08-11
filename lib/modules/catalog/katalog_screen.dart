@@ -1,14 +1,23 @@
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
+import 'package:apehipo_app/modules/account/account_screen.dart';
+import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
-import '../../modules/catalog/catalog_edit.dart';
+import 'package:get/get.dart';
+import 'catalog_edit.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/catalog_item_arsip_widget.dart';
-import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
+import 'package:apehipo_app/widgets/catalog_item_widget.dart';
 
-class ManageProductsPage extends StatelessWidget {
+class CatalogScreen extends StatefulWidget {
   @override
+  State<CatalogScreen> createState() => _CatalogScreenState();
+}
+
+class _CatalogScreenState extends State<CatalogScreen> {
+  @override
+  var controller = Get.put(CatalogController());
+
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
@@ -28,7 +37,7 @@ class ManageProductsPage extends StatelessWidget {
               ),
               onPressed: () {
                 // Handle the back button press
-                Navigator.of(context).pop();
+                Get.off(AccountScreen());
               },
             ),
             bottom: PreferredSize(
@@ -86,37 +95,53 @@ class ManageProductsPage extends StatelessWidget {
           ),
           body: TabBarView(children: [
             SafeArea(
-                child: Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      padded(subTitle("Produk Anda")),
-                      getVerticalItemSlider(penawaranSpesial),
-                      getTambahButton(context, "Tambah Produk Baru")
-                    ],
-                  ),
+              child: Container(
+                child: Obx(
+                  () => controller.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.dataTampilList!.isEmpty
+                          ? Center(child: Text("Tidak ada data"))
+                          : SingleChildScrollView(
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    padded(subTitle("Produk Anda")),
+                                    getVerticalItemSlider(
+                                        controller.dataTampilList!),
+                                    getTambahButton(
+                                        context, "Tambah Produk Baru")
+                                  ],
+                                ),
+                              ),
+                            ),
                 ),
               ),
-            )),
+            ),
             SafeArea(
                 child: Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      padded(subTitle("Arsip Anda")),
-                      getVerticalItemSliderArsip(penjualanTerbaik),
-                      getTambahButton(context, "Tambah Produk Baru")
-                    ],
-                  ),
-                ),
+              child: Obx(
+                () => controller.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.dataArsipList!.isEmpty
+                        ? Center(child: Text("Tidak ada data"))
+                        : SingleChildScrollView(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  padded(subTitle("Arsip Anda")),
+                                  getVerticalItemSlider(
+                                      controller.dataArsipList!),
+                                  getTambahButton(context, "Tambah Produk Baru")
+                                ],
+                              ),
+                            ),
+                          ),
               ),
             ))
           ]),
@@ -126,7 +151,7 @@ class ManageProductsPage extends StatelessWidget {
   Widget getTambahButton(BuildContext context, label,
       {Widget? trailingWidget}) {
     return Container(
-      width: 400,
+      width: 350,
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
@@ -168,11 +193,6 @@ class ManageProductsPage extends StatelessWidget {
                 SizedBox(
                   width: 8,
                 ),
-                Icon(
-                  Icons.add,
-                  size: 18,
-                  color: Colors.white,
-                ),
               ],
             )),
             if (trailingWidget != null)
@@ -194,10 +214,10 @@ class ManageProductsPage extends StatelessWidget {
     );
   }
 
-  Widget getVerticalItemSlider(List<KatalogItem> items) {
+  Widget getVerticalItemSlider(List<CatalogModel> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 650,
+      height: 490,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -208,7 +228,7 @@ class ManageProductsPage extends StatelessWidget {
             onTap: () {
               onItemClicked(context, items[index]);
             },
-            child: CatalogItemTampilWidget(
+            child: CatalogItemWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),
@@ -223,36 +243,7 @@ class ManageProductsPage extends StatelessWidget {
     );
   }
 
-  Widget getVerticalItemSliderArsip(List<KatalogItem> items) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: 650,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
-        scrollDirection:
-            Axis.vertical, // Mengubah scrollDirection menjadi vertical
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              onItemClicked(context, items[index]);
-            },
-            child: CatalogItemArsipWidget(
-              item: items[index],
-              heroSuffix: "account_katalog",
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 20, // Mengubah width menjadi height
-          );
-        },
-      ),
-    );
-  }
-
-  void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+  void onItemClicked(BuildContext context, CatalogModel katalogItem) {
     Navigator.push(
       context,
       MaterialPageRoute(

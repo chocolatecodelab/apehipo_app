@@ -1,4 +1,5 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/modules/track/track_screen.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -112,7 +113,6 @@ class TransactionSelesaiPetaniWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                
               ],
             )
           ],
@@ -288,7 +288,7 @@ Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+void onItemClicked(BuildContext context, CatalogModel katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(

@@ -1,10 +1,9 @@
 import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/grocery_item_card_widget.dart';
 
 import 'filter_screen.dart';
 
@@ -83,7 +82,7 @@ class CategoryItemsScreen extends StatelessWidget {
     );
   }
 
-  void onItemClicked(BuildContext context, ProductModel productItem) {
+  void onItemClicked(BuildContext context, HomeModel productItem) {
     Navigator.push(
       context,
       MaterialPageRoute(

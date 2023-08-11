@@ -1,10 +1,7 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/payment/payment_screen.dart';
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
 import 'package:flutter/material.dart';
 import 'LineSeparator.dart';
 import 'package:apehipo_app/widgets/theme.dart';
@@ -12,7 +9,6 @@ import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 // import 'package:apehipo_app/modules/account/catalog_details.dart';
-import '.././widgets/confirmation_dialog.dart';
 
 class OrderDibatalkanWidget extends StatelessWidget {
   OrderDibatalkanWidget({
@@ -279,7 +275,7 @@ Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+void onItemClicked(BuildContext context, CatalogModel katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(

@@ -1,16 +1,16 @@
+import 'dart:io';
+
+import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
+import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import '../account/models/katalog_item.dart';
-import '../account/favourite_toggle_icon_widget.dart';
-import 'package:apehipo_app/widgets/item_counter_widget.dart';
 
 // import 'favourite_toggle_icon_widget.dart';
 
@@ -24,11 +24,6 @@ class CatalogTambahScreen extends StatefulWidget {
 class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
   int amount = 1;
   bool isPreOrder = false;
-
-  TextEditingController _priceController = TextEditingController();
-  TextEditingController _stockController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
   XFile? _selectedImage;
 
   Future<void> _pickImage(ImageSource source) async {
@@ -49,7 +44,9 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
   }
 
   @override
+  var controller = Get.put(CatalogController());
   Widget build(BuildContext context) {
+    final formFieldKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,6 +55,26 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.black,
+          onPressed: () async {
+            bool? confirmationResult = await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ConfirmationDialog(
+                    message:
+                        "Apakah anda yakin ingin meninggalkan halaman ini?");
+              },
+            );
+            if (confirmationResult == true) {
+              controller.clearData();
+              Get.to(CatalogScreen());
+              // SuccessConfirmationDialog(
+              //     message: "Anda berhasil menyimpan perubahan");
+            }
+          },
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -96,45 +113,45 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      // Image(image: AssetImage(widget.katalogItem.imagePath)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getPilihGambar("Pilih gambar")
-                    ],
-                  ),
-                ),
+                // Expanded(
+                //   child: Column(
+                //     children: [
+                //       // Image(image: AssetImage(widget.katalogItem.imagePath)),
+                //       SizedBox(
+                //         height: 5,
+                //       ),
+                //       getPilihGambar("Pilih gambar")
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: 5,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      // Image(image: AssetImage(widget.katalogItem.imagePath)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getPilihGambar("Pilih gambar")
-                    ],
-                  ),
-                ),
+                // Expanded(
+                //   child: Column(
+                //     children: [
+                //       // Image(image: AssetImage(widget.katalogItem.imagePath)),
+                //       SizedBox(
+                //         height: 5,
+                //       ),
+                //       getPilihGambar("Pilih gambar")
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: 5,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      // Image(image: AssetImage(widget.katalogItem.imagePath)),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      getPilihGambar("Pilih gambar")
-                    ],
-                  ),
-                ),
+                // Expanded(
+                //   child: Column(
+                //     children: [
+                //       // Image(image: AssetImage(widget.katalogItem.imagePath)),
+                //       SizedBox(
+                //         height: 5,
+                //       ),
+                //       getPilihGambar("Pilih gambar")
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: 10,
                 ),
@@ -142,46 +159,46 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                children: [
-                  SizedBox(height: 16),
-                  Divider(thickness: 1),
-                  getCatalogRowName("Nama"),
-                  Divider(thickness: 1),
-                  getCatalogRowDeskripsi("Deskripsi"),
-                  Divider(thickness: 1),
-                  getCatalogRowHarga("Harga"),
-                  Divider(thickness: 1),
-                  getCatalogRowStok("Stok"),
-                  Divider(thickness: 1),
-                  getCatalogRowPreOrder("Pre-Order"),
-                  Divider(thickness: 1),
-                  SizedBox(height: 16),
-                  DynamicButtonWidget(
-                    label: "Simpan Perubahan",
-                    textColor: Colors.white,
-                    backgroundColor: AppColors.primaryColor,
-                    iconData: Icons.add,
-                    onPressed: () async {
-                      bool? confirmationResult = await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ConfirmationDialog(
-                              message:
-                                  "Apakah anda yakin ingin menyimpan perubahan?");
-                        },
-                      );
-                      if (confirmationResult == true) {
-                        SuccessConfirmationDialog(
-                            message: "Anda berhasil menyimpan perubahan");
-                      } else {
-                        print("Gagal");
-                      }
-                    },
-                  ),
-                  SizedBox(height: 8),
-                  SizedBox(height: 16),
-                ],
+              child: Form(
+                key: formFieldKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 16),
+                    Divider(thickness: 1),
+                    getCatalogRowName("Nama"),
+                    Divider(thickness: 1),
+                    getCatalogRowDeskripsi("Deskripsi"),
+                    Divider(thickness: 1),
+                    getCatalogRowHarga("Harga"),
+                    Divider(thickness: 1),
+                    getCatalogRowStok("Stok"),
+                    Divider(thickness: 1),
+                    getCatalogRowPreOrder("Pre-Order"),
+                    Divider(thickness: 1),
+                    SizedBox(height: 16),
+                    DynamicButtonWidget(
+                      label: "Simpan Perubahan",
+                      textColor: Colors.white,
+                      backgroundColor: AppColors.primaryColor,
+                      iconData: Icons.add,
+                      onPressed: () async {
+                        bool? confirmationResult = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ConfirmationDialog(
+                                message:
+                                    "Apakah anda yakin ingin menyimpan perubahan?");
+                          },
+                        );
+                        if (confirmationResult == true) {
+                          controller.sendData(_selectedImage);
+                        } else {}
+                      },
+                    ),
+                    SizedBox(height: 8),
+                    SizedBox(height: 16),
+                  ],
+                ),
               ),
             ),
           ],
@@ -206,6 +223,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                       leading: Icon(Icons.photo_library),
                       title: Text('Pilih dari Galeri'),
                       onTap: () {
+                        // Get.to(controller.sendData(ImageSource.gallery));
                         _pickImage(ImageSource.gallery);
                         Navigator.pop(context);
                       },
@@ -214,6 +232,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                       leading: Icon(Icons.camera_alt),
                       title: Text('Ambil Foto'),
                       onTap: () {
+                        // Get.to(controller.sendData(ImageSource.camera));
                         _pickImage(ImageSource.camera);
                         Navigator.pop(context);
                       },
@@ -290,6 +309,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                       ),
                       title: Text('Pilih dari Galeri'),
                       onTap: () {
+                        // Get.to(controller.sendData(ImageSource.gallery));
                         _pickImage(ImageSource.gallery);
                         Navigator.pop(context);
                       },
@@ -298,6 +318,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                       leading: Icon(Icons.camera_alt),
                       title: Text('Ambil Foto'),
                       onTap: () {
+                        // Get.to(controller.sendData(ImageSource.camera));
                         _pickImage(ImageSource.camera);
                         Navigator.pop(context);
                       },
@@ -379,15 +400,14 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
             stops: [0.0, 1.0],
             tileMode: TileMode.clamp),
       ),
-      // child: Hero(
-      //   tag: "KatalogItem:" +
-      //       widget.katalogItem.name +
-      //       "-" +
-      //       (widget.heroSuffix ?? ""),
-      //   child: Image(
-      //     image: AssetImage(widget.katalogItem.imagePath),
-      //   ),
-      // ),
+      child: _selectedImage == null
+          ? Center(
+              child: Text("Tidak ada gambar"),
+            )
+          : Hero(
+              tag: "CatalogItem: tambah",
+              child: Image.file(File(_selectedImage!.path)),
+            ),
     );
   }
 
@@ -421,7 +441,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _priceController,
+              controller: controller.harga,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -487,7 +507,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _stockController,
+              controller: controller.stok,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -594,7 +614,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _descriptionController,
+              controller: controller.deskripsi,
               maxLines: 5,
               textAlign: TextAlign.left,
               decoration: InputDecoration(
@@ -659,7 +679,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
           ),
           Expanded(
             child: TextField(
-              controller: _nameController,
+              controller: controller.nama,
               textAlign: TextAlign.left,
               decoration: InputDecoration(
                 hintText: 'Masukkan Nama Produk',

@@ -1,12 +1,9 @@
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/contoh_api/product_model.dart';
-import 'package:apehipo_app/screens/custom_binary_option.dart';
-import 'package:apehipo_app/splash/splash_screen.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/home/models/grocery_item.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/card_item.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -238,7 +235,7 @@ Widget getItemWidget(List<GroceryItem> items) {
   ));
 }
 
-void onItemClicked(BuildContext context, ProductModel productItem) {
+void onItemClicked(BuildContext context, HomeModel productItem) {
   Navigator.push(
     context,
     MaterialPageRoute(

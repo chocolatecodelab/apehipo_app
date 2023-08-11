@@ -1,4 +1,4 @@
-import 'package:apehipo_app/modules/home/models/dashboard_model.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
 import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -14,7 +14,7 @@ import 'package:apehipo_app/widgets/item_counter_widget.dart';
 // import '../favourite_toggle_icon_widget.dart';
 
 class DashboardDetailScreen extends StatefulWidget {
-  final DashboardModel productItem;
+  final HomeModel productItem;
   final String? heroSuffix;
 
   const DashboardDetailScreen(this.productItem, {this.heroSuffix});

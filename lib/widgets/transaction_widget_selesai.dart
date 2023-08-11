@@ -1,8 +1,8 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/modules/track/track_screen.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
 import 'package:flutter/material.dart';
 import 'LineSeparator.dart';
@@ -10,8 +10,6 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-// import 'package:apehipo_app/modules/account/catalog_details.dart';
-import '.././widgets/confirmation_dialog.dart';
 
 class TransactionSelesaiWidget extends StatelessWidget {
   TransactionSelesaiWidget({
@@ -120,68 +118,67 @@ class TransactionSelesaiWidget extends StatelessWidget {
   }
 
   Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
-  return Container(
-    width: 300,
-    height: 50,
-    child: ElevatedButton(
-      onPressed: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DashboardScreen(),
-            )),
-      },
-      style: ElevatedButton.styleFrom(
-        visualDensity: VisualDensity.compact,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
+    return Container(
+      width: 300,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () => {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DashboardScreen(),
+              )),
+        },
+        style: ElevatedButton.styleFrom(
+          visualDensity: VisualDensity.compact,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.green[400],
+          textStyle: TextStyle(
+            color: Colors.white,
+            fontFamily: gilroyFontFamily,
+          ),
+          padding: EdgeInsets.symmetric(vertical: 24),
+          minimumSize: const Size.fromHeight(50),
         ),
-        elevation: 0,
-        backgroundColor: Colors.green[400],
-        textStyle: TextStyle(
-          color: Colors.white,
-          fontFamily: gilroyFontFamily,
-        ),
-        padding: EdgeInsets.symmetric(vertical: 24),
-        minimumSize: const Size.fromHeight(50),
-      ),
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: <Widget>[
-          Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: <Widget>[
+            Center(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
+                SizedBox(
+                  width: 8,
+                ),
+                Icon(
+                  Icons.card_travel_rounded,
+                  size: 18,
+                  color: Colors.white,
+                ),
+              ],
+            )),
+            if (trailingWidget != null)
+              Positioned(
+                top: 0,
+                right: 25,
+                child: trailingWidget,
               ),
-              SizedBox(
-                width: 8,
-              ),
-              Icon(
-                Icons.card_travel_rounded,
-                size: 18,
-                color: Colors.white,
-              ),
-            ],
-          )),
-          if (trailingWidget != null)
-            Positioned(
-              top: 0,
-              right: 25,
-              child: trailingWidget,
-            ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget imageWidget() {
     return Container(
@@ -350,7 +347,7 @@ Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+void onItemClicked(BuildContext context, CatalogModel katalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(

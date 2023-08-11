@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_arsip.dart';
 import 'package:apehipo_app/widgets/delete_confirmation_dialog.dart';
 import '../widgets/success_confirmation_dialog.dart';
@@ -17,7 +18,7 @@ class CatalogItemTampilWidget extends StatelessWidget {
     this.onAddPressed,
   }) : super(key: key);
 
-  final KatalogItem item;
+  final CatalogModel item;
   final String? heroSuffix;
   final VoidCallback? onAddPressed;
 
@@ -49,7 +50,7 @@ class CatalogItemTampilWidget extends StatelessWidget {
           children: [
             Row(children: [
               Hero(
-                tag: "KatalogItem:" + item.name + "-" + (heroSuffix ?? ""),
+                tag: "KatalogItem:" + item.nama + "-" + (heroSuffix ?? ""),
                 child: imageWidget(),
               ),
               SizedBox(
@@ -60,12 +61,12 @@ class CatalogItemTampilWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    text: item.name,
+                    text: item.nama,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   AppText(
-                    text: "\$${item.price.toStringAsFixed(2)}",
+                    text: "\$${item.harga}",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -118,7 +119,7 @@ class CatalogItemTampilWidget extends StatelessWidget {
                   width: 5,
                 ),
                 AppText(
-                  text: "Favorit: " + item.favorit.toString(),
+                  text: "Terjual: 2",
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF7C7C7C),
@@ -135,7 +136,7 @@ class CatalogItemTampilWidget extends StatelessWidget {
                   width: 5,
                 ),
                 AppText(
-                  text: "Stok: " + item.stock.toString(),
+                  text: "Stok: " + item.stok.toString(),
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF7C7C7C),
@@ -146,34 +147,34 @@ class CatalogItemTampilWidget extends StatelessWidget {
               height: 20,
             ),
             Row(
-              children: [
-                Icon(Icons.remove_red_eye_outlined,
-                    size: 14, color: Color(0xFF7C7C7C)),
-                SizedBox(
-                  width: 5,
+                // children: [
+                //   Icon(Icons.remove_red_eye_outlined,
+                //       size: 14, color: Color(0xFF7C7C7C)),
+                //   SizedBox(
+                //     width: 5,
+                //   ),
+                //   AppText(
+                //     text: "Dilihat: " + item.dilihat.toString(),
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.w600,
+                //     color: Color(0xFF7C7C7C),
+                //   ),
+                //   SizedBox(
+                //     width: 150,
+                //   ),
+                //   Icon(Icons.monetization_on_outlined,
+                //       size: 14, color: Color(0xFF7C7C7C)),
+                //   SizedBox(
+                //     width: 5,
+                //   ),
+                //   AppText(
+                //     text: "Terjual: " + item.sold.toString(),
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.w600,
+                //     color: Color(0xFF7C7C7C),
+                //   ),
+                // ],
                 ),
-                AppText(
-                  text: "Dilihat: " + item.dilihat.toString(),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
-                SizedBox(
-                  width: 150,
-                ),
-                Icon(Icons.monetization_on_outlined,
-                    size: 14, color: Color(0xFF7C7C7C)),
-                SizedBox(
-                  width: 5,
-                ),
-                AppText(
-                  text: "Terjual: " + item.sold.toString(),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
-              ],
-            ),
             SizedBox(
               height: 15,
             ),
@@ -205,7 +206,7 @@ class CatalogItemTampilWidget extends StatelessWidget {
 
   Widget imageWidget() {
     return Container(
-      child: Image.asset(item.imagePath),
+      child: Image.network(item.foto),
       width: 100,
       height: 100,
     );
@@ -300,7 +301,7 @@ Widget getArsipButton(BuildContext context, label, {Widget? trailingWidget}) {
     width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed:  () async {
+      onPressed: () async {
         bool? confirmationResult = await showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -365,12 +366,12 @@ Widget getArsipButton(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+void onItemClicked(BuildContext context, CatalogModel catalogItem) {
   Navigator.push(
     context,
     MaterialPageRoute(
         builder: (context) => CatalogEditScreen(
-              katalogItem,
+              catalogItem,
               heroSuffix: "account_katalog",
             )),
   );

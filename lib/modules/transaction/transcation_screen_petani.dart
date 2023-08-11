@@ -1,18 +1,11 @@
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/widgets/theme.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/widgets/transaction_proses_petani.dart';
 import 'package:apehipo_app/widgets/transaction_selesai_petani.dart';
 import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
 import 'package:apehipo_app/widgets/transaction_widget_selesai.dart';
 import 'package:flutter/material.dart';
-// import 'package:apehipo_app/models/katalog_item.dart';
-// import 'package:apehipo_app/screens/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-import 'package:apehipo_app/widgets/catalog_item_arsip_widget.dart';
-import 'package:apehipo_app/widgets/catalog_item_tampil_widget.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
 
 class TransactionPetaniScreen extends StatelessWidget {
   @override
@@ -183,7 +176,7 @@ class TransactionPetaniScreen extends StatelessWidget {
     );
   }
 
-  void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+  void onItemClicked(BuildContext context, CatalogModel katalogItem) {
     Navigator.push(
       context,
       MaterialPageRoute(
