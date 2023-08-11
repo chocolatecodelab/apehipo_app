@@ -1,18 +1,20 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/modules/track/track_edit.dart';
+import 'package:apehipo_app/modules/payment/payment_screen.dart';
 import 'package:apehipo_app/modules/track/track_screen.dart';
+import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_tolak.dart';
 import 'package:flutter/material.dart';
 import 'LineSeparator.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+// import 'package:apehipo_app/modules/account/catalog_details.dart';
+import '.././widgets/confirmation_dialog.dart';
 
-class PesananDitolakPetaniWidget extends StatelessWidget {
-  PesananDitolakPetaniWidget({
+class TransactionSelesaiPetaniWidget extends StatelessWidget {
+  TransactionSelesaiPetaniWidget({
     Key? key,
     required this.item,
     this.heroSuffix,
@@ -96,7 +98,7 @@ class PesananDitolakPetaniWidget extends StatelessWidget {
                   width: 5,
                 ),
                 AppText(
-                  text: "Produk ditolak oleh penjual",
+                  text: "Produk Anda disortir dari Bandung",
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
@@ -153,77 +155,7 @@ class PesananDitolakPetaniWidget extends StatelessWidget {
   }
 }
 
-Widget getTolakButton(BuildContext context, label, {Widget? trailingWidget}) {
-  return Container(
-    width: 150,
-    height: 50,
-    child: ElevatedButton(
-      onPressed: () async {
-        bool? confirmationResult = await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return ConfirmationDialogTolak(
-                message: "Apakah Anda ingin menolak pesanan?");
-          },
-        );
-        if (confirmationResult == true) {
-          print("Hello");
-        } else {
-          print("gagal");
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        visualDensity: VisualDensity.compact,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.red,
-        textStyle: TextStyle(
-          color: Colors.white,
-          fontFamily: gilroyFontFamily,
-        ),
-        padding: EdgeInsets.symmetric(vertical: 24),
-        minimumSize: const Size.fromHeight(50),
-      ),
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: <Widget>[
-          Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Icon(
-                Icons.cancel,
-                size: 18,
-                color: Colors.white,
-              ),
-            ],
-          )),
-          if (trailingWidget != null)
-            Positioned(
-              top: 0,
-              right: 25,
-              child: trailingWidget,
-            ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget getTerimaButton(BuildContext context, label, {Widget? trailingWidget}) {
+Widget getSelesaiButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
@@ -233,7 +165,7 @@ Widget getTerimaButton(BuildContext context, label, {Widget? trailingWidget}) {
           context: context,
           builder: (BuildContext context) {
             return ConfirmationDialogBatal(
-                message: "Apakah anda yakin ingin menerima pesanan?");
+                message: "Apakah anda yakin ingin menyelesaikan transaksi?");
           },
         );
         if (confirmationResult == true) {
@@ -276,70 +208,6 @@ Widget getTerimaButton(BuildContext context, label, {Widget? trailingWidget}) {
               ),
               Icon(
                 Icons.done,
-                size: 18,
-                color: Colors.white,
-              ),
-            ],
-          )),
-          if (trailingWidget != null)
-            Positioned(
-              top: 0,
-              right: 25,
-              child: trailingWidget,
-            ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget getEdiStatusButton(BuildContext context, label,
-    {Widget? trailingWidget}) {
-  return Container(
-    width: 150,
-    height: 50,
-    child: ElevatedButton(
-      onPressed: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TrackEditScreen(),
-            )),
-      },
-      style: ElevatedButton.styleFrom(
-        visualDensity: VisualDensity.compact,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.grey,
-        textStyle: TextStyle(
-          color: Colors.white,
-          fontFamily: gilroyFontFamily,
-        ),
-        padding: EdgeInsets.symmetric(vertical: 24),
-        minimumSize: const Size.fromHeight(50),
-      ),
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: <Widget>[
-          Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Icon(
-                Icons.edit,
                 size: 18,
                 color: Colors.white,
               ),

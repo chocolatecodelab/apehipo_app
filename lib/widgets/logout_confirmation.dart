@@ -1,18 +1,19 @@
+import 'package:apehipo_app/auth/login/login.dart';
+import 'package:apehipo_app/splash/welcome_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class SuccessConfirmationDialog extends StatefulWidget {
+class LogoutConfirmationDialog extends StatefulWidget {
   final String message;
 
-  SuccessConfirmationDialog({required this.message});
+  LogoutConfirmationDialog({required this.message});
 
   @override
-  _SuccessConfirmationDialogState createState() =>
-      _SuccessConfirmationDialogState();
+  _LogoutConfirmationDialogState createState() =>
+      _LogoutConfirmationDialogState();
 }
 
-class _SuccessConfirmationDialogState extends State<SuccessConfirmationDialog> {
+class _LogoutConfirmationDialogState extends State<LogoutConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -47,8 +48,12 @@ class _SuccessConfirmationDialogState extends State<SuccessConfirmationDialog> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
+                  onPressed: () => {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        )),
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(200, 50),

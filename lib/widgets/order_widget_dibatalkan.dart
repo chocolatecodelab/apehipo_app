@@ -23,7 +23,7 @@ class OrderDibatalkanWidget extends StatelessWidget {
   final VoidCallback? onAddPressed;
 
   final double width = 174;
-  final double height = 300;
+  final double height = 230;
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
@@ -107,10 +107,6 @@ class OrderDibatalkanWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                getBeliLagi(
-                  context,
-                  "Beli Lagi",
-                ),
               ],
             )
           ],

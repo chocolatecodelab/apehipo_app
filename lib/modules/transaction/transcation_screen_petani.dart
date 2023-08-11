@@ -2,6 +2,8 @@ import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/widgets/transaction_proses_petani.dart';
+import 'package:apehipo_app/widgets/transaction_selesai_petani.dart';
+import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
 import 'package:apehipo_app/widgets/transaction_widget_selesai.dart';
 import 'package:flutter/material.dart';
 
@@ -159,7 +161,7 @@ class TransactionPetaniScreen extends StatelessWidget {
             onTap: () {
               // onItemClicked(context, items[index]);
             },
-            child: TransactionSelesaiWidget(
+            child: TransactionSelesaiPetaniWidget(
               item: items[index],
               heroSuffix: "account_katalog",
             ),

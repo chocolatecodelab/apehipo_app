@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/account/account_screen.dart';
 import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
@@ -36,7 +37,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
               ),
               onPressed: () {
                 // Handle the back button press
-                Navigator.of(context).pop();
+                Get.off(AccountScreen());
               },
             ),
             bottom: PreferredSize(

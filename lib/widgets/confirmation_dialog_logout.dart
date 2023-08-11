@@ -1,17 +1,18 @@
 import 'package:apehipo_app/widgets/colors.dart';
+import 'package:apehipo_app/widgets/logout_confirmation.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 
-class ConfirmationDialogProses extends StatefulWidget {
+class ConfirmationDialogLogout extends StatefulWidget {
   final String message;
 
-  ConfirmationDialogProses({required this.message});
+  ConfirmationDialogLogout({required this.message});
 
   @override
-  _ConfirmationDialogProsesState createState() => _ConfirmationDialogProsesState();
+  _ConfirmationDialogLogoutState createState() => _ConfirmationDialogLogoutState();
 }
 
-class _ConfirmationDialogProsesState extends State<ConfirmationDialogProses> {
+class _ConfirmationDialogLogoutState extends State<ConfirmationDialogLogout> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -69,8 +70,8 @@ class _ConfirmationDialogProsesState extends State<ConfirmationDialogProses> {
                     bool? confirmationResult = await showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return SuccessConfirmationDialog(
-                            message: "Anda telah membatalkan pesanan");
+                        return LogoutConfirmationDialog(
+                            message: "");
                       },
                     );
                     if (confirmationResult == true) {
@@ -92,6 +93,5 @@ class _ConfirmationDialogProsesState extends State<ConfirmationDialogProses> {
         ),
       ),
     );
-    
   }
 }

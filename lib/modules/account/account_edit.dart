@@ -176,7 +176,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(height: 24.0),
                 getButton(context, "Simpan", onPressed: () {}),
                 SizedBox(height: 24.0),
-                getLupa("Lupa Password"),
+                // getLupa("Lupa Password"),
               ],
             ),
           ],

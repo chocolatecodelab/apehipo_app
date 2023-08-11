@@ -194,15 +194,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 20,),
-                const Text(
-                  "Lupa Password?",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
                 const SizedBox(height: 30),
                 Text.rich(
                   TextSpan(

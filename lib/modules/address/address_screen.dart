@@ -6,6 +6,7 @@ import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -23,11 +24,7 @@ class _AddressScreenState extends State<AddressScreen> {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) {
-                return CartScreen();
-              },
-            ));
+            Get.back();
           },
         ),
         title: Text(

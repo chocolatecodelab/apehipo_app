@@ -45,6 +45,7 @@ class CatalogController extends GetxController {
       isLoading(true);
       String baseUrl = '${Api().baseURL}/product';
       final response = await http.get(Uri.tryParse(baseUrl)!);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
         List<dynamic> dataTampilJsonList = data['data_tampil'];
@@ -219,7 +220,11 @@ class CatalogController extends GetxController {
       }
     } catch (e) {
       Get.snackbar("Gagal", e.toString());
-    } finally {}
+    } finally {
+      Get.off(CatalogScreen());
+      clearData();
+      refresh();
+    }
   }
 
   ubahStatus(id) async {

@@ -113,7 +113,7 @@ class OrderSudahBayarWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                getTrackButton(context, "Track")
+                getTrackButton(context, "Status")
               ],
             )
           ],

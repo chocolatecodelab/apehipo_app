@@ -105,7 +105,7 @@ class TransactionProsesPetaniWidget extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [getTrackButton(context, "Status")],
+              children: [getSelesaiButton(context, "Proses")],
             )
           ],
         ),
@@ -149,7 +149,7 @@ class TransactionProsesPetaniWidget extends StatelessWidget {
 
 Widget getSelesaiButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
-    width: 150,
+    width: 150 * 2,
     height: 50,
     child: ElevatedButton(
       onPressed: () async {
@@ -157,7 +157,7 @@ Widget getSelesaiButton(BuildContext context, label, {Widget? trailingWidget}) {
           context: context,
           builder: (BuildContext context) {
             return ConfirmationDialogBatal(
-                message: "Apakah anda yakin ingin menyelesaikan transaksi?");
+                message: "Apakah anda yakin ingin memproses pesanan?");
           },
         );
         if (confirmationResult == true) {

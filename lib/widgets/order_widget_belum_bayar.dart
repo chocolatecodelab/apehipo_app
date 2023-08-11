@@ -232,11 +232,11 @@ Widget getBayarButton(BuildContext context, label, {Widget? trailingWidget}) {
     height: 50,
     child: ElevatedButton(
       onPressed: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymentScreen(),
-            )),
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => PaymentScreen(),
+        //     )),
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,

@@ -96,7 +96,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
             );
             if (confirmationResult == true) {
               controller.clearData();
-              Get.to(CatalogScreen());
+              Get.off(CatalogScreen());
               // SuccessConfirmationDialog(
               //     message: "Anda berhasil menyimpan perubahan");
             }
