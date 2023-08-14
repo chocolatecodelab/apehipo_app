@@ -7,7 +7,7 @@ import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  final String imagePath = "assets/images/welcome_image.png";
+  final String imagePath = "assets/images/welcome_img.jpg";
 
   @override
   Widget build(BuildContext context) {

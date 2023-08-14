@@ -50,7 +50,7 @@ class OrderFailedDialogue extends StatelessWidget {
               flex: 5,
             ),
             AppText(
-              text: "Oops! Order Failed",
+              text: "Oops! Pesanan Gagal Dibuat :(",
               fontSize: 28,
               fontWeight: FontWeight.w600,
             ),
@@ -67,7 +67,7 @@ class OrderFailedDialogue extends StatelessWidget {
               flex: 8,
             ),
             AppButton(
-              label: "Please Try Again",
+              label: "Coba Lagi",
               fontWeight: FontWeight.w600,
               onPressed: () {
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
@@ -85,7 +85,7 @@ class OrderFailedDialogue extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: AppText(
-                text: "Back To Home",
+                text: "Kembali ke Hidrocommerce",
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),

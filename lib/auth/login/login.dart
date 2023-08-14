@@ -1,6 +1,7 @@
 import 'package:apehipo_app/auth/roles/role.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/splash/welcome_screen.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -31,10 +32,10 @@ class _LoginPageState extends State<LoginPage> {
                   // bottomRight: Radius.circular(30), // Atur radius sudut kanan bawah
                   ),
             ),
-            backgroundColor: Color(0xFFF53B175),
+            backgroundColor: Colors.white,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
               onPressed: () =>
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) {
@@ -43,9 +44,10 @@ class _LoginPageState extends State<LoginPage> {
               )),
             ),
             title: Text(
-              '',
+              'APEHIPO',
               style: TextStyle(
-                fontFamily: 'PoppinsMedium',
+                fontWeight: FontWeight.bold,
+                color: Colors.black
               ),
             ),
             centerTitle: true,
@@ -66,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Center(
                   child: Text(
-                    "Welcome back!",
+                    "Selamat Datang!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 30,
@@ -74,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                SizedBox(height: 5,),
                 const Center(
                   child: Text(
                     "You've been missed",
@@ -104,10 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                           child: Image.asset("../assets/images/ic_google.png"),
                         ), // Tambahkan jarak horizontal antara ikon dan teks
                         Text(
-                          '  Sign in with Google',
+                          '  Masuk dengan Google',
                           style: TextStyle(
                             fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.normal,
                             color: Colors.black,
                           ),
                         ),
@@ -118,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'or',
+                  'atau',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
@@ -163,27 +166,19 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Forgot password?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Container(
                   height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Color(0xFFF53B175),
+                        backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(15),
                         )),
                     child: const Text(
-                      'Sign In',
+                      'Masuk',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -199,17 +194,17 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
                 Text.rich(
                   TextSpan(
-                    text: "Don't have an account? ",
+                    text: "Nggak punya akun? ",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                     children: [
                       TextSpan(
-                        text: "Sign up",
+                        text: "Daftar yuk!",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
                         ),

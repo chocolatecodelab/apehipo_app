@@ -85,7 +85,7 @@ var demoItems = [
       imagePath: "assets/images/grocery_images/chicken.png"),
 ];
 
-var penawaranSpesial = [demoItems[0], demoItems[1], demoItems[3]];
+var penawaranSpesial = [demoItems[0], demoItems[1], demoItems[3], demoItems[5]];
 
 var penjualanTerbaik = [demoItems[2], demoItems[3]];
 

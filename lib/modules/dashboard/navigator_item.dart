@@ -17,10 +17,10 @@ class NavigatorItem {
 
 List<NavigatorItem> navigatorItems = [
   NavigatorItem("HidroCommerce", "assets/icons/shop_icon.svg", 0, HomeScreen()),
-  NavigatorItem(
-      "V-Trends", "assets/icons/explore_icon.svg", 1, ExploreScreen()),
+  // NavigatorItem(
+  //     "V-Trends", "assets/icons/explore_icon.svg", 1, ExploreScreen()),
   // NavigatorItem("Cart", "assets/icons/cart_icon.svg", 2, CartScreen()),
   // NavigatorItem(
-  //     "Favourite", "assets/icons/favourite_icon.svg", 3, FavouriteScreen()),
+  //     "Account", "assets/icons/favourite_icon.svg", 2, AccountScreen()),
   NavigatorItem("Account", "assets/icons/account_icon.svg", 2, AccountScreen()),
 ];
