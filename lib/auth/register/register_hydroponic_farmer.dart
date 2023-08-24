@@ -1,6 +1,9 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/auth/roles/role.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegisterHydroponicFarmer extends StatefulWidget {
   static const String id = "register_hydroponic_farmer";
@@ -13,11 +16,8 @@ class RegisterHydroponicFarmer extends StatefulWidget {
 
 class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
   final GlobalKey<FormState> _signUpGlobalKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController passwordRetryController = TextEditingController();
   bool passwordSee = true;
+  var controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +35,12 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
-            onPressed: () => 
-            Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return RolePage();
-                },
-              )),
+            onPressed: () =>
+                Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) {
+                return RolePage();
+              },
+            )),
           ),
           title: Text(
             'APEHIPO',
@@ -80,54 +80,101 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
                   children: [
                     // Name Input -------------------------------------
                     TextFormField(
-                      controller: nameController,
+                      controller: controller.nama,
                       // validator: AuthValidator.isNameValid,
                       decoration: const InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                          hintText: "Nama",
-                          ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "Nama",
+                      ),
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: nameController,
+                      controller: controller.noTelpon,
+                      keyboardType: TextInputType.phone,
                       // validator: AuthValidator.isNameValid,
                       decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                          hintText: "Username",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "Nomor Telpon",
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: controller.noRekening,
+                      // validator: AuthValidator.isNameValid,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "No Rekening",
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: controller.alamat,
+                      // validator: AuthValidator.isNameValid,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "Alamat",
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: controller.username,
+                      // validator: AuthValidator.isNameValid,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "Username",
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                      ),
                     ),
                     // Email Input -------------------------------------
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: emailController,
+                      controller: controller.email,
                       // validator: AuthValidator.isEmailValid,
                       decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                          hintText: "E-mail",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          ),
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "E-mail",
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                      ),
                     ),
                     // Password Input -------------------------------------
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: passwordController,
+                      controller: controller.password,
                       obscureText: passwordSee,
                       // validator: AuthValidator.isPasswordValid,
                       decoration: InputDecoration(
@@ -139,36 +186,21 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
                         ),
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         hintText: "Password",
-                        // suffixIcon: GestureDetector(
-                        //   onTap: () {
-                        //     passwordSee = !passwordSee;
-                        //     setState(() {});
-                        //   },
-                        //   child: Icon(
-                        //     passwordSee
-                        //         ? Icons.visibility_off_outlined
-                        //         : Icons.visibility_outlined,
-                        //   ),
-                        // ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            passwordSee = !passwordSee;
+                            setState(() {});
+                          },
+                          child: Icon(
+                            passwordSee
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                          ),
+                        ),
                       ),
                     ),
                     // Retry Password Input -------------------------------------
                     const SizedBox(height: 20),
-                    TextFormField(
-                      controller: passwordRetryController,
-                      obscureText: passwordSee,
-                      // validator: AuthValidator.isPasswordValid,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green),
-                        ),
-                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        hintText: "Konfirmasi Password",
-                      ),
-                    ),
                     const SizedBox(height: 40),
                     // Sign Up for Button ----------------------------------
                     Container(
@@ -188,13 +220,42 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () => {
-                          Navigator.of(context)
-                              .pushReplacement(new MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return LoginPage();
-                            },
-                          )),
+                        onPressed: () async {
+                          String? regisResult =
+                              await controller.createAccount();
+                          if (regisResult == "sukses") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: "Anda berhasil mendaftar",
+                                  icon: Icons.check_circle_outline,
+                                );
+                              },
+                            );
+                            Get.offAll(
+                                LoginPage()); // Pindah ke DashboardScreen setelah dialog sukses login
+                          } else if (regisResult == "gagal") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: "Anda gagal mendaftar",
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: regisResult,
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
+                          }
                         },
                       ),
                     ),
@@ -232,12 +293,4 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
   // }
 
   // textController exits when finished
-  @override
-  void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    passwordRetryController.dispose();
-    super.dispose();
-  }
 }

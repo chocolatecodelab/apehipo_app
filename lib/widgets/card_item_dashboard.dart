@@ -83,7 +83,7 @@ class CardItemDashboard extends StatelessWidget {
           top: Radius.circular(10),
         ),
         child: Image.network(
-          "https://asset.kompas.com/crops/fIaNWDAjRZ8OzH-6PTSsBisOyA0=/87x0:759x448/750x500/data/photo/2023/03/05/64049a48c2ac7.jpg",
+          item.foto,
           width: MediaQuery.of(context).size.width,
           height: 75,
           fit: BoxFit.cover,

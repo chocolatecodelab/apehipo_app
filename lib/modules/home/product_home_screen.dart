@@ -1,6 +1,6 @@
 import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/home/home_controller.dart';
-import 'package:apehipo_app/modules/home/home_detail.dart';
+import 'package:apehipo_app/modules/home/product_all_detail.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/widgets/card_item_dashboard.dart';
@@ -12,9 +12,15 @@ import 'package:get/get.dart';
 import 'package:apehipo_app/modules/home/klasifikasi_screen.dart';
 import 'home_banner_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class ProductHomeScreen extends StatefulWidget {
+  @override
+  State<ProductHomeScreen> createState() => _ProductHomeScreenState();
+}
+
+class _ProductHomeScreenState extends State<ProductHomeScreen> {
   @override
   var controller = Get.put(HomeController());
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(

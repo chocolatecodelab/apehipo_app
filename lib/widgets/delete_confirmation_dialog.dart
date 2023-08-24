@@ -71,7 +71,9 @@ class _DeleteConfirmationDialogState extends State<DeleteConfirmationDialog> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                            message: "Anda berhasil menghapus produk");
+                          message: "Anda berhasil menghapus produk",
+                          icon: Icons.check_circle_outline,
+                        );
                       },
                     );
                     if (confirmationResult == true) {

@@ -22,6 +22,8 @@ class CatalogTambahScreen extends StatefulWidget {
 }
 
 class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
+  var controller = Get.put(CatalogController());
+  String selectedValue = 'Sayuran'; // Nilai terpilih dari dropdown
   int amount = 1;
   bool isPreOrder = false;
   XFile? _selectedImage;
@@ -44,7 +46,6 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
   }
 
   @override
-  var controller = Get.put(CatalogController());
   Widget build(BuildContext context) {
     final formFieldKey = GlobalKey<FormState>();
     return Scaffold(
@@ -56,26 +57,26 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
-          onPressed: () async {
-            bool? confirmationResult = await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmationDialog(
-                    message:
-                        "Apakah anda yakin ingin meninggalkan halaman ini?");
-              },
-            );
-            if (confirmationResult == true) {
-              controller.clearData();
-              Get.to(CatalogScreen());
-              // SuccessConfirmationDialog(
-              //     message: "Anda berhasil menyimpan perubahan");
-            }
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   color: Colors.black,
+        //   onPressed: () async {
+        //     bool? confirmationResult = await showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmationDialog(
+        //             message:
+        //                 "Apakah anda yakin ingin meninggalkan halaman ini?");
+        //       },
+        //     );
+        //     if (confirmationResult == true) {
+        //       controller.clearData();
+        //       Get.to(CatalogScreen());
+        //       // SuccessConfirmationDialog(
+        //       //     message: "Anda berhasil menyimpan perubahan");
+        //     }
+        //   },
+        // ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
@@ -108,61 +109,38 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
             SizedBox(
               height: 15,
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 10,
-                ),
-                // Expanded(
-                //   child: Column(
-                //     children: [
-                //       // Image(image: AssetImage(widget.katalogItem.imagePath)),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       getPilihGambar("Pilih gambar")
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: 5,
-                ),
-                // Expanded(
-                //   child: Column(
-                //     children: [
-                //       // Image(image: AssetImage(widget.katalogItem.imagePath)),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       getPilihGambar("Pilih gambar")
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: 5,
-                ),
-                // Expanded(
-                //   child: Column(
-                //     children: [
-                //       // Image(image: AssetImage(widget.katalogItem.imagePath)),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       getPilihGambar("Pilih gambar")
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Form(
                 key: formFieldKey,
                 child: Column(
                   children: [
+                    Divider(thickness: 1),
+                    Container(
+                      width: 400,
+                      child: DropdownButtonFormField<String>(
+                        value: selectedValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                            controller.jenis.text = selectedValue;
+                          });
+                        },
+                        items: ['Sayuran', 'Buah']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        decoration: InputDecoration(
+                          labelText: 'Pilih jenis',
+                          border: OutlineInputBorder(),
+                        ),
+                        isDense: true,
+                        isExpanded: true,
+                      ),
+                    ),
                     SizedBox(height: 16),
                     Divider(thickness: 1),
                     getCatalogRowName("Nama"),
@@ -173,8 +151,8 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                     Divider(thickness: 1),
                     getCatalogRowStok("Stok"),
                     Divider(thickness: 1),
-                    getCatalogRowPreOrder("Pre-Order"),
-                    Divider(thickness: 1),
+                    // getCatalogRowPreOrder("Pre-Order"),
+                    // Divider(thickness: 1),
                     SizedBox(height: 16),
                     DynamicButtonWidget(
                       label: "Simpan Perubahan",

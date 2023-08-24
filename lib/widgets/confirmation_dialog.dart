@@ -70,7 +70,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                            message: "Anda berhasil menyimpan perubahan");
+                          message: "Anda berhasil menyimpan perubahan",
+                          icon: Icons.check_circle_outline,
+                        );
                       },
                     );
                     if (confirmationResult == true) {

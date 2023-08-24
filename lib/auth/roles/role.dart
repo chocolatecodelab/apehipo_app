@@ -1,8 +1,10 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/auth/register/register_consumer.dart';
 import 'package:apehipo_app/auth/register/register_hydroponic_farmer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RolePage extends StatefulWidget {
   static const String id = "role_page";
@@ -13,6 +15,7 @@ class RolePage extends StatefulWidget {
 }
 
 class _RolePageState extends State<RolePage> {
+  var controller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +79,7 @@ class _RolePageState extends State<RolePage> {
                   onTap: () => {
                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (BuildContext context) {
+                        controller.role.text = "petani";
                         return RegisterHydroponicFarmer();
                       },
                     )),
@@ -101,6 +105,7 @@ class _RolePageState extends State<RolePage> {
                   onTap: () => {
                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (BuildContext context) {
+                        controller.role.text = "konsumen";
                         return RegisterConsumer();
                       },
                     )),

@@ -1,9 +1,13 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/roles/role.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/splash/welcome_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+import 'package:apehipo_app/widgets/confirmation_dialog.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = "login_page";
@@ -16,11 +20,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _signInGlobalKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   bool passwordSee = true;
 
   @override
+  var controller = Get.put(AuthController());
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
@@ -45,10 +48,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             title: Text(
               'APEHIPO',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black
-              ),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
             centerTitle: true,
           ),
@@ -76,7 +77,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 const Center(
                   child: Text(
                     "You've been missed",
@@ -88,53 +91,53 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  height: 45,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        )),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 25,
-                          height: 25,
-                          child: Image.asset("../assets/images/ic_google.png"),
-                        ), // Tambahkan jarak horizontal antara ikon dan teks
-                        Text(
-                          '  Masuk dengan Google',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onPressed: () => {},
-                  ),
-                ),
+                // Container(
+                //   height: 45,
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //         elevation: 0,
+                //         backgroundColor: Colors.grey[300],
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(25),
+                //         )),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         SizedBox(
+                //           width: 25,
+                //           height: 25,
+                //           child: Image.asset("../assets/images/ic_google.png"),
+                //         ), // Tambahkan jarak horizontal antara ikon dan teks
+                //         Text(
+                //           '  Masuk dengan Google',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.normal,
+                //             color: Colors.black,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     onPressed: () => {},
+                //   ),
+                // ),
                 SizedBox(height: 10),
-                Text(
-                  'atau',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
+                // Text(
+                //   'atau',
+                //   style: TextStyle(
+                //     fontSize: 15,
+                //     fontWeight: FontWeight.w500,
+                //     color: Colors.black,
+                //   ),
+                // ),
                 SizedBox(height: 0),
                 Form(
                   key: _signInGlobalKey,
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: emailController,
+                        controller: controller.username,
                         // validator: AuthValidator.isEmailValid,
                         decoration: const InputDecoration(
                           hintText: "Username",
@@ -149,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        controller: passwordController,
+                        controller: controller.password,
                         obscureText: passwordSee,
                         // validator: AuthValidator.isPasswordValid,
                         decoration: InputDecoration(
@@ -184,13 +187,41 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () => {
-                      Navigator.of(context)
-                          .pushReplacement(new MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return DashboardScreen();
-                        },
-                      )),
+                    onPressed: () async {
+                      String? loginResult = await controller.doLogin();
+                      if (loginResult == "sukses") {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: "Anda berhasil login",
+                              icon: Icons.check_circle_outline,
+                            );
+                          },
+                        );
+                        Get.offAll(
+                            DashboardScreen()); // Pindah ke DashboardScreen setelah dialog sukses login
+                      } else if (loginResult == "gagal") {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: "Anda gagal login",
+                              icon: Icons.close_rounded,
+                            );
+                          },
+                        );
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: loginResult,
+                              icon: Icons.close_rounded,
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
@@ -229,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
   // void signIn() {
   //   if (_signInGlobalKey.currentState!.validate()) {
   //     final message = authController.login(
-  //       emailController.text.trim(),
+  //       userController.text.trim(),
   //       passwordController.text.trim(),
   //     );
   //     ScaffoldMessenger.of(context).showSnackBar(
@@ -246,17 +277,17 @@ class _LoginPageState extends State<LoginPage> {
   //     );
   //     if (message["next"] == "next") {
   //       AppWidget.isLogin = true;
-  //       AppWidget.loggedUser["email"] = emailController.text.trim();
+  //       AppWidget.loggedUser["email"] = userController.text.trim();
   //       AppWidget.loggedUser["password"] = passwordController.text.trim();
   //       Navigator.pushNamed(context, AdminPage.id);
   //     }
   //   }
   // }
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   userController.dispose();
+  //   passwordController.dispose();
+  //   super.dispose();
+  // }
 }

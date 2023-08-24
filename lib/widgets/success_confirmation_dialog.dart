@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 
 class SuccessConfirmationDialog extends StatefulWidget {
   final String message;
+  final IconData icon;
 
-  SuccessConfirmationDialog({required this.message});
+  SuccessConfirmationDialog({required this.message, required this.icon});
 
   @override
   _SuccessConfirmationDialogState createState() =>
@@ -28,13 +29,15 @@ class _SuccessConfirmationDialogState extends State<SuccessConfirmationDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.check_circle_outline,
-              color: AppColors.primaryColor,
+              widget.icon,
+              color: widget.icon == Icons.check_circle_outline
+                  ? AppColors.primaryColor
+                  : const Color.fromARGB(255, 182, 51, 42),
               size: 48,
             ),
             SizedBox(height: 20),
             Text(
-              'Sukses',
+              'Informasi',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

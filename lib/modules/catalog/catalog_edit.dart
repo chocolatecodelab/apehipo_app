@@ -4,19 +4,13 @@ import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import '../account/models/katalog_item.dart';
-import '../account/favourite_toggle_icon_widget.dart';
-import 'package:apehipo_app/widgets/item_counter_widget.dart';
 
 // import 'favourite_toggle_icon_widget.dart';
 
@@ -37,12 +31,6 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
   var controller = Get.put(CatalogController());
   final formFieldKey = GlobalKey<FormState>();
 
-  // TextEditingController _priceController = TextEditingController();
-  // TextEditingController _stockController = TextEditingController();
-  // TextEditingController _descriptionController = TextEditingController();
-  // TextEditingController _nameController = TextEditingController();
-  // XFile? _selectedImage;
-
   void initState() {
     super.initState();
 
@@ -52,6 +40,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
     controller.harga.text = widget.katalogItem.harga.toString();
     controller.stok.text = widget.katalogItem.stok.toString();
     controller.foto.text = widget.katalogItem.foto;
+    controller.status.text = widget.katalogItem.status;
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -83,25 +72,25 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black,
-          onPressed: () async {
-            bool? confirmationResult = await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return ConfirmationDialog(
-                    message: "Apakah anda yakin ingin meninggalkan perubahan?");
-              },
-            );
-            if (confirmationResult == true) {
-              controller.clearData();
-              Get.off(CatalogScreen());
-              // SuccessConfirmationDialog(
-              //     message: "Anda berhasil menyimpan perubahan");
-            }
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   color: Colors.black,
+        //   onPressed: () async {
+        //     bool? confirmationResult = await showDialog(
+        //       context: context,
+        //       builder: (BuildContext context) {
+        //         return ConfirmationDialog(
+        //             message: "Apakah anda yakin ingin meninggalkan perubahan?");
+        //       },
+        //     );
+        //     if (confirmationResult == true) {
+        //       controller.clearData();
+        //       Get.off(CatalogScreen());
+        //       // SuccessConfirmationDialog(
+        //       //     message: "Anda berhasil menyimpan perubahan");
+        //     }
+        //   },
+        // ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
@@ -219,7 +208,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                         if (confirmationResult == true) {
                           controller.updateData(
                             widget.katalogItem.kode,
-                            _selectedImage!,
+                            _selectedImage,
                           );
                           // SuccessConfirmationDialog(
                           //     message: "Anda berhasil menyimpan perubahan");

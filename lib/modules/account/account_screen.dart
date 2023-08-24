@@ -1,9 +1,14 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/login/login.dart';
+import 'package:apehipo_app/modules/account/account_controller.dart';
+import 'package:apehipo_app/modules/account/account_model.dart';
+import 'package:apehipo_app/modules/dashboard/navigator_item.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
 import 'package:apehipo_app/modules/transaction/transcation_screen_petani.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_logout.dart';
+import 'package:apehipo_app/widgets/preview_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,10 +18,19 @@ import 'package:apehipo_app/modules/account/account_edit.dart';
 import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/modules/account/account_toko.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+import 'package:get/get.dart';
 
 import 'account_item.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  var auth = Get.put(AuthController());
+  var controller = Get.put(AccountController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,40 +42,43 @@ class AccountScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                ListTile(
-                  leading: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditProfilePage(),
-                          ));
-                    },
-                    child: SizedBox(
-                      width: 65,
-                      height: 65,
-                      child: getImageHeader(),
-                    ),
-                  ),
-                  title: AppText(
-                    text: "Muhammad Nazar Gunawan",
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  subtitle: AppText(
-                    text: "Petani",
-                    color: Color(0xff7C7C7C),
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16,
-                  ),
-                ),
+                Obx(() => controller.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.map.isEmpty
+                        ? Center(child: Text("Tidak ada data"))
+                        : ListTile(
+                            leading: GestureDetector(
+                              onTap: () {
+                                showModal(context);
+                              },
+                              child: SizedBox(
+                                width: 65,
+                                height: 65,
+                                child: getImageHeader(controller.foto.text),
+                              ),
+                            ),
+                            title: AppText(
+                              text: auth.box.read("nama"),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            subtitle: AppText(
+                              text: auth.box.read("role"),
+                              color: Color(0xff7C7C7C),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                            ),
+                          )),
                 SizedBox(
                   height: 15,
                 ),
                 // getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
                 Column(
                   children: getChildrenWithSeperator(
-                    widgets: accountItems.map((e) {
+                    widgets: accountItems
+                        .where((item) => shouldDisplay(
+                            item)) // Ganti shouldDisplay dengan kondisi yang sesuai
+                        .map((e) {
                       return getAccountItemWidget(context, e);
                     }).toList(),
                     seperator: Divider(
@@ -82,6 +99,45 @@ class AccountScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void showModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.network(controller.foto.text),
+              ElevatedButton(
+                onPressed: () {
+                  // Tutup modal saat tombol ditekan
+                  Navigator.of(context).pop();
+                },
+                child: Text('Tutup'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  bool shouldDisplay(AccountItem item) {
+    if (auth.box.read("role") == "petani") {
+      if (item.label == "Transaksi" || item.label == "Status Pembelian") {
+        return false;
+      }
+      return true;
+    } else {
+      if (item.label == "Transaksi Petani" ||
+          item.label == "Edit Kebun" ||
+          item.label == "Katalog") {
+        return false;
+      }
+      return true;
+    }
   }
 
   Widget getHorizontalItemSlider() {
@@ -206,7 +262,6 @@ class AccountScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: AppColors.primaryColor),
             ),
-            Container()
           ],
         ),
         onPressed: () async {
@@ -218,7 +273,7 @@ class AccountScreen extends StatelessWidget {
             },
           );
           if (confirmationResult == true) {
-            print("Hello");
+            auth.logOut();
           } else {
             print("gagal");
           }
@@ -227,12 +282,18 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
-  Widget getImageHeader() {
-    String imagePath = "assets/images/account_image.jpg";
+  Widget getImageHeader(String foto) {
     return CircleAvatar(
-      radius: 5.0,
-      backgroundImage: AssetImage(imagePath),
+      radius: 64.0,
       backgroundColor: AppColors.primaryColor.withOpacity(0.7),
+      child: ClipOval(
+        child: Image.network(
+          foto,
+          fit: BoxFit.cover,
+          width: 128,
+          height: 128,
+        ),
+      ),
     );
   }
 
@@ -265,10 +326,6 @@ class AccountScreen extends StatelessWidget {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => OrderScreen()));
             break;
-          // case "Pesanan Masuk":
-          //   Navigator.push(context,
-          //       MaterialPageRoute(builder: (context) => PesananPetaniScreen()));
-          //   break;
           case "Transaksi Petani":
             Navigator.push(
                 context,

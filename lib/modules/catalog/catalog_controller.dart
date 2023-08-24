@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,9 +28,10 @@ class CatalogController extends GetxController {
   late TextEditingController foto;
 
   @override
+  var auth = Get.put(AuthController());
   Future<void> onInit() async {
     super.onInit();
-    getAllData();
+    getAllData(auth.box.read("id_user"));
     nama = TextEditingController();
     jenis = TextEditingController();
     harga = TextEditingController();
@@ -40,12 +42,11 @@ class CatalogController extends GetxController {
     foto = TextEditingController();
   }
 
-  getAllData() async {
+  getAllData(id) async {
     try {
       isLoading(true);
-      String baseUrl = '${Api().baseURL}/product';
+      String baseUrl = '${Api().baseURL}/product/$id';
       final response = await http.get(Uri.tryParse(baseUrl)!);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
         List<dynamic> dataTampilJsonList = data['data_tampil'];
@@ -72,7 +73,6 @@ class CatalogController extends GetxController {
       isLoading(true);
       String baseUrl = '${Api().baseURL}/product';
       final response = await http.get(Uri.tryParse(baseUrl)!);
-      print(response.statusCode);
       if (response.statusCode == 200) {
         dataTampilList!.clear();
         dataArsipList!.clear();
@@ -80,7 +80,7 @@ class CatalogController extends GetxController {
     } catch (e) {
     } finally {
       isLoading(true);
-      getAllData();
+      getAllData(auth.box.read("id_user"));
     }
   }
 
@@ -90,12 +90,13 @@ class CatalogController extends GetxController {
     try {
       var map = <String, dynamic>{};
       map['nama'] = nama.text;
-      map['jenis'] = "Sayur";
+      map['jenis'] = jenis.text;
+      print(map['jenis']);
       map['harga'] = harga.text;
       map['stok'] = stok.text;
       map['deskripsi'] = deskripsi.text;
       map['status'] = "arsip";
-      map['id_user'] = "0001";
+      map['id_user'] = auth.box.read("id_user");
       var img = image;
       if (img == null) {
         // Jika gambar tidak dipilih, maka berhentikan proses pengiriman data.
@@ -119,7 +120,6 @@ class CatalogController extends GetxController {
       // Mengirim request dan menunggu responsenya
       var response = await request.send();
       if (response.statusCode == 201) {
-        SuccessConfirmationDialog(message: "Anda berhasil menyimpan perubahan");
       } else {
         // Tangani jika request gagal
         print('Failed to send data: ${response.statusCode}');
@@ -139,6 +139,7 @@ class CatalogController extends GetxController {
     harga.text = "";
     stok.text = "";
     deskripsi.text = "";
+    status.text = "";
   }
 
   Future deleteData(String id) async {
@@ -155,9 +156,6 @@ class CatalogController extends GetxController {
       );
       print("sukses");
       if (response.statusCode == 200) {
-        SuccessConfirmationDialog(
-          message: "Anda berhasil menghapus produk ini",
-        );
       } else {
         print('Failed to send data: ${response.statusCode}');
       }
@@ -168,36 +166,27 @@ class CatalogController extends GetxController {
     }
   }
 
-  updateData(String id, XFile image) async {
+  updateData(String id, XFile? image) async {
     try {
       var request = http.MultipartRequest(
         'POST',
         Uri.tryParse('${Api().baseURL}/product/ubah/$id')!,
       );
 
+      // split nama foto
+      var fotoLama = foto.text.split('/').last;
+
       var map = <String, dynamic>{};
       map['nama'] = nama.text;
-      map['jenis'] = "Sayur";
+      map['jenis'] = jenis.text;
       map['harga'] = harga.text;
       map['stok'] = stok.text;
       map['deskripsi'] = deskripsi.text;
-      map['klasifikasi'] = "biasa";
-      map['status'] = "arsip";
-      map['id_user'] = "0001";
 
-      // Menambahkan data string ke dalam request
-      request.fields['nama'] = nama.text;
-      request.fields['jenis'] = "sayur";
-      request.fields['harga'] = harga.text;
-      request.fields['stok'] = stok.text;
-      request.fields['deskripsi'] = deskripsi.text;
-      request.fields['klasifikasi'] = "biasa";
-      request.fields['status'] = "arsip";
-      request.fields['id_user'] = "0001";
-      print(id);
       map.forEach((key, value) {
         request.fields[key] = value;
       });
+      request.fields['fotoLama'] = fotoLama;
       request.headers['Authorization'] = "";
       // Menambahkan data gambar (image) ke dalam request
       if (image != null) {
@@ -214,10 +203,7 @@ class CatalogController extends GetxController {
       var response = await request.send();
       print(response.statusCode);
       if (response.statusCode == 200) {
-        SuccessConfirmationDialog(message: "Anda berhasil menyimpan perubahan");
-      } else {
-        print("Gagal mengirim data");
-      }
+      } else {}
     } catch (e) {
       Get.snackbar("Gagal", e.toString());
     } finally {
@@ -227,15 +213,24 @@ class CatalogController extends GetxController {
     }
   }
 
-  ubahStatus(id) async {
+  ubahStatus(id, status) async {
     try {
+      String statusProduk =
+          status == "tampil" ? status = "arsip" : status = "tampil";
+      var map = <String, dynamic>{};
+      map['status'] = statusProduk;
       isLoading(true);
-      String baseUrl = '${Api().baseURL}/product/$id';
-      final response = await http.put(Uri.tryParse(baseUrl)!);
+      String baseUrl = '${Api().baseURL}/product/status/$id';
+      final response = await http.post(Uri.tryParse(baseUrl)!, body: map);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+      } else {}
     } catch (e) {
       Get.snackbar("kesalahan", e.toString());
     } finally {
       isLoading(false);
+      clearData();
+      refresh();
     }
   }
 }
