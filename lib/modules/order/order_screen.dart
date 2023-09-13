@@ -1,15 +1,21 @@
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/widgets/order_widget_belum_bayar.dart';
-import 'package:apehipo_app/widgets/order_widget_dibatalkan.dart';
-import 'package:apehipo_app/widgets/order_widget_sudah_bayar.dart';
+import 'package:apehipo_app/modules/order/order_controller.dart';
+import 'package:apehipo_app/modules/order/order_model.dart';
+import 'package:get/get.dart';
+import 'order_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import '../../widgets/confirmation_dialog.dart';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends StatefulWidget {
   @override
+  State<OrderScreen> createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
+  @override
+  var controller = Get.put(OrderController());
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 3,
@@ -98,134 +104,121 @@ class OrderScreen extends StatelessWidget {
           body: TabBarView(children: [
             SafeArea(
                 child: Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      getVerticalItemSliderBelumBayar(penawaranSpesial),
-                    ],
-                  ),
-                ),
+              child: Obx(
+                () => controller.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.dataBelumList!.isEmpty
+                        ? Center(child: Text("Tidak ada data"))
+                        : SingleChildScrollView(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  getVerticalItemSlider(
+                                      controller.dataBelumList!),
+                                ],
+                              ),
+                            ),
+                          ),
               ),
             )),
             SafeArea(
                 child: Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      getVerticalItemSliderSudahBayar(penawaranSpesial),
-                    ],
-                  ),
-                ),
+              child: Obx(
+                () => controller.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.dataSudahList!.isEmpty
+                        ? Center(child: Text("Tidak ada data"))
+                        : SingleChildScrollView(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  getVerticalItemSlider(
+                                      controller.dataSudahList!),
+                                ],
+                              ),
+                            ),
+                          ),
               ),
             )),
             SafeArea(
                 child: Container(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      getVerticalItemSliderDibatalkan(penjualanTerbaik),
-                    ],
-                  ),
-                ),
+              child: Obx(
+                () => controller.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.dataBatalList!.isEmpty
+                        ? Center(child: Text("Tidak ada data"))
+                        : SingleChildScrollView(
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  getVerticalItemSlider(
+                                      controller.dataBatalList!),
+                                ],
+                              ),
+                            ),
+                          ),
               ),
             )),
           ]),
         ));
   }
 
-  Widget getVerticalItemSliderBelumBayar(List<KatalogItem> items) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: 1000,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
-        scrollDirection:
-            Axis.vertical, // Mengubah scrollDirection menjadi vertical
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // onItemClicked(context, items[index]);
-            },
-            child: OrderBelumBayarWidget(
-              item: items[index],
-              heroSuffix: "account_katalog",
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 20, // Mengubah width menjadi height
-          );
-        },
-      ),
-    );
-  }
+  Widget getVerticalItemSlider(List<OrderModel> items) {
+    items.sort((a, b) {
+      // Mengambil angka dari idOrder menggunakan ekstraksi substring
+      int aOrderNumber = int.parse(a.idOrder!
+          .substring(1)); // Mengabaikan karakter pertama (biasanya 'O')
+      int bOrderNumber = int.parse(b.idOrder!.substring(1));
 
-  Widget getVerticalItemSliderSudahBayar(List<KatalogItem> items) {
+      // Membandingkan angka-angka tersebut
+      return bOrderNumber.compareTo(aOrderNumber);
+    });
+    List<OrderModel> filteredItems = [];
+    Set<String> uniqueIds = Set<String>();
+    for (var item in controller.dataBelumList!) {
+      if (!uniqueIds.contains(item.idOrder)) {
+        filteredItems.add(item);
+        uniqueIds.add(item.idOrder!);
+      }
+    }
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 1000,
+      height: 600,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
+        itemCount: filteredItems.length,
         scrollDirection:
             Axis.vertical, // Mengubah scrollDirection menjadi vertical
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // onItemClicked(context, items[index]);
-            },
-            child: OrderSudahBayarWidget(
-              item: items[index],
-              heroSuffix: "account_katalog",
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 20, // Mengubah width menjadi height
-          );
-        },
-      ),
-    );
-  }
+          List<OrderModel> filtered2Items = items
+              .where((x) => x.idOrder == filteredItems[index].idOrder)
+              .toList();
 
-  Widget getVerticalItemSliderDibatalkan(List<KatalogItem> items) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: 1000,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
-        scrollDirection:
-            Axis.vertical, // Mengubah scrollDirection menjadi vertical
-        itemBuilder: (context, index) {
+          // print(filtered2Items[0].idOrder);
+          // print(filtered2Items[1].idOrder);
           return GestureDetector(
             onTap: () {
               // onItemClicked(context, items[index]);
             },
-            child: OrderDibatalkanWidget(
-              item: items[index],
+            child: OrderWidget(
+              items: filtered2Items,
+              item: filteredItems[index],
               heroSuffix: "account_katalog",
             ),
           );
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
-            height: 20, // Mengubah width menjadi height
+            height: 10, // Mengubah width menjadi height
           );
         },
       ),

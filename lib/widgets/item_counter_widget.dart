@@ -1,5 +1,7 @@
+import 'package:apehipo_app/modules/cart/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+import 'package:get/get.dart';
 
 class ItemCounterWidget extends StatefulWidget {
   final Function? onAmountChanged;
@@ -14,6 +16,7 @@ class _ItemCounterWidgetState extends State<ItemCounterWidget> {
   int amount = 1;
 
   @override
+  var controller = Get.put(CartController());
   Widget build(BuildContext context) {
     return Row(
       children: [

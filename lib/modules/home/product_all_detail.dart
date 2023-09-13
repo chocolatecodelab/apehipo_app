@@ -7,6 +7,7 @@ import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
 // import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
 import 'package:apehipo_app/screens/profile_screen.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
@@ -35,7 +36,7 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Detail Product',
+            'Rincian Produk',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -107,7 +108,7 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                     ),
                     Spacer(),
                     Divider(thickness: 1),
-                    getProfile(),
+                    getProfile(widget.productItem),
                     Divider(thickness: 1),
                     getProductDataRowWidget("Deskripsi",
                         rincian: widget.productItem.deskripsi, key: "products"),
@@ -123,13 +124,14 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                     // ),
                     Spacer(),
                     AppButton(
-                      label: "Add To Basket",
+                      label: "Tambah ke Keranjang",
                       onPressed: () async {
                         String result = await controller.tambahData(
                             widget.productItem.kode,
                             widget.productItem.nama,
                             widget.productItem.harga,
-                            widget.productItem.foto);
+                            widget.productItem.foto,
+                            this.amount);
                         if (result == "sukses") {
                           await showDialog(
                               context: context,
@@ -137,6 +139,22 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                                 return SuccessConfirmationDialog(
                                     message: "Anda berhasil menambahkan produk",
                                     icon: Icons.check_circle_outline);
+                              });
+                        } else if (result == "gagal") {
+                          await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                    message: "Gagal menambahkan produk",
+                                    icon: Icons.close_rounded);
+                              });
+                        } else {
+                          await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                    message: "Produk sudah ditambahkan",
+                                    icon: Icons.close_rounded);
                               });
                         }
                       },
@@ -175,7 +193,7 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
           top: Radius.circular(10),
         ),
         child: Image.network(
-          "https://asset.kompas.com/crops/fIaNWDAjRZ8OzH-6PTSsBisOyA0=/87x0:759x448/750x500/data/photo/2023/03/05/64049a48c2ac7.jpg",
+          widget.productItem.foto,
           width: MediaQuery.of(context).size.width,
           height: 75,
           fit: BoxFit.cover,
@@ -252,26 +270,26 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
   //   );
   // }
 
-  Widget getProfile() {
+  Widget getProfile(HomeModel productItem) {
     return InkWell(
       onTap: () => {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProfileScreen(),
+              builder: (context) => ProfileScreen(productItem),
             ))
       },
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/account_image.jpg"))),
+          CircleAvatar(
+            child: ClipOval(
+              child: Image.network(
+                productItem.fotoPetani,
+                fit: BoxFit.cover,
+                width: 64,
+                height: 64,
+              ),
+            ),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -282,7 +300,7 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Petani Kode",
+                      productItem.namaPetani,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -292,7 +310,9 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: "Banjarmasin",
+                        text: productItem.alamatPetani.length <= 30
+                            ? productItem.alamatPetani
+                            : '${productItem.alamatPetani.substring(0, 30)}...',
                         style: TextStyle(
                           color: Colors
                               .black, // Ganti warna teks "Banjarmasin" dengan warna lain sesuai keinginan Anda
@@ -302,6 +322,8 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                           // Add other text styles as needed
                         ),
                       ),
+                      overflow: TextOverflow
+                          .ellipsis, // Efek elipsis jika teks terlalu panjang
                     ),
                   ],
                 ),

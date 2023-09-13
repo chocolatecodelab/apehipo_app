@@ -138,7 +138,7 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
     filteredItems = filteredItems.take(3).toList();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 250,
+      height: 225,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: filteredItems.length,
@@ -188,7 +188,7 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
         ),
         Spacer(),
         GestureDetector(
-          onTap: () => {Get.to(BestSellingOffer(key, text, items))},
+          onTap: () => {Get.to(KlasifikasiScreen(key, text, items))},
           child: Text("See All",
               style: TextStyle(
                   fontSize: 18,

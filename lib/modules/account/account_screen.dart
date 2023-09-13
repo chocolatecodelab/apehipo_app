@@ -1,14 +1,10 @@
 import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/modules/account/account_controller.dart';
-import 'package:apehipo_app/modules/account/account_model.dart';
-import 'package:apehipo_app/modules/dashboard/navigator_item.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
 import 'package:apehipo_app/modules/transaction/transcation_screen_petani.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_logout.dart';
-import 'package:apehipo_app/widgets/preview_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,6 +27,17 @@ class _AccountScreenState extends State<AccountScreen> {
   var auth = Get.put(AuthController());
   var controller = Get.put(AccountController());
 
+  void initState() {
+    super.initState();
+
+    // Set nilai awal _nameController jika widget.katalogItem tidak null
+    if (controller.map['foto'] == null) {
+      controller.isLoading(true);
+    } else {
+      controller.foto.text = controller.map['foto'];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +59,13 @@ class _AccountScreenState extends State<AccountScreen> {
                                 showModal(context);
                               },
                               child: SizedBox(
-                                width: 65,
-                                height: 65,
+                                width: 60,
+                                height: 85,
                                 child: getImageHeader(controller.foto.text),
                               ),
                             ),
                             title: AppText(
-                              text: auth.box.read("nama"),
+                              text: controller.nama.text,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),

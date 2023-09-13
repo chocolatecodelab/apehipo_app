@@ -57,26 +57,6 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back),
-        //   color: Colors.black,
-        //   onPressed: () async {
-        //     bool? confirmationResult = await showDialog(
-        //       context: context,
-        //       builder: (BuildContext context) {
-        //         return ConfirmationDialog(
-        //             message:
-        //                 "Apakah anda yakin ingin meninggalkan halaman ini?");
-        //       },
-        //     );
-        //     if (confirmationResult == true) {
-        //       controller.clearData();
-        //       Get.to(CatalogScreen());
-        //       // SuccessConfirmationDialog(
-        //       //     message: "Anda berhasil menyimpan perubahan");
-        //     }
-        //   },
-        // ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
@@ -165,7 +145,7 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
                           builder: (BuildContext context) {
                             return ConfirmationDialog(
                                 message:
-                                    "Apakah anda yakin ingin menyimpan perubahan?");
+                                    "Apakah anda yakin ingin menambah produk ini?");
                           },
                         );
                         if (confirmationResult == true) {

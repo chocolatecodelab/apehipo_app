@@ -14,6 +14,8 @@ import '../../services/api.dart';
 class CatalogController extends GetxController {
   List<CatalogModel>? dataTampilList = [];
   List<CatalogModel>? dataArsipList = [];
+  List<CatalogModel> dataGabungList = [];
+  int jumlahDataGabung = 0;
   XFile? image;
   var isLoading = false.obs;
   final ImagePicker picker = ImagePicker();
@@ -60,6 +62,11 @@ class CatalogController extends GetxController {
           CatalogModel catalogModel = CatalogModel.fromJson(item);
           dataArsipList!.add(catalogModel);
         }
+        List<CatalogModel> dataGabungList = [
+          ...dataTampilList!,
+          ...dataArsipList!
+        ];
+        jumlahDataGabung = dataGabungList.length;
       }
     } catch (e) {
       Get.snackbar("kesalahan", e.toString());
@@ -91,7 +98,6 @@ class CatalogController extends GetxController {
       var map = <String, dynamic>{};
       map['nama'] = nama.text;
       map['jenis'] = jenis.text;
-      print(map['jenis']);
       map['harga'] = harga.text;
       map['stok'] = stok.text;
       map['deskripsi'] = deskripsi.text;
@@ -172,7 +178,6 @@ class CatalogController extends GetxController {
         'POST',
         Uri.tryParse('${Api().baseURL}/product/ubah/$id')!,
       );
-
       // split nama foto
       var fotoLama = foto.text.split('/').last;
 
@@ -182,7 +187,6 @@ class CatalogController extends GetxController {
       map['harga'] = harga.text;
       map['stok'] = stok.text;
       map['deskripsi'] = deskripsi.text;
-
       map.forEach((key, value) {
         request.fields[key] = value;
       });
@@ -198,7 +202,6 @@ class CatalogController extends GetxController {
             filename: imgFileName);
         request.files.add(imgMultiPart);
       }
-
       // Mengirim request dan menunggu responsenya
       var response = await request.send();
       print(response.statusCode);

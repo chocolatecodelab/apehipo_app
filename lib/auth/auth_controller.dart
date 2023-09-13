@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:apehipo_app/auth/auth_model.dart';
 import 'package:apehipo_app/auth/login/login.dart';
+import 'package:apehipo_app/modules/account/account_controller.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -119,6 +120,7 @@ class AuthController extends GetxController {
     box.remove("id_user");
     box.remove("nama");
     box.remove("role");
+    clearData();
     await Get.offAll(LoginPage());
   }
 }

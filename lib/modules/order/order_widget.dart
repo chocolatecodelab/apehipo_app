@@ -1,37 +1,41 @@
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
+import 'package:apehipo_app/modules/order/order_model.dart';
+import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
 import 'package:flutter/material.dart';
-import 'LineSeparator.dart';
+import 'package:apehipo_app/widgets/LineSeparator.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-// import 'package:apehipo_app/modules/account/catalog_details.dart';
 
-class OrderDibatalkanWidget extends StatelessWidget {
-  OrderDibatalkanWidget({
+class OrderWidget extends StatefulWidget {
+  OrderWidget({
     Key? key,
+    required this.items,
     required this.item,
     this.heroSuffix,
     this.onAddPressed,
   }) : super(key: key);
 
-  final KatalogItem item;
+  final List<OrderModel> items;
+  final OrderModel item;
   final String? heroSuffix;
   final VoidCallback? onAddPressed;
 
-  final double width = 174;
-  final double height = 230;
+  @override
+  State<OrderWidget> createState() => _OrderWidgetState();
+}
+
+class _OrderWidgetState extends State<OrderWidget> {
   final Color borderColor = Color(0xffE2E2E2);
+
   final double borderRadius = 18;
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.items.length);
     return Container(
-      width: width,
-      height: height,
       decoration: BoxDecoration(
         border: Border.all(
           color: borderColor,
@@ -41,83 +45,103 @@ class OrderDibatalkanWidget extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 15,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              Hero(
-                tag: "KatalogItem:" + item.name + "-" + (heroSuffix ?? ""),
-                child: imageWidget(),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 15,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListView.builder(
+                shrinkWrap: true, // Ini penting untuk membatasi tinggi ListView
+                physics:
+                    NeverScrollableScrollPhysics(), // Nonaktifkan guliran ListView
+                itemCount: widget.items.length,
+                itemBuilder: (context, index) {
+                  final item = widget.items[index];
+                  return Row(
+                    children: [
+                      Hero(
+                        tag:
+                            "KatalogItem:${item.nama}-${widget.heroSuffix ?? ""}",
+                        child: imageWidget(item.foto),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppText(
+                              text: item.nama,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            AppText(
+                              text: "x" + item.amount,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            AppText(
+                              text: "Rp${item.harga}",
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               SizedBox(
-                width: 10,
+                height: 15,
               ),
-              Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              LineSeparator(
+                height: 1,
+                color: const Color.fromARGB(255, 211, 211, 211),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              AppText(
+                text: "Batas akhir pembayaran: 12 Agustus 2023",
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              AppText(
+                text: "Total: Rp${widget.item.totalHarga}",
+                textAlign: TextAlign.right,
+                fontWeight: FontWeight.bold,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  AppText(
-                    text: item.name,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  getCancelButton(
+                    context,
+                    "Batalkan",
                   ),
-                  AppText(
-                    text: "x2",
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: 20,
                   ),
-                  AppText(
-                    text: "\$${item.price.toStringAsFixed(2)}",
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  getBayarButton(context, "Bayar")
                 ],
-              )),
-            ]),
-            SizedBox(
-              height: 15,
-            ),
-            LineSeparator(
-              height: 1,
-              color: const Color.fromARGB(255, 211, 211, 211),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            AppText(
-              text: "Batas akhir pembayaran: 12 Agustus 2023",
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            AppText(
-              text: "Total: \$${item.price.toString()}",
-              textAlign: TextAlign.right,
-              fontWeight: FontWeight.bold,
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-              ],
-            )
-          ],
-        ),
-      ),
+              )
+            ],
+          )),
     );
   }
 
-  Widget imageWidget() {
+  Widget imageWidget(String foto) {
     return Container(
-      child: Image.asset(item.imagePath),
+      child: Image.network(foto),
       width: 100,
       height: 100,
     );
@@ -125,7 +149,7 @@ class OrderDibatalkanWidget extends StatelessWidget {
 
   Widget editWidget() {
     return GestureDetector(
-      onTap: onAddPressed,
+      onTap: widget.onAddPressed,
       child: Container(
         height: 45,
         width: 45,
@@ -149,17 +173,24 @@ class OrderDibatalkanWidget extends StatelessWidget {
   }
 }
 
-Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
+Widget getCancelButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
-    width: 340,
+    width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DashboardScreen(),
-            )),
+      onPressed: () async {
+        bool? confirmationResult = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ConfirmationDialogBatal(
+                message: "Apakah anda yakin ingin membatalkan pesanan?");
+          },
+        );
+        if (confirmationResult == true) {
+          print("Hello");
+        } else {
+          print("gagal");
+        }
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
@@ -167,7 +198,7 @@ Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
           borderRadius: BorderRadius.circular(18),
         ),
         elevation: 0,
-        backgroundColor: Colors.green[400],
+        backgroundColor: Colors.red[400],
         textStyle: TextStyle(
           color: Colors.white,
           fontFamily: gilroyFontFamily,
@@ -194,7 +225,7 @@ Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
                 width: 8,
               ),
               Icon(
-                Icons.card_travel_rounded,
+                Icons.cancel_outlined,
                 size: 18,
                 color: Colors.white,
               ),
@@ -212,17 +243,17 @@ Widget getBeliLagi(BuildContext context, label, {Widget? trailingWidget}) {
   );
 }
 
-Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
+Widget getBayarButton(BuildContext context, label, {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
     child: ElevatedButton(
       onPressed: () => {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TransactionScreen(),
-            )),
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => PaymentScreen(),
+        //     )),
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
@@ -257,7 +288,7 @@ Widget getTrackButton(BuildContext context, label, {Widget? trailingWidget}) {
                 width: 8,
               ),
               Icon(
-                Icons.track_changes_outlined,
+                Icons.payment_outlined,
                 size: 18,
                 color: Colors.white,
               ),

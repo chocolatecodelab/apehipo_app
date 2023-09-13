@@ -23,8 +23,6 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
 
   final double borderRadius = 18;
 
-  int amount = 1;
-
   @override
   var controller = Get.put(CartController());
   Widget build(BuildContext context) {
@@ -42,6 +40,9 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 25,
+                ),
                 AppText(
                   text: widget.item.nama,
                   fontSize: 16,
@@ -50,44 +51,32 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
                 SizedBox(
                   height: 5,
                 ),
-                // AppText(
-                //     text: widget.item.description,
-                //     fontSize: 14,
-                //     fontWeight: FontWeight.bold,
-                //     color: AppColors.darkGrey),
                 SizedBox(
                   height: 12,
                 ),
-                Spacer(),
-                ItemCounterWidget(
-                  onAmountChanged: (newAmount) {
-                    setState(() {
-                      amount = newAmount;
-                    });
-                  },
-                )
+                // Spacer(),
+                Container(
+                  width: 80,
+                  child: AppText(
+                    text: "Rp${getPrice().toStringAsFixed(0)}",
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
               ],
             ),
             Column(
               children: [
                 IconButton(
                   onPressed: () {
-                    controller.deleteData(widget.item.id);
+                    controller.deleteData(widget.item.id, widget.item.amount);
                     // Tindakan yang ingin dilakukan saat tombol ditekan
                   },
                   icon: Icon(Icons.close),
                 ),
                 Spacer(
                   flex: 5,
-                ),
-                Container(
-                  width: 70,
-                  child: AppText(
-                    text: "\$${getPrice().toStringAsFixed(2)}",
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    textAlign: TextAlign.right,
-                  ),
                 ),
                 Spacer(),
               ],
@@ -101,12 +90,12 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   Widget imageWidget() {
     return Container(
       width: 100,
-      child: Image.asset(widget.item.foto),
+      child: Image.network(widget.item.foto),
     );
   }
 
   double getPrice() {
     double harga = double.parse(widget.item.harga);
-    return harga * amount;
+    return harga * widget.item.amount;
   }
 }

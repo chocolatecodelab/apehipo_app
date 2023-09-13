@@ -24,6 +24,7 @@ class HomeController extends GetxController {
       isLoading(true);
       String baseUrl = '${Api().baseURL}/dashboard';
       final response = await http.get(Uri.tryParse(baseUrl)!);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
         List<dynamic> semuaProdukJsonList = data['semua_produk'];
@@ -46,10 +47,6 @@ class HomeController extends GetxController {
           HomeModel homeModel = HomeModel.fromJson(item);
           dataListLaris!.add(homeModel);
         }
-        // for (var item in sedangLarisJsonList) {
-        //   HomeModel homeModel = HomeModel.fromJson(item);
-        //   dataList!.add(homeModel);
-        // }
       } else {
         Get.snackbar("Pesan", "Terjadi kesalahan sistem");
       }

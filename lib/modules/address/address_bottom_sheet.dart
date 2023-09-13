@@ -1,7 +1,9 @@
+import 'package:apehipo_app/modules/account/account_controller.dart';
 import 'package:apehipo_app/modules/address/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:get/get.dart';
 
 import '../../screens/order_failed_dialog.dart';
 
@@ -11,6 +13,7 @@ class AddressBottom extends StatefulWidget {
 }
 
 class _AddressBottomState extends State<AddressBottom> {
+  var controller = Get.put(AccountController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +29,7 @@ class _AddressBottomState extends State<AddressBottom> {
           Row(
             children: [
               AppText(
-                text: "Tambah Alamat",
+                text: "Alamat",
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),
@@ -46,6 +49,8 @@ class _AddressBottomState extends State<AddressBottom> {
             height: 45,
           ),
           TextFormField(
+            enabled: false,
+            controller: controller.alamat,
             maxLines: 20,
             minLines: 10,
             keyboardType: TextInputType.multiline,
@@ -62,12 +67,12 @@ class _AddressBottomState extends State<AddressBottom> {
           SizedBox(
             height: 15,
           ),
-          AppButton(
-            label: "Tambah",
-            onPressed: () => {
-              AddressScreen(),
-            },
-          ),
+          // AppButton(
+          //   label: "Simpan Alamat",
+          //   onPressed: () => {
+          //     Get.back(),
+          //   },
+          // ),
         ],
       ),
     );

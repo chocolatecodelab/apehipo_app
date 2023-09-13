@@ -6,18 +6,18 @@ import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BestSellingOffer extends StatefulWidget {
+class KlasifikasiScreen extends StatefulWidget {
   final String? klasifikasi;
   final String title;
   final List<HomeModel>? items;
 
-  const BestSellingOffer(this.klasifikasi, this.title, this.items);
+  const KlasifikasiScreen(this.klasifikasi, this.title, this.items);
 
   @override
-  State<BestSellingOffer> createState() => _BestSellingOfferState();
+  State<KlasifikasiScreen> createState() => _KlasifikasiScreenState();
 }
 
-class _BestSellingOfferState extends State<BestSellingOffer> {
+class _KlasifikasiScreenState extends State<KlasifikasiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +47,10 @@ class _BestSellingOfferState extends State<BestSellingOffer> {
   Widget getItemWidget(List<HomeModel> items) {
     return Container(
         child: GridView.builder(
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(10),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        mainAxisExtent: 225,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),

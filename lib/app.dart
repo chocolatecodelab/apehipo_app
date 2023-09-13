@@ -1,3 +1,4 @@
+import 'package:apehipo_app/splash/splash_screen.dart';
 import 'package:apehipo_app/splash/welcome_screen.dart';
 import 'package:apehipo_app/widgets/dropdown.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: themeData,
-      home: WelcomeScreen(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

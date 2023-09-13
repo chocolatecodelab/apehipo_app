@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/modules/account/account_screen.dart';
 // import 'package:apehipo_app/screens/cart/cart_screen.dart';
-import 'package:apehipo_app/screens/explore_screen.dart';
 import 'package:apehipo_app/modules/home/product_home_screen.dart';
-
-// import '../favourite_screen.dart';
 
 class NavigatorItem {
   final String label;

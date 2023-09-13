@@ -108,7 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     Spacer(),
                     Divider(thickness: 1),
-                    getProfile(),
+                    getProfile(widget.productItem),
                     Divider(thickness: 1),
                     getProductDataRowWidget("Deskripsi",
                         rincian: widget.productItem.deskripsi, key: "products"),
@@ -130,7 +130,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             widget.productItem.kode,
                             widget.productItem.nama,
                             widget.productItem.harga,
-                            widget.productItem.foto);
+                            widget.productItem.foto,
+                            this.amount);
                         if (result == "sukses") {
                           await showDialog(
                               context: context,
@@ -253,26 +254,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   //   );
   // }
 
-  Widget getProfile() {
+  Widget getProfile(HomeModel productItem) {
     return InkWell(
       onTap: () => {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProfileScreen(),
+              builder: (context) => ProfileScreen(productItem),
             ))
       },
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/account_image.jpg"))),
+          CircleAvatar(
+            child: ClipOval(
+              child: Image.network(
+                productItem.fotoPetani,
+                fit: BoxFit.cover,
+                width: 64,
+                height: 64,
+              ),
+            ),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -283,7 +284,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Petani Kode",
+                      productItem.namaPetani,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -293,7 +294,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: "Banjarmasin",
+                        text: productItem.alamatPetani.length <= 30
+                            ? productItem.alamatPetani
+                            : '${productItem.alamatPetani.substring(0, 30)}...',
                         style: TextStyle(
                           color: Colors
                               .black, // Ganti warna teks "Banjarmasin" dengan warna lain sesuai keinginan Anda

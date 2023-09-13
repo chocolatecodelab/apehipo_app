@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:apehipo_app/auth/auth_controller.dart';
+import 'package:apehipo_app/modules/account/account_screen.dart';
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/modules/home/product_home_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'account_model.dart';
@@ -36,7 +39,9 @@ class AccountController extends GetxController {
     alamat = TextEditingController();
     noTelpon = TextEditingController();
     foto = TextEditingController();
-    noRekening = TextEditingController();
+    if (auth.box.read("role") == "petani") {
+      noRekening = TextEditingController();
+    }
     role = TextEditingController();
   }
 
@@ -54,7 +59,9 @@ class AccountController extends GetxController {
         email.text = map['email'];
         alamat.text = map['alamat'];
         noTelpon.text = map['no_telpon'];
-        noRekening.text = map['no_rekening'];
+        if (role.text == "petani") {
+          noRekening.text = map['no_rekening'];
+        }
         foto.text = map['foto'];
       }
     } catch (e) {
@@ -77,7 +84,10 @@ class AccountController extends GetxController {
       map['email'] = email.text;
       map['alamat'] = alamat.text;
       map['no_telpon'] = noTelpon.text;
-      map['no_rekening'] = noRekening.text;
+      if (role.text == "petani") {
+        map['no_rekening'] = noRekening.text;
+      }
+
       map['role'] = role.text;
 
       // Menambahkan data string ke dalam request
@@ -86,7 +96,9 @@ class AccountController extends GetxController {
       request.fields['email'] = email.text;
       request.fields['alamat'] = alamat.text;
       request.fields['no_telpon'] = noTelpon.text;
-      request.fields['no_rekening'] = noRekening.text;
+      if (role.text == "petani") {
+        request.fields['no_rekening'] = noRekening.text;
+      }
       request.fields['role'] = role.text;
       print(id);
       map.forEach((key, value) {

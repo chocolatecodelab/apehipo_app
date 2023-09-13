@@ -30,6 +30,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
   XFile? _selectedImage;
   var controller = Get.put(CatalogController());
   final formFieldKey = GlobalKey<FormState>();
+  String selectedValue = 'Sayuran';
 
   void initState() {
     super.initState();
@@ -128,48 +129,6 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                // Expanded(
-                //   child: Column(
-                //     children: [
-                //       Image(image: AssetImage(widget.katalogItem.imagePath)),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       getPilihGambar("Pilih gambar")
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: 5,
-                ),
-                // Expanded(
-                //   child: Column(
-                //     children: [
-                //       Image(image: AssetImage(widget.katalogItem.imagePath)),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       getPilihGambar("Pilih gambar")
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: 5,
-                ),
-                // Expanded(
-                //   child: Column(
-                //     children: [
-                //       Image(image: AssetImage(widget.katalogItem.imagePath)),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       getPilihGambar("Pilih gambar")
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: 10,
-                ),
               ],
             ),
             Padding(
@@ -178,6 +137,34 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                 key: formFieldKey,
                 child: Column(
                   children: [
+                    Divider(
+                      thickness: 1,
+                    ),
+                    Container(
+                      width: 400,
+                      child: DropdownButtonFormField<String>(
+                        value: selectedValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                            controller.jenis.text = selectedValue;
+                          });
+                        },
+                        items: ['Sayuran', 'Buah']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        decoration: InputDecoration(
+                          labelText: 'Pilih jenis',
+                          border: OutlineInputBorder(),
+                        ),
+                        isDense: true,
+                        isExpanded: true,
+                      ),
+                    ),
                     SizedBox(height: 16),
                     Divider(thickness: 1),
                     getCatalogRowName("Nama"),
@@ -206,6 +193,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                           },
                         );
                         if (confirmationResult == true) {
+                          print("halaman edit");
                           controller.updateData(
                             widget.katalogItem.kode,
                             _selectedImage,
