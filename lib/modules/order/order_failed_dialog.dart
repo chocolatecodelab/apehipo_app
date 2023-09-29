@@ -1,7 +1,8 @@
+import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/screens/order_accepted_screen.dart';
+import 'package:get/get.dart';
 
 class OrderFailedDialogue extends StatelessWidget {
   @override
@@ -58,7 +59,7 @@ class OrderFailedDialogue extends StatelessWidget {
               flex: 2,
             ),
             AppText(
-              text: "Something went temply wrong",
+              text: "Selesaikan Pesanan Sebelumnya Terlebih Dahulu",
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Color(0xff7C7C7C),
@@ -67,12 +68,12 @@ class OrderFailedDialogue extends StatelessWidget {
               flex: 8,
             ),
             AppButton(
-              label: "Coba Lagi",
+              label: "Lanjutkan Pesanan",
               fontWeight: FontWeight.w600,
               onPressed: () {
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return OrderAcceptedScreen();
+                    return OrderScreen();
                   },
                 ));
               },
@@ -82,10 +83,10 @@ class OrderFailedDialogue extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Get.back();
               },
               child: AppText(
-                text: "Kembali ke Hidrocommerce",
+                text: "Kembali ke Cart",
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),

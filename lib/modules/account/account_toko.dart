@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/colors.dart';
@@ -165,8 +164,10 @@ class _StoreManagementPageState extends State<StoreManagementPage> {
                 getRowTextField("Alamat Kebun", _storeAddressController,
                     "Masukkan Alamat Kebun"),
                 Divider(thickness: 1),
-                getRowTextField("Nomor Telepon Kebun",
-                    _storePhoneNumberController, "Masukkan Nomor Telepon Kebun"),
+                getRowTextField(
+                    "Nomor Telepon Kebun",
+                    _storePhoneNumberController,
+                    "Masukkan Nomor Telepon Kebun"),
                 Divider(thickness: 1),
                 SizedBox(height: 24.0),
                 getButton(context, "Simpan", onPressed: () {}),

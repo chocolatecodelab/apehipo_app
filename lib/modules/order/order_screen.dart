@@ -1,24 +1,33 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
+import 'package:apehipo_app/modules/home/home_controller.dart';
+import 'package:apehipo_app/modules/home/home_model.dart';
+import 'package:apehipo_app/modules/home/product_all_detail.dart';
 import 'package:apehipo_app/modules/order/order_controller.dart';
 import 'package:apehipo_app/modules/order/order_model.dart';
+import 'package:apehipo_app/modules/order/order_widget_bayar.dart';
 import 'package:get/get.dart';
 import 'order_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import '../../widgets/confirmation_dialog.dart';
 
 class OrderScreen extends StatefulWidget {
+  final String? waktu;
+
+  const OrderScreen({this.waktu});
   @override
   State<OrderScreen> createState() => _OrderScreenState();
 }
 
 class _OrderScreenState extends State<OrderScreen> {
   @override
+  var auth = Get.put(AuthController());
   var controller = Get.put(OrderController());
+  var homeController = Get.put(HomeController());
+
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -35,7 +44,7 @@ class _OrderScreenState extends State<OrderScreen> {
               ),
               onPressed: () {
                 // Handle the back button press
-                Navigator.of(context).pop();
+                Get.back();
               },
             ),
             bottom: PreferredSize(
@@ -86,16 +95,6 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                       ),
                     ),
-                    Tab(
-                      child: Text(
-                        'Dibatalkan',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -138,30 +137,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  getVerticalItemSlider(
+                                  getVerticalItemSlider2(
                                       controller.dataSudahList!),
-                                ],
-                              ),
-                            ),
-                          ),
-              ),
-            )),
-            SafeArea(
-                child: Container(
-              child: Obx(
-                () => controller.isLoading.value
-                    ? Center(child: CircularProgressIndicator())
-                    : controller.dataBatalList!.isEmpty
-                        ? Center(child: Text("Tidak ada data"))
-                        : SingleChildScrollView(
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  getVerticalItemSlider(
-                                      controller.dataBatalList!),
                                 ],
                               ),
                             ),
@@ -190,6 +167,8 @@ class _OrderScreenState extends State<OrderScreen> {
         uniqueIds.add(item.idOrder!);
       }
     }
+    List<Key> orderWidgetKeys =
+        List.generate(filteredItems.length, (index) => UniqueKey());
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 600,
@@ -202,14 +181,64 @@ class _OrderScreenState extends State<OrderScreen> {
           List<OrderModel> filtered2Items = items
               .where((x) => x.idOrder == filteredItems[index].idOrder)
               .toList();
+          return GestureDetector(
+            onTap: () {},
+            child: OrderWidget(
+              waktu: widget.waktu,
+              key: orderWidgetKeys[index],
+              items: filtered2Items,
+              item: filteredItems[index],
+              heroSuffix: "account_katalog",
+            ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 10, // Mengubah width menjadi height
+          );
+        },
+      ),
+    );
+  }
 
-          // print(filtered2Items[0].idOrder);
-          // print(filtered2Items[1].idOrder);
+  Widget getVerticalItemSlider2(List<OrderModel> items) {
+    items.sort((a, b) {
+      // Mengambil angka dari idOrder menggunakan ekstraksi substring
+      int aOrderNumber = int.parse(a.idOrder!
+          .substring(1)); // Mengabaikan karakter pertama (biasanya 'O')
+      int bOrderNumber = int.parse(b.idOrder!.substring(1));
+
+      // Membandingkan angka-angka tersebut
+      return bOrderNumber.compareTo(aOrderNumber);
+    });
+    List<OrderModel> filteredItems = [];
+    Set<String> uniqueIds = Set<String>();
+    for (var item in controller.dataSudahList!) {
+      if (!uniqueIds.contains(item.idOrder)) {
+        filteredItems.add(item);
+        uniqueIds.add(item.idOrder!);
+      }
+    }
+    List<Key> orderWidgetKeys =
+        List.generate(items.length, (index) => UniqueKey());
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      height: 600,
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        itemCount: filteredItems.length,
+        scrollDirection:
+            Axis.vertical, // Mengubah scrollDirection menjadi vertical
+        itemBuilder: (context, index) {
+          List<OrderModel> filtered2Items = items
+              .where((x) => x.idOrder == filteredItems[index].idOrder)
+              .toList();
           return GestureDetector(
             onTap: () {
-              // onItemClicked(context, items[index]);
+              Get.to(ProductDetailScreen(homeController.dataList![index]));
             },
-            child: OrderWidget(
+            child: OrderWidgetBayar(
+              key: orderWidgetKeys[index],
               items: filtered2Items,
               item: filteredItems[index],
               heroSuffix: "account_katalog",
@@ -233,29 +262,6 @@ class _OrderScreenState extends State<OrderScreen> {
                 katalogItem,
                 heroSuffix: "account_katalog",
               )),
-    );
-  }
-
-  Widget getButton(BuildContext context, String label,
-      {required Function() onPressed}) {
-    return AppButton(
-      label: label,
-      fontWeight: FontWeight.w300,
-      padding: EdgeInsets.symmetric(vertical: 25),
-      onPressed: () async {
-        bool? confirmationResult = await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return ConfirmationDialog(
-                message: "Apakah Anda yakin ingin membatalkan pembelian?");
-          },
-        );
-        if (confirmationResult == true) {
-          print("Hello");
-        } else {
-          print("gagal");
-        }
-      },
     );
   }
 }

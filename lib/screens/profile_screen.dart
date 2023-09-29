@@ -1,5 +1,4 @@
 import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
 import 'package:apehipo_app/modules/home/home_controller.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/widgets/app_button.dart';

@@ -1,6 +1,5 @@
 import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
+import 'package:apehipo_app/modules/order/order_accepted_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/column_with_seprator.dart';
@@ -143,6 +142,8 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
           return CheckoutBottomSheet(totalHarga.toString());
+        }).then((result) => {
+          if (result == "next") {Get.off(OrderAcceptedScreen())}
         });
   }
 }

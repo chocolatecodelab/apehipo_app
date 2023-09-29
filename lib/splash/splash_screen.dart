@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     var auth = Get.put(AuthController());
-    const delay = const Duration(seconds: 3);
+    const delay = const Duration(seconds: 1);
     Future.delayed(delay, () => onTimerFinished(auth));
   }
 

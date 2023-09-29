@@ -1,19 +1,21 @@
+import 'package:apehipo_app/modules/cart/cart_change.dart';
 import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
 import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
 // import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
 import 'package:apehipo_app/screens/profile_screen.dart';
+import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'favourite_toggle_icon_widget.dart';
 
@@ -30,17 +32,54 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int amount = 1;
 
-  @override
   var controller = Get.put(CartController());
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Detail produk',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Row(
+            children: [
+              Text(
+                'Rincian Produk',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Spacer(),
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(CartScreen());
+                      },
+                      child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0, // Menentukan posisi horizontal
+                    top: 0, // Menentukan posisi vertikal
+                    child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor, // Warna latar belakang
+                      ),
+                      child: Text(
+                        cart.itemCount.toString(),
+                        style: TextStyle(
+                          color: Colors.white, // Warna teks
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -131,8 +170,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             widget.productItem.nama,
                             widget.productItem.harga,
                             widget.productItem.foto,
+                            widget.productItem.namaPetani,
                             this.amount);
                         if (result == "sukses") {
+                          cart.incrementCounter(controller.dataList!.length);
                           await showDialog(
                               context: context,
                               builder: (BuildContext context) {

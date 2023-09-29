@@ -1,7 +1,10 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
+import 'package:apehipo_app/auth/login/login.dart';
+import 'package:apehipo_app/modules/cart/cart_change.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/logout_confirmation.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ConfirmationDialogLogout extends StatefulWidget {
   final String message;
@@ -9,7 +12,8 @@ class ConfirmationDialogLogout extends StatefulWidget {
   ConfirmationDialogLogout({required this.message});
 
   @override
-  _ConfirmationDialogLogoutState createState() => _ConfirmationDialogLogoutState();
+  _ConfirmationDialogLogoutState createState() =>
+      _ConfirmationDialogLogoutState();
 }
 
 class _ConfirmationDialogLogoutState extends State<ConfirmationDialogLogout> {
@@ -67,15 +71,6 @@ class _ConfirmationDialogLogoutState extends State<ConfirmationDialogLogout> {
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).pop(true);
-                    bool? confirmationResult = await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return LogoutConfirmationDialog(
-                            message: "");
-                      },
-                    );
-                    if (confirmationResult == true) {
-                    } else {}
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(30, 45),

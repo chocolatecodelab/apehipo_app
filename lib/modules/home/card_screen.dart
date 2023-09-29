@@ -1,20 +1,30 @@
+import 'package:apehipo_app/modules/cart/cart_change.dart';
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/home/home_controller.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:apehipo_app/widgets/card_item.dart';
-import '../contoh_api/product_controller.dart';
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
+import 'package:apehipo_app/widgets/colors.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 
-class CardScreen extends StatelessWidget {
+class CardScreen extends StatefulWidget {
   CardScreen({super.key});
 
   @override
+  State<CardScreen> createState() => _CardScreenState();
+}
+
+class _CardScreenState extends State<CardScreen> {
+  @override
   var controller = Get.put(HomeController());
+
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -32,24 +42,59 @@ class CardScreen extends StatelessWidget {
           child: SearchBarWidgets(),
         ),
         actions: [
-          PopupMenuButton(
-              icon: Icon(
-                Icons.filter_list_alt,
-                color: Colors.black,
-              ),
-              offset:
-                  Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
-              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    const PopupMenuItem(
-                      child: Text('Terbaru'),
+          // PopupMenuButton(
+          //     icon: Icon(
+          //       Icons.filter_list_alt,
+          //       color: Colors.black,
+          //     ),
+          //     offset:
+          //         Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
+          //     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+          //           const PopupMenuItem(
+          //             child: Text('Terbaru'),
+          //           ),
+          //           const PopupMenuItem(
+          //             child: Text('Terlaris'),
+          //           ),
+          //           const PopupMenuItem(
+          //             child: Text('Termurah'),
+          //           ),
+          //         ]),
+          Container(
+            margin: EdgeInsets.only(top: 20, right: 15),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(CartScreen());
+                    },
+                    child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+                  ),
+                ),
+                Positioned(
+                  right: 0, // Menentukan posisi horizontal
+                  top: 0, // Menentukan posisi vertikal
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.primaryColor, // Warna latar belakang
                     ),
-                    const PopupMenuItem(
-                      child: Text('Terlaris'),
+                    child: Text(
+                      cart.itemCount.toString(),
+                      style: TextStyle(
+                        color: Colors.white, // Warna teks
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const PopupMenuItem(
-                      child: Text('Termurah'),
-                    ),
-                  ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       body: Container(

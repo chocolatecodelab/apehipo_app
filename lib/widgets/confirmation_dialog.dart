@@ -68,17 +68,6 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).pop(true);
-                    bool? confirmationResult = await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SuccessConfirmationDialog(
-                          message: "Anda berhasil menyimpan perubahan",
-                          icon: Icons.check_circle_outline,
-                        );
-                      },
-                    );
-                    if (confirmationResult == true) {
-                    } else {}
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(30, 45),

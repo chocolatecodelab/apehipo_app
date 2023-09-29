@@ -1,5 +1,3 @@
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/home/home_controller.dart';
 import 'package:apehipo_app/modules/home/product_all_detail.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/widgets/card_item_dashboard.dart';
@@ -73,13 +71,14 @@ class _KlasifikasiScreenState extends State<KlasifikasiScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => DashboardDetailScreen(
+          builder: (context) => ProductDetailScreen(
                 dashboardItem,
                 heroSuffix: "home_screen",
               )),
     );
   }
 }
+
 
   // Widget getItemCard(List<GroceryItem> items) {
   //   return Container(

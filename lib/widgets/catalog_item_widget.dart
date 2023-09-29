@@ -69,7 +69,7 @@ class CatalogItemWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   AppText(
-                    text: "\$${item.harga}",
+                    text: "Rp${item.harga}",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -112,30 +112,30 @@ class CatalogItemWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(Icons.layers_outlined, size: 14, color: Color(0xFF7C7C7C)),
+                // Icon(Icons.layers_outlined, size: 14, color: Color(0xFF7C7C7C)),
                 SizedBox(
                   width: 5,
                 ),
-                AppText(
-                  text: "Stok: " + item.stok.toString(),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
+                // AppText(
+                //   text: "Stok: " + item.stok.toString(),
+                //   fontSize: 14,
+                //   fontWeight: FontWeight.w600,
+                //   color: Color(0xFF7C7C7C),
+                // ),
                 SizedBox(
                   width: 150,
                 ),
-                Icon(Icons.monetization_on_outlined,
-                    size: 14, color: Color(0xFF7C7C7C)),
+                // Icon(Icons.monetization_on_outlined,
+                //     size: 14, color: Color(0xFF7C7C7C)),
                 SizedBox(
                   width: 5,
                 ),
-                AppText(
-                  text: "Terjual: 2",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
+                // AppText(
+                //   text: "Terjual: 2",
+                //   fontSize: 14,
+                //   fontWeight: FontWeight.w600,
+                //   color: Color(0xFF7C7C7C),
+                // ),
               ],
             ),
             SizedBox(

@@ -1,5 +1,6 @@
 import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/roles/role.dart';
+import 'package:apehipo_app/modules/cart/cart_change.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/splash/welcome_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
@@ -8,9 +9,10 @@ import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String id = "login_page";
+  static const String? id = "login_page";
 
   const LoginPage({super.key});
 
@@ -25,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   var controller = Get.put(AuthController());
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
@@ -190,6 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       String? loginResult = await controller.doLogin();
                       if (loginResult == "sukses") {
+                        cart.resetValue();
                         await showDialog(
                           context: context,
                           builder: (BuildContext context) {

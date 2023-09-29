@@ -1,10 +1,7 @@
 import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/modules/account/account_controller.dart';
-import 'package:apehipo_app/modules/account/account_model.dart';
-import 'package:apehipo_app/modules/account/account_screen.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
 import 'package:apehipo_app/widgets/dynamic_button.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:get/get.dart';

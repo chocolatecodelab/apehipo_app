@@ -1,11 +1,25 @@
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/widgets/transaction_widget_proses.dart';
-import 'package:apehipo_app/widgets/transaction_widget_selesai.dart';
+import 'package:apehipo_app/modules/transaction/transaction_controller.dart';
+import 'package:apehipo_app/modules/transaction/transaction_model.dart';
+import 'package:apehipo_app/modules/transaction/transaction_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class TransactionScreen extends StatelessWidget {
+class TransactionScreen extends StatefulWidget {
+  @override
+  State<TransactionScreen> createState() => _TransactionScreenState();
+}
+
+class _TransactionScreenState extends State<TransactionScreen> {
+  var controller = Get.put(TransactionController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.refresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -85,14 +99,24 @@ class TransactionScreen extends StatelessWidget {
           body: TabBarView(children: [
             SafeArea(
               child: Container(
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      getVerticalTransaksiProsesSlider(penawaranSpesial),
-                    ],
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Obx(
+                          () => controller.isLoading.value
+                              ? Center(child: CircularProgressIndicator())
+                              : controller.dataProsesList!.isEmpty
+                                  ? Center(child: Text("Tidak ada data"))
+                                  : getVerticalTransaksi(
+                                      controller.dataProsesList!),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -102,11 +126,19 @@ class TransactionScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Center(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         height: 20,
                       ),
-                      getVerticalTransaksiSelesaiSlider(penjualanTerbaik),
+                      Obx(
+                        () => controller.isLoading.value
+                            ? Center(child: CircularProgressIndicator())
+                            : controller.dataSelesaiList!.isEmpty
+                                ? Center(child: Text("Tidak ada data"))
+                                : getVerticalTransaksi(
+                                    controller.dataSelesaiList!),
+                      )
                     ],
                   ),
                 ),
@@ -116,23 +148,50 @@ class TransactionScreen extends StatelessWidget {
         ));
   }
 
-  Widget getVerticalTransaksiProsesSlider(List<KatalogItem> items) {
+  Widget getVerticalTransaksi(List<TransactionModel> items) {
+    items.sort((a, b) {
+      // Mengambil angka dari idOrder menggunakan ekstraksi substring
+      int aOrderNumber = int.parse(a.idTransaksi
+          .substring(1)); // Mengabaikan karakter pertama (biasanya 'O')
+      int bOrderNumber = int.parse(b.idTransaksi.substring(1));
+
+      // Membandingkan angka-angka tersebut
+      return bOrderNumber.compareTo(aOrderNumber);
+    });
+    List<TransactionModel> filteredItems = [];
+    Set<String> uniqueIds = Set<String>();
+    for (var item in items) {
+      if (!uniqueIds.contains(item.idTransaksi)) {
+        filteredItems.add(item);
+        uniqueIds.add(item.idTransaksi);
+      }
+    }
+    print(filteredItems.length);
+    List<Key> orderWidgetKeys =
+        List.generate(filteredItems.length, (index) => UniqueKey());
+    print(orderWidgetKeys);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 750,
+      height: 640,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
+        itemCount: filteredItems.length,
         scrollDirection:
             Axis.vertical, // Mengubah scrollDirection menjadi vertical
         itemBuilder: (context, index) {
+          List<TransactionModel> filtered2Items = items
+              .where((x) => x.idTransaksi == filteredItems[index].idTransaksi)
+              .toList();
+          print(filtered2Items);
           return GestureDetector(
             onTap: () {
               // onItemClicked(context, items[index]);
             },
-            child: TransactionProsesWidget(
-              item: items[index],
-              heroSuffix: "account_katalog",
+            child: TransactionWidget(
+              key: orderWidgetKeys[index],
+              items: filtered2Items,
+              item: filteredItems[index],
+              heroSuffix: "transaction",
             ),
           );
         },
@@ -142,46 +201,6 @@ class TransactionScreen extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget getVerticalTransaksiSelesaiSlider(List<KatalogItem> items) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      height: 750,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
-        scrollDirection:
-            Axis.vertical, // Mengubah scrollDirection menjadi vertical
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // onItemClicked(context, items[index]);
-            },
-            child: TransactionSelesaiWidget(
-              item: items[index],
-              heroSuffix: "account_katalog",
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 20, // Mengubah width menjadi height
-          );
-        },
-      ),
-    );
-  }
-
-  void onItemClicked(BuildContext context, CatalogModel katalogItem) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => CatalogEditScreen(
-                katalogItem,
-                heroSuffix: "account_katalog",
-              )),
     );
   }
 }

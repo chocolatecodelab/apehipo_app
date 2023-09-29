@@ -1,46 +1,83 @@
 import 'package:apehipo_app/modules/cart/cart_controller.dart';
+import 'package:apehipo_app/modules/cart/cart_screen.dart';
+import 'package:apehipo_app/modules/cart/cart_change.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
 import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
-// import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
-import 'package:apehipo_app/screens/profile_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:apehipo_app/screens/profile_screen.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-// import '../favourite_toggle_icon_widget.dart';
-
-class DashboardDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends StatefulWidget {
   final HomeModel productItem;
   final String? heroSuffix;
 
-  const DashboardDetailScreen(this.productItem, {this.heroSuffix});
+  const ProductDetailScreen(this.productItem, {this.heroSuffix});
 
   @override
-  _DashboardDetailScreenState createState() => _DashboardDetailScreenState();
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int amount = 1;
 
   @override
   var controller = Get.put(CartController());
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Rincian Produk',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Row(
+            children: [
+              Text(
+                'Rincian Produk',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Spacer(),
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(CartScreen());
+                      },
+                      child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0, // Menentukan posisi horizontal
+                    top: 0, // Menentukan posisi vertikal
+                    child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor, // Warna latar belakang
+                      ),
+                      child: Text(
+                        cart.itemCount.toString(),
+                        style: TextStyle(
+                          color: Colors.white, // Warna teks
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -118,10 +155,6 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                         stok: widget.productItem.stok,
                         key: "nutritions"),
                     Divider(thickness: 1),
-                    // getProductDataRowWidget(
-                    //   "Review",
-                    //   customWidget: ratingWidget(),
-                    // ),
                     Spacer(),
                     AppButton(
                       label: "Tambah ke Keranjang",
@@ -131,8 +164,10 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                             widget.productItem.nama,
                             widget.productItem.harga,
                             widget.productItem.foto,
+                            widget.productItem.namaPetani,
                             this.amount);
                         if (result == "sukses") {
+                          cart.incrementCounter(controller.dataList!.length);
                           await showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -148,12 +183,20 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                                     message: "Gagal menambahkan produk",
                                     icon: Icons.close_rounded);
                               });
-                        } else {
+                        } else if (result == "duplikat") {
                           await showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return SuccessConfirmationDialog(
                                     message: "Produk sudah ditambahkan",
+                                    icon: Icons.close_rounded);
+                              });
+                        } else {
+                          await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                    message: "Pesanan harus satu toko/petani",
                                     icon: Icons.close_rounded);
                               });
                         }
@@ -256,20 +299,6 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
         });
   }
 
-  // Widget getProductDetails(context) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.end,
-  //     children: [
-  //       IconButton(
-  //       onPressed: () => {
-  //         showBottomSheets(context)
-  //       },
-  //       icon: Icon(Icons.arrow_forward_ios),
-  //     ),
-  //     ],
-  //   );
-  // }
-
   Widget getProfile(HomeModel productItem) {
     return InkWell(
       onTap: () => {
@@ -354,26 +383,6 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
       ),
     );
   }
-
-  // Widget ratingWidget() {
-  //   Widget starIcon() {
-  //     return Icon(
-  //       Icons.star,
-  //       color: Color(0xffF3603F),
-  //       size: 20,
-  //     );
-  //   }
-
-  //   return Row(
-  //     children: [
-  //       starIcon(),
-  //       starIcon(),
-  //       starIcon(),
-  //       starIcon(),
-  //       starIcon(),
-  //     ],
-  //   );
-  // }
 
   int getTotalPrice() {
     int harga = int.parse(widget.productItem.harga);

@@ -1,9 +1,7 @@
 import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/account/account_screen.dart';
 import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:get/get.dart';
 import 'catalog_edit.dart';
 import 'package:apehipo_app/widgets/theme.dart';
@@ -17,8 +15,16 @@ class CatalogScreen extends StatefulWidget {
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
-  @override
+  var auth = Get.put(AuthController());
   var controller = Get.put(CatalogController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.refresh();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
@@ -159,12 +165,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
         onPressed: () {
           Get.to(CatalogTambahScreen());
           controller.clearData();
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => CatalogTambahScreen(),
-          //   ),
-          // );
         },
         style: ElevatedButton.styleFrom(
           visualDensity: VisualDensity.compact,

@@ -5,7 +5,7 @@ import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:get/get.dart';
 
-import '../../screens/order_failed_dialog.dart';
+import '../order/order_failed_dialog.dart';
 
 class AddressBottom extends StatefulWidget {
   @override

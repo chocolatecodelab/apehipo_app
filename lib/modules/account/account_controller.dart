@@ -1,9 +1,6 @@
 import 'dart:convert';
 
 import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/account/account_screen.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/home/product_home_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'account_model.dart';
@@ -70,6 +67,20 @@ class AccountController extends GetxController {
     }
   }
 
+  Future<String> clearData() async {
+    try {
+      username.text = "";
+      email.text = "";
+      nama.text = "";
+      noTelpon.text = "";
+      noRekening.text = "";
+      alamat.text = "";
+      return "sukses";
+    } catch (e) {
+      return "gagal";
+    }
+  }
+
   updateData(String id, XFile? image) async {
     try {
       print("disini?");
@@ -120,7 +131,6 @@ class AccountController extends GetxController {
             filename: imgFileName);
         request.files.add(imgMultiPart);
       }
-      print("sukses lagi");
       // Mengirim request dan menunggu responsenya
       var response = await request.send();
       print(response.statusCode);

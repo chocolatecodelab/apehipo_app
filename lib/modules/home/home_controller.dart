@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../services/api.dart';
 
 class HomeController extends GetxController {
-  List<HomeModel>? dataListEksklusif = [];
-  List<HomeModel>? dataListTerbaik = [];
-  List<HomeModel>? dataListLaris = [];
+  List<HomeModel>? dataListBuah = [];
+  List<HomeModel>? dataListSayuran = [];
+  // List<HomeModel>? dataListLaris = [];
   List<HomeModel>? dataList = [];
   var isLoading = false.obs;
 
@@ -32,21 +31,21 @@ class HomeController extends GetxController {
           HomeModel homeModel = HomeModel.fromJson(item);
           dataList!.add(homeModel);
         }
-        List<dynamic> penjualanEksklusifJsonList = data['penjualan_eksklusif'];
-        for (var item in penjualanEksklusifJsonList) {
+        List<dynamic> dataBuahJsonList = data['buah'];
+        for (var item in dataBuahJsonList) {
           HomeModel homeModel = HomeModel.fromJson(item);
-          dataListEksklusif!.add(homeModel);
+          dataListBuah!.add(homeModel);
         }
-        List<dynamic> penjualanTerbaikJsonList = data['penjualan_terbaik'];
-        for (var item in penjualanTerbaikJsonList) {
+        List<dynamic> dataSayurJsonList = data['sayuran'];
+        for (var item in dataSayurJsonList) {
           HomeModel homeModel = HomeModel.fromJson(item);
-          dataListTerbaik!.add(homeModel);
+          dataListSayuran!.add(homeModel);
         }
-        List<dynamic> sedangLarisJsonList = data['sedang_laris'];
-        for (var item in sedangLarisJsonList) {
-          HomeModel homeModel = HomeModel.fromJson(item);
-          dataListLaris!.add(homeModel);
-        }
+        // List<dynamic> sedangLarisJsonList = data['sedang_laris'];
+        // for (var item in sedangLarisJsonList) {
+        //   HomeModel homeModel = HomeModel.fromJson(item);
+        //   dataListLaris!.add(homeModel);
+        // }
       } else {
         Get.snackbar("Pesan", "Terjadi kesalahan sistem");
       }
@@ -54,6 +53,19 @@ class HomeController extends GetxController {
       Get.snackbar("Kesalahan", e.toString());
     } finally {
       isLoading(false);
+    }
+  }
+
+  Future refresh() async {
+    try {
+      isLoading(true);
+      dataList!.clear();
+      dataListBuah!.clear();
+      dataListSayuran!.clear();
+    } catch (e) {
+    } finally {
+      isLoading(true);
+      getAllData();
     }
   }
 }

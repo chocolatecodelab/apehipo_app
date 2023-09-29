@@ -1,10 +1,13 @@
 import 'package:apehipo_app/auth/auth_controller.dart';
+import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/modules/account/account_controller.dart';
+import 'package:apehipo_app/modules/cart/cart_change.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/modules/order/order_screen.dart';
 import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
 import 'package:apehipo_app/modules/transaction/transcation_screen_petani.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog_logout.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +18,7 @@ import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/modules/account/account_toko.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'account_item.dart';
 
@@ -65,7 +69,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               ),
                             ),
                             title: AppText(
-                              text: controller.nama.text,
+                              text: auth.box.read("nama"),
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -133,14 +137,17 @@ class _AccountScreenState extends State<AccountScreen> {
 
   bool shouldDisplay(AccountItem item) {
     if (auth.box.read("role") == "petani") {
-      if (item.label == "Transaksi" || item.label == "Status Pembelian") {
+      if (item.label == "Transaksi" ||
+          item.label == "Status Pembelian" ||
+          item.label == "Edit Kebun") {
         return false;
       }
       return true;
     } else {
       if (item.label == "Transaksi Petani" ||
           item.label == "Edit Kebun" ||
-          item.label == "Katalog") {
+          item.label == "Katalog" ||
+          item.label == "Transaksi") {
         return false;
       }
       return true;
@@ -279,10 +286,14 @@ class _AccountScreenState extends State<AccountScreen> {
                   message: "Apakah anda yakin ingin keluar?");
             },
           );
-          if (confirmationResult == true) {
-            auth.logOut();
-          } else {
-            print("gagal");
+          if (confirmationResult!) {
+            String? hasil = await auth.logOut();
+            if (hasil == "sukses") {
+              SuccessConfirmationDialog(
+                  message: "Anda telah keluar dari akun",
+                  icon: Icons.check_circle_outline);
+              Get.offAll(LoginPage());
+            }
           }
         },
       ),
@@ -325,19 +336,13 @@ class _AccountScreenState extends State<AccountScreen> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()));
             break;
-          case "Transaksi":
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TransactionScreen()));
-            break;
           case "Status Pembelian":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => OrderScreen()));
             break;
           case "Transaksi Petani":
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => TransactionPetaniScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TransactionScreen()));
             break;
         }
       },
@@ -364,5 +369,10 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

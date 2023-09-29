@@ -1,7 +1,12 @@
+import 'package:apehipo_app/modules/cart/cart_controller.dart';
 import 'package:apehipo_app/modules/cart/cart_screen.dart';
+import 'package:apehipo_app/modules/cart/cart_change.dart';
 import 'package:apehipo_app/modules/home/home_controller.dart';
 import 'package:apehipo_app/modules/home/product_all_detail.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
+import 'package:apehipo_app/modules/notification/notification_change.dart';
+import 'package:apehipo_app/modules/notification/notification_controller.dart';
+import 'package:apehipo_app/modules/notification/notification_model.dart';
 import 'package:apehipo_app/modules/notification/notification_screen.dart';
 import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:apehipo_app/widgets/search_bar_widget.dart';
 import 'package:get/get.dart';
 import 'package:apehipo_app/modules/home/klasifikasi_screen.dart';
+import 'package:provider/provider.dart';
 import 'home_banner_widget.dart';
 
 class ProductHomeScreen extends StatefulWidget {
@@ -18,17 +24,31 @@ class ProductHomeScreen extends StatefulWidget {
 }
 
 class _ProductHomeScreenState extends State<ProductHomeScreen> {
-  @override
   var controller = Get.put(HomeController());
+  var notificationController = Get.put(NotificationController());
 
+  @override
+  void initState() {
+    super.initState();
+    controller.refresh();
+  }
+
+  @override
+  var cartController = Get.put(CartController());
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
+    final notif = Provider.of<NotificationChange>(context);
+    List<NotificationModel> notifTidakTerbaca = notificationController.dataList!
+        .where((x) => x.status == "false")
+        .toList();
+    notif.incrementCounter(notifTidakTerbaca.length);
     return Scaffold(
       body: SafeArea(
         child: Container(
             child: Obx(
           () => controller.isLoading.value
               ? Center(child: CircularProgressIndicator())
-              : controller.dataListEksklusif!.isEmpty
+              : controller.dataListSayuran!.isEmpty
                   ? Center(child: Text("Tidak ada data"))
                   : SingleChildScrollView(
                       child: Center(
@@ -38,40 +58,80 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: InkWell(
-                                    onTap: () {
-                                      // Handle the tap event for the first SVG icon
-                                      // Add your desired action here
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                NotificationScreen(),
-                                          ));
-                                    },
-                                    child: SvgPicture.asset(
-                                        "assets/icons/account_icons/notification_icon.svg"),
-                                  ),
+                                Stack(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(NotificationScreen());
+                                        },
+                                        child: SvgPicture.asset(
+                                            "assets/icons/account_icons/notification_icon.svg"),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0, // Menentukan posisi horizontal
+                                      top: 0, // Menentukan posisi vertikal
+                                      child: Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors
+                                              .primaryColor, // Warna latar belakang
+                                        ),
+                                        child: Text(
+                                          notif.itemCount.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white, // Warna teks
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => CartScreen(),
-                                          ));
-                                    },
-                                    child: SvgPicture.asset(
-                                        "assets/icons/cart_icon.svg"),
-                                  ),
+                                Stack(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(CartScreen());
+                                        },
+                                        child: SvgPicture.asset(
+                                            "assets/icons/cart_icon.svg"),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0, // Menentukan posisi horizontal
+                                      top: 0, // Menentukan posisi vertikal
+                                      child: Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors
+                                              .primaryColor, // Warna latar belakang
+                                        ),
+                                        child: Text(
+                                          cart.itemCount.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white, // Warna teks
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                                SizedBox(
+                                  width: 20,
+                                )
                               ],
                             ),
                             // SvgPicture.asset("assets/icons/app_icon_color.svg"),
@@ -90,28 +150,26 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
                             SizedBox(
                               height: 25,
                             ),
-                            padded(subTitle(context, "Penjualan Ekslusif",
-                                key: "penjualan eksklusif",
-                                items: controller.dataListEksklusif)),
+                            padded(subTitle(context, "Sayur-sayuran",
+                                key: "sayur",
+                                items: controller.dataListSayuran)),
                             getHorizontalItemSlider(
-                                controller.dataListEksklusif!,
-                                "penjualan eksklusif"),
+                                controller.dataListSayuran!, "Sayuran"),
                             SizedBox(
                               height: 15,
                             ),
-                            padded(subTitle(context, "Penjualan Terbaik",
-                                key: "penjualan terbaik",
-                                items: controller.dataListTerbaik)),
-                            getHorizontalItemSlider(controller.dataListTerbaik!,
-                                "penjualan terbaik"),
+                            padded(subTitle(context, "Buah-buahan",
+                                key: "buah", items: controller.dataListBuah)),
+                            getHorizontalItemSlider(
+                                controller.dataListBuah!, "Buah"),
                             SizedBox(
                               height: 15,
                             ),
-                            padded(subTitle(context, "Sedang Laris",
-                                key: "sedang laris",
-                                items: controller.dataListLaris)),
-                            getHorizontalItemSlider(
-                                controller.dataListLaris!, "sedang laris"),
+                            // padded(subTitle(context, "Sedang Laris",
+                            //     key: "sedang laris",
+                            //     items: controller.dataListLaris)),
+                            // getHorizontalItemSlider(
+                            //     controller.dataListLaris!, "sedang laris"),
                             SizedBox(
                               height: 15,
                             ),
@@ -132,9 +190,9 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
     );
   }
 
-  Widget getHorizontalItemSlider(List<HomeModel> items, String klasifikasi) {
+  Widget getHorizontalItemSlider(List<HomeModel> items, String jenis) {
     List<HomeModel> filteredItems =
-        items.where((item) => item.klasifikasi == klasifikasi).toList();
+        items.where((item) => item.jenis == jenis).toList();
     filteredItems = filteredItems.take(3).toList();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -168,7 +226,7 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => DashboardDetailScreen(
+          builder: (context) => ProductDetailScreen(
                 homeItem,
                 heroSuffix: "home_screen",
               )),
