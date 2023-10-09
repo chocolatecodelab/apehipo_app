@@ -85,7 +85,8 @@ class TransactionScreen extends StatelessWidget {
           body: TabBarView(children: [
             SafeArea(
               child: Container(
-                child: Center(
+                child: SingleChildScrollView(
+                  child: Center(
                   child: Column(
                     children: [
                       SizedBox(
@@ -95,10 +96,11 @@ class TransactionScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                )
               ),
             ),
             SafeArea(
-                child: Container(
+              child: Container(
               child: SingleChildScrollView(
                 child: Center(
                   child: Column(
@@ -119,7 +121,7 @@ class TransactionScreen extends StatelessWidget {
   Widget getVerticalTransaksiProsesSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 750,
+      height: 850,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,
@@ -148,7 +150,7 @@ class TransactionScreen extends StatelessWidget {
   Widget getVerticalTransaksiSelesaiSlider(List<KatalogItem> items) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 750,
+      height: 850,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: items.length,

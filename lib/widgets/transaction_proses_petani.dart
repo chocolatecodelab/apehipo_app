@@ -87,19 +87,19 @@ class TransactionProsesPetaniWidget extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Icon(Icons.delivery_dining),
-                SizedBox(
-                  width: 5,
-                ),
-                AppText(
-                  text: "Produk Anda disortir dari Bandung",
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Icon(Icons.delivery_dining),
+            //     SizedBox(
+            //       width: 5,
+            //     ),
+            //     AppText(
+            //       text: "Produk Anda disortir dari Bandung",
+            //       fontSize: 12,
+            //       fontWeight: FontWeight.w500,
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               height: 15,
             ),

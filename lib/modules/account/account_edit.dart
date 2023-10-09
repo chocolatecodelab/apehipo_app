@@ -1,7 +1,13 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
+import 'package:apehipo_app/modules/account/account_controller.dart';
+import 'package:apehipo_app/modules/account/account_model.dart';
+import 'package:apehipo_app/modules/account/account_screen.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
+import 'package:apehipo_app/widgets/dynamic_button.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/colors.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import '../../widgets/theme.dart';
@@ -14,13 +20,19 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _noController = TextEditingController();
+  var controller = Get.put(AccountController());
+  var auth = Get.put(AuthController());
   XFile? _selectedImage;
-  String _dummyImagePath = "assets/images/pulses.png";
+  final formFieldKey = GlobalKey<FormState>();
+
+  // set nilai awal jika widget.katalogItem
+
+  void initState() {
+    super.initState();
+
+    // Set nilai awal _nameController jika widget.katalogItem tidak null
+    controller.foto.text = controller.map['foto'];
+  }
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
@@ -71,6 +83,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           color: Color.fromARGB(255, 22, 22, 22),
         ),
       ),
+      resizeToAvoidBottomInset: true,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: ListView(
@@ -78,7 +91,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                getImageHeader(),
+                getImageHeader(_selectedImage, controller.foto.text),
                 SizedBox(
                   height: 10,
                 ),
@@ -88,26 +101,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       context: context,
                       builder: (BuildContext context) {
                         return SafeArea(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.photo_library),
-                                title: Text('Pilih dari Galeri'),
-                                onTap: () {
-                                  _pickImage(ImageSource.gallery);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.camera_alt),
-                                title: Text('Ambil Foto'),
-                                onTap: () {
-                                  _pickImage(ImageSource.camera);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
+                          child: Form(
+                            key: formFieldKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  leading: Icon(Icons.photo_library),
+                                  title: Text('Pilih dari Galeri'),
+                                  onTap: () {
+                                    _pickImage(ImageSource.gallery);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  leading: Icon(Icons.camera_alt),
+                                  title: Text('Ambil Foto'),
+                                  onTap: () {
+                                    _pickImage(ImageSource.camera);
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -159,22 +175,52 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 SizedBox(height: 16.0),
                 Divider(thickness: 1),
-                getRowTextField(
-                    "Nama Lengkap", _nameController, "Masukkan Nama Lengkap"),
+                getRowTextField("Nama Lengkap", controller.nama,
+                    "Masukkan Nama Lengkap", "Contoh:\nMuhammad Fadhillah"),
                 Divider(thickness: 1),
-                getRowTextField(
-                    "Username", _usernameController, "Masukkan Username"),
+                getRowTextField("Username", controller.username,
+                    "Masukkan Username", "Contoh:\nfadhillahmuhammad"),
                 Divider(thickness: 1),
-                getRowTextField("Email", _emailController, "Masukkan Email"),
+                getRowTextField("Email", controller.email, "Masukkan Email",
+                    "Contoh:\nfadhillah99@gmail.com"),
                 Divider(thickness: 1),
-                getRowTextField(
-                    "Alamat", _addressController, "Masukkan Alamat"),
+                getRowTextField("Alamat", controller.alamat, "Masukkan Alamat",
+                    "Contoh:\nJl. Kebun Mangga No. 17"),
                 Divider(thickness: 1),
-                getRowTextField(
-                    "Nomor Telepon", _noController, "Masukkan Nomor Telepon"),
+                getRowTextField("Nomor Telepon", controller.noTelpon,
+                    "Masukkan Nomor Telepon", "Contoh:\n081349479839"),
                 Divider(thickness: 1),
+                // if (auth.box.read("role") == "petani")
+                //   getRowTextField("Nomor Rekening", controller.noRekening,
+                //       "Masukkan Nomor Rekening", "Contoh: 120038832891"),
+                if (auth.box.read("role") == "petani") Divider(thickness: 1),
                 SizedBox(height: 24.0),
-                getButton(context, "Simpan", onPressed: () {}),
+                DynamicButtonWidget(
+                  label: "Simpan Perubahan",
+                  textColor: Colors.white,
+                  backgroundColor: AppColors.primaryColor,
+                  iconData: Icons.add,
+                  onPressed: () async {
+                    bool? confirmationResult = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ConfirmationDialog(
+                            message:
+                                "Apakah anda yakin ingin menyimpan perubahan?");
+                      },
+                    );
+                    if (confirmationResult == true) {
+                      controller.updateData(
+                        auth.box.read("id_user"),
+                        _selectedImage,
+                      );
+                      // SuccessConfirmationDialog(
+                      //     message: "Anda berhasil menyimpan perubahan");
+                    } else {
+                      print("Gagal");
+                    }
+                  },
+                ),
                 SizedBox(height: 24.0),
                 // getLupa("Lupa Password"),
               ],
@@ -186,12 +232,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 }
 
-Widget getImageHeader() {
-  String imagePath = "assets/images/account_image.jpg";
+Widget getImageHeader(XFile? _selectedImage, String foto) {
   return CircleAvatar(
     radius: 64.0,
-    backgroundImage: AssetImage(imagePath),
     backgroundColor: AppColors.primaryColor.withOpacity(0.7),
+    child: ClipOval(
+      child: _selectedImage == null
+          ? Image.network(
+              foto,
+              fit: BoxFit.cover,
+              width: 128,
+              height: 128,
+            )
+          : Image.file(
+              File(_selectedImage.path),
+              fit: BoxFit.cover,
+              width: 128,
+              height: 128,
+            ),
+    ),
   );
 }
 
@@ -262,8 +321,8 @@ Widget getRowTextArea(
   );
 }
 
-Widget getRowTextField(
-    String label, TextEditingController? controller, String? hintText,
+Widget getRowTextField(String label, TextEditingController? controller,
+    String? hintText, String? example,
     {Widget? customWidget}) {
   return Container(
     margin: EdgeInsets.only(
@@ -283,12 +342,25 @@ Widget getRowTextField(
         ),
         Container(
           width: 120, // Gunakan nilai labelWidth untuk lebar label
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                example!,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal
+                ),
+              ),
+            ],
+            
           ),
         ),
         SizedBox(
@@ -301,7 +373,7 @@ Widget getRowTextField(
             decoration: InputDecoration(
               hintText: hintText,
               labelText: null,
-              contentPadding: EdgeInsets.only(left: 40.0),
+              contentPadding: EdgeInsets.only(left: 20),
               floatingLabelStyle: TextStyle(
                 color: AppColors.primaryColor,
               ),
@@ -331,7 +403,8 @@ Widget getRowTextField(
   );
 }
 
-Widget getButton(BuildContext context, String label,
+Widget getButton(BuildContext context, String label, XFile _selectedImage,
+    AccountController controller, AuthController auth,
     {required Function() onPressed}) {
   return AppButton(
     label: label,
@@ -346,7 +419,7 @@ Widget getButton(BuildContext context, String label,
         },
       );
       if (confirmationResult == true) {
-        SuccessConfirmationDialog(message: "Anda berhasil menyimpan perubahan");
+        controller.updateData(auth.box.read("id_user"), _selectedImage);
       } else {
         print("Gagal");
       }

@@ -87,7 +87,8 @@ class TransactionPetaniScreen extends StatelessWidget {
           body: TabBarView(children: [
             SafeArea(
               child: Container(
-                child: Center(
+                child: SingleChildScrollView(
+                  child: Center(
                   child: Column(
                     children: [
                       SizedBox(
@@ -97,6 +98,7 @@ class TransactionPetaniScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                )
               ),
             ),
             SafeArea(

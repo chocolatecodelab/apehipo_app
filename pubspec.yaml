@@ -48,3 +48,9 @@ flutter:
         - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
         - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf
         - asset: assets/fonts/gilroy/Gilroy-Bold.otf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/montserrat/Montserrat-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf

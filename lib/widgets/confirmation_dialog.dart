@@ -1,6 +1,8 @@
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   final String message;
@@ -70,7 +72,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                            message: "Anda berhasil menyimpan perubahan");
+                          message: "Anda berhasil menyimpan perubahan",
+                          icon: Icons.check_circle_outline,
+                        );
                       },
                     );
                     if (confirmationResult == true) {

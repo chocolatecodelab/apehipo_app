@@ -81,10 +81,10 @@ class _ProductViewState extends State<ProductView> {
                                                 },
                                               );
                                               if (confirmationResult == true) {
-                                                SuccessConfirmationDialog(
-                                                    message:
-                                                        "Anda berhasil menghapus data");
-                                                controller.deleteData(id);
+                                                // SuccessConfirmationDialog(
+                                                //     message:
+                                                //         "Anda berhasil menghapus data");
+                                                // controller.deleteData(id);
                                               } else {
                                                 print("Gagal");
                                               }

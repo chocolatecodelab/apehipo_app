@@ -30,8 +30,8 @@ class CatalogItemWidget extends StatelessWidget {
   final double borderRadius = 18;
 
   @override
-  var controller = Get.put(CatalogController());
   Widget build(BuildContext context) {
+    var controller = Get.put(CatalogController());
     return Container(
       width: width,
       height: height,
@@ -110,44 +110,6 @@ class CatalogItemWidget extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            // Row(
-            //   children: [
-            //     Icon(
-            //       Icons.favorite_border_outlined,
-            //       color: Color(0xFF7C7C7C),
-            //       size: 14,
-            //     ),
-            //     SizedBox(
-            //       width: 5,
-            //     ),
-            //     AppText(
-            //       text: "Favorit: " + item.favorit.toString(),
-            //       fontSize: 14,
-            //       fontWeight: FontWeight.w600,
-            //       color: Color(0xFF7C7C7C),
-            //     ),
-            //     SizedBox(
-            //       width: 150,
-            //     ),
-            //     Icon(
-            //       Icons.layers_outlined,
-            //       color: Color(0xFF7C7C7C),
-            //       size: 14,
-            //     ),
-            //     SizedBox(
-            //       width: 5,
-            //     ),
-            //     AppText(
-            //       text: "Stok: " + item.stock.toString(),
-            //       fontSize: 14,
-            //       fontWeight: FontWeight.w600,
-            //       color: Color(0xFF7C7C7C),
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
             Row(
               children: [
                 Icon(Icons.layers_outlined, size: 14, color: Color(0xFF7C7C7C)),
@@ -196,7 +158,7 @@ class CatalogItemWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                getArsipButton(context, "Publish")
+                getAction(context, "Publish", controller, item)
               ],
             )
           ],
@@ -297,24 +259,15 @@ Widget getEditButton(String label,
   );
 }
 
-Widget getArsipButton(BuildContext context, label, {Widget? trailingWidget}) {
+Widget getAction(BuildContext context, label, CatalogController controller,
+    CatalogModel item,
+    {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed: () async {
-        bool? confirmationResult = await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return ConfirmationDialogPublish(
-                message: "Apakah anda yakin ingin publish produk #?");
-          },
-        );
-        if (confirmationResult == true) {
-          print("Hello");
-        } else {
-          print("gagal");
-        }
+      onPressed: () {
+        controller.ubahStatus(item.kode, item.status);
       },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
@@ -322,7 +275,9 @@ Widget getArsipButton(BuildContext context, label, {Widget? trailingWidget}) {
           borderRadius: BorderRadius.circular(18),
         ),
         elevation: 0,
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: item.status == "tampil"
+            ? AppColors.darkGrey
+            : AppColors.primaryColor,
         textStyle: TextStyle(
           color: Colors.white,
           fontFamily: gilroyFontFamily,
@@ -338,7 +293,9 @@ Widget getArsipButton(BuildContext context, label, {Widget? trailingWidget}) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                label,
+                label = item.status == "arsip"
+                    ? label = "Publish"
+                    : label = "Arsipkan",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,

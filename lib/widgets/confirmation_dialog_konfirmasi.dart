@@ -8,10 +8,12 @@ class ConfirmationDialogKonfirmasi extends StatefulWidget {
   ConfirmationDialogKonfirmasi({required this.message});
 
   @override
-  _ConfirmationDialogKonfirmasiState createState() => _ConfirmationDialogKonfirmasiState();
+  _ConfirmationDialogKonfirmasiState createState() =>
+      _ConfirmationDialogKonfirmasiState();
 }
 
-class _ConfirmationDialogKonfirmasiState extends State<ConfirmationDialogKonfirmasi> {
+class _ConfirmationDialogKonfirmasiState
+    extends State<ConfirmationDialogKonfirmasi> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -70,7 +72,10 @@ class _ConfirmationDialogKonfirmasiState extends State<ConfirmationDialogKonfirm
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                            message: "Terima kasih! Anda telah mengonfirmasi pesanan");
+                          message:
+                              "Terima kasih! Anda telah mengonfirmasi pesanan",
+                          icon: Icons.check_circle_outline,
+                        );
                       },
                     );
                     if (confirmationResult == true) {

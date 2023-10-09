@@ -8,7 +8,7 @@ class CatalogModel {
       foto,
       klasifikasi,
       status,
-      kodeKebun;
+      idUser;
 
   CatalogModel(
       {required this.kode,
@@ -20,7 +20,7 @@ class CatalogModel {
       required this.foto,
       required this.klasifikasi,
       required this.status,
-      required this.kodeKebun});
+      required this.idUser});
 
   factory CatalogModel.fromJson(Map<String, dynamic> json) {
     return CatalogModel(
@@ -33,7 +33,7 @@ class CatalogModel {
         foto: json['foto'],
         klasifikasi: json['klasifikasi'],
         status: json['status'],
-        kodeKebun: json['id_user']);
+        idUser: json['id_user']);
   }
 }
 

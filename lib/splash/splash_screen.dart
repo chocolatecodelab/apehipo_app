@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:apehipo_app/auth/auth_controller.dart';
+import 'package:apehipo_app/auth/login/login.dart';
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
+import 'package:apehipo_app/modules/home/product_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/splash/welcome_screen.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,17 +20,27 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
+    var auth = Get.put(AuthController());
     const delay = const Duration(seconds: 3);
-    Future.delayed(delay, () => onTimerFinished());
+    Future.delayed(delay, () => onTimerFinished(auth));
   }
 
-  void onTimerFinished() {
-    Navigator.of(context).pushReplacement(new MaterialPageRoute(
-      builder: (BuildContext context) {
-        return WelcomeScreen();
-      },
-    ));
+  void onTimerFinished(AuthController auth) {
+    if (auth.box.hasData("nama")) {
+      Get.snackbar("Hai", "Error nya dimana?");
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        builder: (BuildContext context) {
+          return DashboardScreen();
+        },
+      ));
+    } else {
+      print("Hai");
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        builder: (BuildContext context) {
+          return LoginPage();
+        },
+      ));
+    }
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:apehipo_app/modules/cart/cart_controller.dart';
 import 'package:apehipo_app/modules/contoh_api/product_model.dart';
 import 'package:apehipo_app/modules/home/home_model.dart';
 import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
@@ -7,10 +8,12 @@ import 'package:apehipo_app/modules/cart/cart_screen.dart';
 import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
 // import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
 import 'package:apehipo_app/screens/profile_screen.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/item_counter_widget.dart';
+import 'package:get/get.dart';
 
 import 'favourite_toggle_icon_widget.dart';
 
@@ -28,11 +31,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int amount = 1;
 
   @override
+  var controller = Get.put(CartController());
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Product Detail',
+            'Detail produk',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -104,7 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     Spacer(),
                     Divider(thickness: 1),
-                    getProfile(),
+                    getProfile(widget.productItem),
                     Divider(thickness: 1),
                     getProductDataRowWidget("Deskripsi",
                         rincian: widget.productItem.deskripsi, key: "products"),
@@ -121,12 +125,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Spacer(),
                     AppButton(
                       label: "Add To Basket",
-                      onPressed: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CartScreen(),
-                            ))
+                      onPressed: () async {
+                        String result = await controller.tambahData(
+                            widget.productItem.kode,
+                            widget.productItem.nama,
+                            widget.productItem.harga,
+                            widget.productItem.foto,
+                            this.amount);
+                        if (result == "sukses") {
+                          await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                    message: "Anda berhasil menambahkan produk",
+                                    icon: Icons.check_circle_outline);
+                              });
+                        }
                       },
                     ),
                     Spacer(),
@@ -240,26 +254,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   //   );
   // }
 
-  Widget getProfile() {
+  Widget getProfile(HomeModel productItem) {
     return InkWell(
       onTap: () => {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProfileScreen(),
+              builder: (context) => ProfileScreen(productItem),
             ))
       },
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/images/account_image.jpg"))),
+          CircleAvatar(
+            child: ClipOval(
+              child: Image.network(
+                productItem.fotoPetani,
+                fit: BoxFit.cover,
+                width: 64,
+                height: 64,
+              ),
+            ),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -270,7 +284,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Petani Kode",
+                      productItem.namaPetani,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -280,7 +294,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: "Banjarmasin",
+                        text: productItem.alamatPetani.length <= 30
+                            ? productItem.alamatPetani
+                            : '${productItem.alamatPetani.substring(0, 30)}...',
                         style: TextStyle(
                           color: Colors
                               .black, // Ganti warna teks "Banjarmasin" dengan warna lain sesuai keinginan Anda

@@ -1,7 +1,9 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/modules/account/account_screen.dart';
 import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
 import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
+import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:get/get.dart';
 import 'catalog_edit.dart';
 import 'package:apehipo_app/widgets/theme.dart';
@@ -17,7 +19,6 @@ class CatalogScreen extends StatefulWidget {
 class _CatalogScreenState extends State<CatalogScreen> {
   @override
   var controller = Get.put(CatalogController());
-
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
@@ -28,18 +29,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
+            iconTheme: IconThemeData(color: Colors.black),
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back, // Replace this with your custom icon
-                color: Colors.black, // Customize the color of the icon
-              ),
-              onPressed: () {
-                // Handle the back button press
-                Get.off(AccountScreen());
-              },
-            ),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(50),
               child: Container(
@@ -95,34 +87,40 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
           body: TabBarView(children: [
             SafeArea(
-              child: Container(
-                child: Obx(
-                  () => controller.isLoading.value
-                      ? Center(child: CircularProgressIndicator())
-                      : controller.dataTampilList!.isEmpty
-                          ? Center(child: Text("Tidak ada data"))
-                          : SingleChildScrollView(
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Obx(
+                      () => controller.isLoading.value
+                          ? Center(child: CircularProgressIndicator())
+                          : controller.dataTampilList!.isEmpty
+                              ? Center(child: Text("Tidak ada Produk"))
+                              : SingleChildScrollView(
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        padded(subTitle("Produk Anda")),
+                                        getVerticalItemSlider(
+                                            controller.dataTampilList!),
+                                      ],
                                     ),
-                                    padded(subTitle("Produk Anda")),
-                                    getVerticalItemSlider(
-                                        controller.dataTampilList!),
-                                    getTambahButton(
-                                        context, "Tambah Produk Baru")
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                ),
-              ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: getTambahButton(context, "Tambah Produk Baru"),
+                    )
+                  ]),
             ),
             SafeArea(
-                child: Container(
-              child: Obx(
+                child: Column(children: [
+              Obx(
                 () => controller.isLoading.value
                     ? Center(child: CircularProgressIndicator())
                     : controller.dataArsipList!.isEmpty
@@ -137,13 +135,18 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                   padded(subTitle("Arsip Anda")),
                                   getVerticalItemSlider(
                                       controller.dataArsipList!),
-                                  getTambahButton(context, "Tambah Produk Baru")
                                 ],
                               ),
                             ),
                           ),
               ),
-            ))
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: getTambahButton(context, "Tambah Produk Baru"),
+              )
+            ]))
           ]),
         ));
   }
@@ -154,12 +157,14 @@ class _CatalogScreenState extends State<CatalogScreen> {
       width: 350,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CatalogTambahScreen(),
-            ),
-          );
+          Get.to(CatalogTambahScreen());
+          controller.clearData();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => CatalogTambahScreen(),
+          //   ),
+          // );
         },
         style: ElevatedButton.styleFrom(
           visualDensity: VisualDensity.compact,

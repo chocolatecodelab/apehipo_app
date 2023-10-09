@@ -8,7 +8,8 @@ class ConfirmationDialogBatal extends StatefulWidget {
   ConfirmationDialogBatal({required this.message});
 
   @override
-  _ConfirmationDialogBatalState createState() => _ConfirmationDialogBatalState();
+  _ConfirmationDialogBatalState createState() =>
+      _ConfirmationDialogBatalState();
 }
 
 class _ConfirmationDialogBatalState extends State<ConfirmationDialogBatal> {
@@ -70,7 +71,9 @@ class _ConfirmationDialogBatalState extends State<ConfirmationDialogBatal> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                            message: "Anda telah membatalkan pesanan");
+                          message: "Anda telah membatalkan pesanan",
+                          icon: Icons.check_circle_outline,
+                        );
                       },
                     );
                     if (confirmationResult == true) {

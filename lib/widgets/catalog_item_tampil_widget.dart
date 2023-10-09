@@ -86,7 +86,9 @@ class CatalogItemTampilWidget extends StatelessWidget {
                     );
                     if (confirmationResult == true) {
                       SuccessConfirmationDialog(
-                          message: "Anda berhasil menyimpan perubahan");
+                        message: "Anda berhasil menyimpan perubahan",
+                        icon: Icons.check_circle_outline,
+                      );
                     } else {
                       print("Gagal");
                     }
