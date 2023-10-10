@@ -1,12 +1,12 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/account/account_controller.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/dynamic_button.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/account/account_controller.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import 'package:Apehipo/widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_button.dart';
 import '../../widgets/theme.dart';
 
 import 'dart:io';
@@ -80,6 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           color: Color.fromARGB(255, 22, 22, 22),
         ),
       ),
+      resizeToAvoidBottomInset: true,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: ListView(
@@ -171,22 +172,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 SizedBox(height: 16.0),
                 Divider(thickness: 1),
-                getRowTextField(
-                    "Nama Lengkap", controller.nama, "Masukkan Nama Lengkap"),
+                getRowTextField("Nama Lengkap", controller.nama,
+                    "Masukkan Nama Lengkap", "Contoh:\nMuhammad Fadhillah"),
                 Divider(thickness: 1),
-                getRowTextField(
-                    "Username", controller.username, "Masukkan Username"),
+                getRowTextField("Username", controller.username,
+                    "Masukkan Username", "Contoh:\nfadhillahmuhammad"),
                 Divider(thickness: 1),
-                getRowTextField("Email", controller.email, "Masukkan Email"),
+                getRowTextField("Email", controller.email, "Masukkan Email",
+                    "Contoh:\nfadhillah99@gmail.com"),
                 Divider(thickness: 1),
-                getRowTextField("Alamat", controller.alamat, "Masukkan Alamat"),
+                getRowTextField("Alamat", controller.alamat, "Masukkan Alamat",
+                    "Contoh:\nJl. Kebun Mangga No. 17"),
                 Divider(thickness: 1),
                 getRowTextField("Nomor Telepon", controller.noTelpon,
-                    "Masukkan Nomor Telepon"),
+                    "Masukkan Nomor Telepon", "Contoh:\n081349479839"),
                 Divider(thickness: 1),
-                if (auth.box.read("role") == "petani")
-                  getRowTextField("Nomor Rekening", controller.noRekening,
-                      "Masukkan Nomor Rekening"),
+                // if (auth.box.read("role") == "petani")
+                //   getRowTextField("Nomor Rekening", controller.noRekening,
+                //       "Masukkan Nomor Rekening", "Contoh: 120038832891"),
                 if (auth.box.read("role") == "petani") Divider(thickness: 1),
                 SizedBox(height: 24.0),
                 DynamicButtonWidget(
@@ -315,8 +318,8 @@ Widget getRowTextArea(
   );
 }
 
-Widget getRowTextField(
-    String label, TextEditingController? controller, String? hintText,
+Widget getRowTextField(String label, TextEditingController? controller,
+    String? hintText, String? example,
     {Widget? customWidget}) {
   return Container(
     margin: EdgeInsets.only(
@@ -336,12 +339,21 @@ Widget getRowTextField(
         ),
         Container(
           width: 120, // Gunakan nilai labelWidth untuk lebar label
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                example!,
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              ),
+            ],
           ),
         ),
         SizedBox(
@@ -354,7 +366,7 @@ Widget getRowTextField(
             decoration: InputDecoration(
               hintText: hintText,
               labelText: null,
-              contentPadding: EdgeInsets.only(left: 40.0),
+              contentPadding: EdgeInsets.only(left: 20),
               floatingLabelStyle: TextStyle(
                 color: AppColors.primaryColor,
               ),

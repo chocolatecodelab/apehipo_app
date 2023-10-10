@@ -1,13 +1,13 @@
-import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/home/home_controller.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/card_item_dashboard.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
+import 'package:Apehipo/modules/product_details/product_details_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {

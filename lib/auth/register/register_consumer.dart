@@ -1,7 +1,7 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/auth/login/login.dart';
-import 'package:apehipo_app/auth/roles/role.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/auth/login/login.dart';
+import 'package:Apehipo/auth/roles/role.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:ui_one/features/auth/presentation/components/buttons.dart';
@@ -56,8 +56,8 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
           centerTitle: true,
         ),
       ),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
@@ -133,7 +133,12 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                         // hintStyle: TextStyle(fontFamily: "PoppinsRegular")
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    Text(
+                      "Username harus mengandung minimal 8 karakter dengan huruf kecil dan/atau angka",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontSize: 12),
+                    ),
                     // Alamat Input -------------------------------
                     TextFormField(
                       controller: controller.alamat,
@@ -197,8 +202,31 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                         hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "Password harus mengandung minimal 8 karakter, termasuk huruf besar, huruf kecil, karakter spesial, dan angka.",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontSize: 12),
+                    ),
                     // Retry Password Input -------------------------------------
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    // TextFormField(
+                    //   controller: passwordRetryController,
+                    //   obscureText: passwordSee,
+                    //   // validator: AuthValidator.isPasswordValid,
+                    //   decoration: const InputDecoration(
+                    //     enabledBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Colors.grey),
+                    //     ),
+                    //     focusedBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Colors.green),
+                    //     ),
+                    //     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                    //     hintText: "Konfirmasi Password",
+
+                    //     // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
+                    //   ),
+                    // ),
                     const SizedBox(height: 40),
                     // Sign Up for Button ----------------------------------
                     Container(
@@ -234,17 +262,6 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                             );
                             Get.offAll(
                                 LoginPage()); // Pindah ke DashboardScreen setelah dialog sukses login
-                          } else if (regisResult ==
-                              "Username atau Email anda sudah diambil") {
-                            await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return SuccessConfirmationDialog(
-                                  message: regisResult,
-                                  icon: Icons.close_rounded,
-                                );
-                              },
-                            );
                           } else if (regisResult == "gagal") {
                             await showDialog(
                               context: context,
@@ -271,6 +288,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 40),
               ],
             ),
           ),

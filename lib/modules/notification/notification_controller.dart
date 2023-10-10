@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/notification/notification_model.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/notification/notification_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../services/api.dart';

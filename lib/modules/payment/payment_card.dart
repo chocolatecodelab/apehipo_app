@@ -1,6 +1,6 @@
-import 'package:apehipo_app/modules/cart/checkout_bottom_sheet.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/modules/cart/checkout_bottom_sheet.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

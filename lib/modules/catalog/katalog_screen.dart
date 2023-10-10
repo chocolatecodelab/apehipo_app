@@ -1,13 +1,13 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/modules/catalog/catalog_tambah.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/modules/catalog/catalog_model.dart';
+import 'package:Apehipo/modules/catalog/catalog_tambah.dart';
 import 'package:get/get.dart';
 import 'catalog_edit.dart';
-import 'package:apehipo_app/widgets/theme.dart';
+import 'package:Apehipo/widgets/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/catalog_item_widget.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/catalog_item_widget.dart';
 
 class CatalogScreen extends StatefulWidget {
   @override

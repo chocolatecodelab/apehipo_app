@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'account_model.dart';

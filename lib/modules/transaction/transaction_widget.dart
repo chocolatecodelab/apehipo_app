@@ -1,17 +1,17 @@
-import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/modules/notification/notification_controller.dart';
-import 'package:apehipo_app/modules/track/track_screen.dart';
-import 'package:apehipo_app/modules/transaction/transaction_controller.dart';
-import 'package:apehipo_app/modules/transaction/transaction_model.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_konfirmasi.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/modules/catalog/catalog_edit.dart';
+import 'package:Apehipo/modules/catalog/catalog_model.dart';
+import 'package:Apehipo/modules/notification/notification_controller.dart';
+import 'package:Apehipo/modules/track/track_screen.dart';
+import 'package:Apehipo/modules/transaction/transaction_controller.dart';
+import 'package:Apehipo/modules/transaction/transaction_model.dart';
+import 'package:Apehipo/widgets/confirmation_dialog_konfirmasi.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../widgets/LineSeparator.dart';
-import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/theme.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/colors.dart';
 
 class TransactionWidget extends StatefulWidget {
   final Key key;

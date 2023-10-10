@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
 import '../modules/home/models/category_item.dart';
-import 'package:apehipo_app/widgets/category_item_card_widget.dart';
-import 'package:apehipo_app/widgets/search_bar_widget.dart';
+import 'package:Apehipo/widgets/category_item_card_widget.dart';
+import 'package:Apehipo/widgets/search_bar_widget.dart';
 
 import 'category_items_screen.dart';
 

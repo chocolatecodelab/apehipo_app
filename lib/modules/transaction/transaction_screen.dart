@@ -1,6 +1,6 @@
-import 'package:apehipo_app/modules/transaction/transaction_controller.dart';
-import 'package:apehipo_app/modules/transaction/transaction_model.dart';
-import 'package:apehipo_app/modules/transaction/transaction_widget.dart';
+import 'package:Apehipo/modules/transaction/transaction_controller.dart';
+import 'package:Apehipo/modules/transaction/transaction_model.dart';
+import 'package:Apehipo/modules/transaction/transaction_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +12,7 @@ class TransactionScreen extends StatefulWidget {
 class _TransactionScreenState extends State<TransactionScreen> {
   @override
   void initState() {
+    super.initState();
     controller.refresh();
   }
 

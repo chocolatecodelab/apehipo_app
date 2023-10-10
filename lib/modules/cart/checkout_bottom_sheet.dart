@@ -1,14 +1,14 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/address/address_bottom_sheet.dart';
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/cart/cart_change.dart';
-import 'package:apehipo_app/modules/payment/payment_page.dart';
-import 'package:apehipo_app/modules/order/order_accepted_screen.dart';
-import 'package:apehipo_app/modules/order/order_failed_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/address/address_bottom_sheet.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/payment/payment_page.dart';
+import 'package:Apehipo/modules/order/order_accepted_screen.dart';
+import 'package:Apehipo/modules/order/order_failed_dialog.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 

@@ -1,9 +1,9 @@
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/widgets/LineSeparator.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/LineSeparator.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 
 class CardItemDashboard extends StatelessWidget {
   CardItemDashboard(

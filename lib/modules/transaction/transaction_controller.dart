@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/order/order_controller.dart';
-import 'package:apehipo_app/modules/transaction/transaction_model.dart';
-import 'package:apehipo_app/services/api.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/order/order_controller.dart';
+import 'package:Apehipo/modules/transaction/transaction_model.dart';
+import 'package:Apehipo/services/api.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';

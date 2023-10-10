@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_model.dart';
+import 'package:Apehipo/auth/auth_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:flutter/material.dart';

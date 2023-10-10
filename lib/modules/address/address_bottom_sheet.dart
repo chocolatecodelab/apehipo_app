@@ -1,8 +1,8 @@
-import 'package:apehipo_app/modules/account/account_controller.dart';
-import 'package:apehipo_app/modules/address/address_screen.dart';
+import 'package:Apehipo/modules/account/account_controller.dart';
+import 'package:Apehipo/modules/address/address_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:get/get.dart';
 
 import '../order/order_failed_dialog.dart';

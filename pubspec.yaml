@@ -1,4 +1,4 @@
-name: apehipo_app
+name: Apehipo
 description: A new Flutter application.
 
 publish_to: 'none'
@@ -29,11 +29,17 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_launcher_icons: "^0.8.0"
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/flutter_icon.png"
 
 flutter:
 
   uses-material-design: true
+  
 
   assets:
     - assets/images/
@@ -42,7 +48,6 @@ flutter:
     - assets/images/beverages_images/
     - assets/icons/
     - assets/icons/account_icons/
-    - assets/fonts/
 
   fonts:
     - family: Gilroy
@@ -50,3 +55,4 @@ flutter:
         - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
         - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf
         - asset: assets/fonts/gilroy/Gilroy-Bold.otf
+      

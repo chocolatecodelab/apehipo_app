@@ -1,10 +1,11 @@
-import 'package:apehipo_app/modules/cart/cart_change.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/home/home_controller.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
-import 'package:apehipo_app/widgets/card_item.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/cart/cart_screen.dart';
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/modules/product_details/product_details_screen.dart';
+import 'package:Apehipo/widgets/card_item.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   @override
   var controller = Get.put(HomeController());
-
+  var auth = Get.put(AuthController());
   Widget build(BuildContext context) {
     final cart = Provider.of<CartChange>(context);
     return Scaffold(
@@ -60,41 +61,42 @@ class _CardScreenState extends State<CardScreen> {
           //             child: Text('Termurah'),
           //           ),
           //         ]),
-          Container(
-            margin: EdgeInsets.only(top: 20, right: 15),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(CartScreen());
-                    },
-                    child: SvgPicture.asset("assets/icons/cart_icon.svg"),
-                  ),
-                ),
-                Positioned(
-                  right: 0, // Menentukan posisi horizontal
-                  top: 0, // Menentukan posisi vertikal
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.primaryColor, // Warna latar belakang
+          if (auth.box.read("role") == "konsumen")
+            Container(
+              margin: EdgeInsets.only(top: 20, right: 15),
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(CartScreen());
+                      },
+                      child: SvgPicture.asset("assets/icons/cart_icon.svg"),
                     ),
-                    child: Text(
-                      cart.itemCount.toString(),
-                      style: TextStyle(
-                        color: Colors.white, // Warna teks
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  Positioned(
+                    right: 0, // Menentukan posisi horizontal
+                    top: 0, // Menentukan posisi vertikal
+                    child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor, // Warna latar belakang
+                      ),
+                      child: Text(
+                        cart.itemCount.toString(),
+                        style: TextStyle(
+                          color: Colors.white, // Warna teks
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ],
       ),
       body: Container(

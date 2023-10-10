@@ -1,18 +1,19 @@
-import 'package:apehipo_app/modules/cart/cart_change.dart';
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
-import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_screen.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/modules/product_details/spesifikasi_bottom.dart';
+import 'package:Apehipo/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-// import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
-import 'package:apehipo_app/screens/profile_screen.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+// import 'package:Apehipo/modules/product_details/product_details_bottom.dart';
+import 'package:Apehipo/screens/profile_screen.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/item_counter_widget.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/item_counter_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int amount = 1;
 
   var controller = Get.put(CartController());
+  var auth = Get.put(AuthController());
   Widget build(BuildContext context) {
     final cart = Provider.of<CartChange>(context);
     return Scaffold(
@@ -47,38 +49,39 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
               ),
               Spacer(),
-              Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8),
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(CartScreen());
-                      },
-                      child: SvgPicture.asset("assets/icons/cart_icon.svg"),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0, // Menentukan posisi horizontal
-                    top: 0, // Menentukan posisi vertikal
-                    child: Container(
-                      padding: EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.primaryColor, // Warna latar belakang
+              if (auth.box.read("role") == "konsumen")
+                Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(CartScreen());
+                        },
+                        child: SvgPicture.asset("assets/icons/cart_icon.svg"),
                       ),
-                      child: Text(
-                        cart.itemCount.toString(),
-                        style: TextStyle(
-                          color: Colors.white, // Warna teks
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                    ),
+                    Positioned(
+                      right: 0, // Menentukan posisi horizontal
+                      top: 0, // Menentukan posisi vertikal
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primaryColor, // Warna latar belakang
+                        ),
+                        child: Text(
+                          cart.itemCount.toString(),
+                          style: TextStyle(
+                            color: Colors.white, // Warna teks
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                )
             ],
           ),
           backgroundColor: Colors.transparent,
@@ -126,26 +129,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       trailing: FavoriteToggleIcon(),
                     ),
-                    Row(
-                      children: [
-                        ItemCounterWidget(
-                          onAmountChanged: (newAmount) {
-                            setState(() {
-                              amount = newAmount;
-                            });
-                          },
-                        ),
-                        Spacer(),
-                        Text(
-                          "Rp${getTotalPrice().toStringAsFixed(0)}",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                    if (auth.box.read("role") == "konsumen")
+                      Row(
+                        children: [
+                          ItemCounterWidget(
+                            onAmountChanged: (newAmount) {
+                              setState(() {
+                                amount = newAmount;
+                              });
+                            },
                           ),
-                        )
-                      ],
-                    ),
-                    Spacer(),
+                          Spacer(),
+                          Text(
+                            "Rp${getTotalPrice().toStringAsFixed(0)}",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    // Spacer(),
                     Divider(thickness: 1),
                     getProfile(widget.productItem),
                     Divider(thickness: 1),
@@ -162,28 +166,30 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     //   customWidget: ratingWidget(),
                     // ),
                     Spacer(),
-                    AppButton(
-                      label: "Add To Basket",
-                      onPressed: () async {
-                        String result = await controller.tambahData(
-                            widget.productItem.kode,
-                            widget.productItem.nama,
-                            widget.productItem.harga,
-                            widget.productItem.foto,
-                            widget.productItem.namaPetani,
-                            this.amount);
-                        if (result == "sukses") {
-                          cart.incrementCounter(controller.dataList!.length);
-                          await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return SuccessConfirmationDialog(
-                                    message: "Anda berhasil menambahkan produk",
-                                    icon: Icons.check_circle_outline);
-                              });
-                        }
-                      },
-                    ),
+                    if (auth.box.read("role") == "konsumen")
+                      AppButton(
+                        label: "Add To Basket",
+                        onPressed: () async {
+                          String result = await controller.tambahData(
+                              widget.productItem.kode,
+                              widget.productItem.nama,
+                              widget.productItem.harga,
+                              widget.productItem.foto,
+                              widget.productItem.namaPetani,
+                              this.amount);
+                          if (result == "sukses") {
+                            cart.incrementCounter(controller.dataList!.length);
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SuccessConfirmationDialog(
+                                      message:
+                                          "Anda berhasil menambahkan produk",
+                                      icon: Icons.check_circle_outline);
+                                });
+                          }
+                        },
+                      ),
                     Spacer(),
                   ],
                 ),
@@ -218,7 +224,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           top: Radius.circular(10),
         ),
         child: Image.network(
-          "https://asset.kompas.com/crops/fIaNWDAjRZ8OzH-6PTSsBisOyA0=/87x0:759x448/750x500/data/photo/2023/03/05/64049a48c2ac7.jpg",
+          widget.productItem.foto,
           width: MediaQuery.of(context).size.width,
           height: 75,
           fit: BoxFit.cover,

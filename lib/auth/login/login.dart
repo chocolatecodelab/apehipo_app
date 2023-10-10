@@ -1,18 +1,16 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/auth/roles/role.dart';
-import 'package:apehipo_app/modules/cart/cart_change.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/splash/welcome_screen.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/auth/roles/role.dart';
+import 'package:Apehipo/modules/dashboard/dashboard_screen.dart';
+import 'package:Apehipo/splash/welcome_screen.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String? id = "login_page";
+  static const String id = "login_page";
 
   const LoginPage({super.key});
 
@@ -27,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   var controller = Get.put(AuthController());
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartChange>(context);
+    // final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
@@ -57,11 +55,12 @@ class _LoginPageState extends State<LoginPage> {
             centerTitle: true,
           ),
         ),
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
+          reverse: true,
           // Menggunakan SingleChildScrollView
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(32),
             child: Column(
               children: [
                 const SizedBox(height: 40),
@@ -85,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Center(
                   child: Text(
-                    "You've been missed",
+                    "Silahkan login terlebih dahulu.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
@@ -94,7 +93,46 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                // Container(
+                //   height: 45,
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //         elevation: 0,
+                //         backgroundColor: Colors.grey[300],
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(25),
+                //         )),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         SizedBox(
+                //           width: 25,
+                //           height: 25,
+                //           child: Image.asset("../assets/images/ic_google.png"),
+                //         ), // Tambahkan jarak horizontal antara ikon dan teks
+                //         Text(
+                //           '  Masuk dengan Google',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.normal,
+                //             color: Colors.black,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     onPressed: () => {},
+                //   ),
+                // ),
                 SizedBox(height: 10),
+                // Text(
+                //   'atau',
+                //   style: TextStyle(
+                //     fontSize: 15,
+                //     fontWeight: FontWeight.w500,
+                //     color: Colors.black,
+                //   ),
+                // ),
                 SizedBox(height: 0),
                 Form(
                   key: _signInGlobalKey,
@@ -154,7 +192,6 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       String? loginResult = await controller.doLogin();
                       if (loginResult == "sukses") {
-                        cart.resetValue();
                         await showDialog(
                           context: context,
                           builder: (BuildContext context) {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/catalog/katalog_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'catalog_model.dart';

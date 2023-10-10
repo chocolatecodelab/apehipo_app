@@ -1,13 +1,13 @@
-import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_publish.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/modules/catalog/catalog_model.dart';
+import 'package:Apehipo/widgets/confirmation_dialog_publish.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'LineSeparator.dart';
-import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/theme.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/account/models/katalog_item.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import '../modules/catalog/catalog_edit.dart';
 import '../widgets/delete_confirmation_dialog.dart';
 import '../widgets/success_confirmation_dialog.dart';
@@ -31,7 +31,7 @@ class CatalogItemWidget extends StatefulWidget {
 class _CatalogItemWidgetState extends State<CatalogItemWidget> {
   final double width = 174;
 
-  final double height = 300;
+  final double height = 220;
 
   final Color borderColor = Color(0xffE2E2E2);
 

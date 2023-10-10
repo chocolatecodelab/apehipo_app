@@ -1,8 +1,8 @@
-import 'package:apehipo_app/modules/order/order_screen.dart';
-import 'package:apehipo_app/modules/track/track_edit_bottom.dart';
-import 'package:apehipo_app/splash/splash_screen.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/modules/order/order_screen.dart';
+import 'package:Apehipo/modules/track/track_edit_bottom.dart';
+import 'package:Apehipo/splash/splash_screen.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -46,31 +46,40 @@ class _TrackEditScreenState extends State<TrackEditScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: Icon(Icons.delivery_dining, size: 100,),)
+                Expanded(
+                  child: Icon(
+                    Icons.delivery_dining,
+                    size: 100,
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 10,),
-            Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                child: AppText(
-                  text: "Produk Anda disortir dari Bandung",
-                  fontSize: 20,
-                  textAlign: TextAlign.center,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
+            SizedBox(
+              height: 10,
             ),
-            SizedBox(height: 30,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: AppText(
+                    text: "Produk Anda disortir dari Bandung",
+                    fontSize: 20,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30,
+            ),
             AppButton(
               label: "Edit Status Pesanan",
               onPressed: () => {
                 showBottomSheet(context),
               },
             ),
-            ],
+          ],
         ),
       ),
     );

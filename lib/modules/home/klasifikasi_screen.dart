@@ -1,6 +1,6 @@
-import 'package:apehipo_app/modules/home/product_all_detail.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/widgets/card_item_dashboard.dart';
+import 'package:Apehipo/modules/home/product_all_detail.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

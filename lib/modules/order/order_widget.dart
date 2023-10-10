@@ -1,15 +1,15 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/notification/notification_controller.dart';
-import 'package:apehipo_app/modules/order/order_controller.dart';
-import 'package:apehipo_app/modules/order/order_model.dart';
-import 'package:apehipo_app/modules/payment/payment_screen.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/notification/notification_controller.dart';
+import 'package:Apehipo/modules/order/order_controller.dart';
+import 'package:Apehipo/modules/order/order_model.dart';
+import 'package:Apehipo/modules/payment/payment_screen.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/LineSeparator.dart';
-import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/LineSeparator.dart';
+import 'package:Apehipo/widgets/theme.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -195,17 +195,15 @@ class _OrderWidgetState extends State<OrderWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Expanded(
-                      child: auth.box.read("role") == "konsumen"
-                          ? getKonfirmasi(
-                              context,
-                              "Konfirmasi",
-                              widget.item.totalHarga,
-                              widget.item.status,
-                              widget.item.idOrder,
-                              widget.item.idPembeli,
-                              widget.item.idPenjual,
-                            )
-                          : Text(""),
+                      child: getKonfirmasi(
+                        context,
+                        "Konfirmasi",
+                        widget.item.totalHarga,
+                        widget.item.status,
+                        widget.item.idOrder,
+                        widget.item.idPembeli,
+                        widget.item.idPenjual,
+                      ),
                     )
                   ],
                 )

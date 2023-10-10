@@ -1,4 +1,4 @@
-import 'package:apehipo_app/modules/payment/payment_card.dart';
+import 'package:Apehipo/modules/payment/payment_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,8 +1,8 @@
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/widgets/transaction_proses_petani.dart';
-import 'package:apehipo_app/widgets/transaction_selesai_petani.dart';
+import 'package:Apehipo/modules/account/models/katalog_item.dart';
+import 'package:Apehipo/modules/catalog/catalog_edit.dart';
+import 'package:Apehipo/modules/catalog/catalog_model.dart';
+import 'package:Apehipo/widgets/transaction_proses_petani.dart';
+import 'package:Apehipo/widgets/transaction_selesai_petani.dart';
 import 'package:flutter/material.dart';
 
 class TransactionPetaniScreen extends StatelessWidget {

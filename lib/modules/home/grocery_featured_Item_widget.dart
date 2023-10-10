@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/colors.dart';
 
 class GroceryFeaturedItem {
   final String name;

@@ -1,10 +1,10 @@
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/cart/cart_model.dart';
-import 'package:apehipo_app/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_model.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/home/models/grocery_item.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 

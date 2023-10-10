@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/modules/home/home_model.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../services/api.dart';
@@ -41,11 +41,8 @@ class HomeController extends GetxController {
           HomeModel homeModel = HomeModel.fromJson(item);
           dataListSayuran!.add(homeModel);
         }
-      } else {
-        Get.snackbar("Pesan", "Terjadi kesalahan sistem");
-      }
+      } else {}
     } catch (e) {
-      Get.snackbar("Kesalahan", e.toString());
     } finally {
       isLoading(false);
     }

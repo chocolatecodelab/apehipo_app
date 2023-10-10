@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/auth/login/login.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/home/product_home_screen.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/auth/login/login.dart';
+import 'package:Apehipo/modules/dashboard/dashboard_screen.dart';
+import 'package:Apehipo/modules/home/product_home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/splash/welcome_screen.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/splash/welcome_screen.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 

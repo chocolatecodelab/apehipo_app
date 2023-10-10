@@ -1,16 +1,16 @@
-import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/modules/payment/payment_screen.dart';
-import 'package:apehipo_app/modules/track/track_screen.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_batal.dart';
+import 'package:Apehipo/modules/catalog/catalog_edit.dart';
+import 'package:Apehipo/modules/catalog/catalog_model.dart';
+import 'package:Apehipo/modules/payment/payment_screen.dart';
+import 'package:Apehipo/modules/track/track_screen.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/confirmation_dialog_batal.dart';
 import 'package:flutter/material.dart';
 import 'LineSeparator.dart';
-import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-// import 'package:apehipo_app/modules/account/catalog_details.dart';
+import 'package:Apehipo/widgets/theme.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/account/models/katalog_item.dart';
+import 'package:Apehipo/widgets/colors.dart';
+// import 'package:Apehipo/modules/account/catalog_details.dart';
 import '.././widgets/confirmation_dialog.dart';
 
 class TransactionSelesaiPetaniWidget extends StatelessWidget {

@@ -1,20 +1,21 @@
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/cart/cart_change.dart';
-import 'package:apehipo_app/modules/home/home_controller.dart';
-import 'package:apehipo_app/modules/home/product_all_detail.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/modules/notification/notification_change.dart';
-import 'package:apehipo_app/modules/notification/notification_controller.dart';
-import 'package:apehipo_app/modules/notification/notification_model.dart';
-import 'package:apehipo_app/modules/notification/notification_screen.dart';
-import 'package:apehipo_app/widgets/card_item_dashboard.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_screen.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:Apehipo/modules/home/product_all_detail.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/modules/notification/notification_change.dart';
+import 'package:Apehipo/modules/notification/notification_controller.dart';
+import 'package:Apehipo/modules/notification/notification_model.dart';
+import 'package:Apehipo/modules/notification/notification_screen.dart';
+import 'package:Apehipo/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:apehipo_app/widgets/search_bar_widget.dart';
+import 'package:Apehipo/widgets/search_bar_widget.dart';
 import 'package:get/get.dart';
-import 'package:apehipo_app/modules/home/klasifikasi_screen.dart';
+import 'package:Apehipo/modules/home/klasifikasi_screen.dart';
 import 'package:provider/provider.dart';
 import 'home_banner_widget.dart';
 
@@ -30,13 +31,12 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
   void initState() {
     super.initState();
     controller.refresh();
-    notifController.refresh();
   }
 
   @override
   var cartController = Get.put(CartController());
   var notifController = Get.put(NotificationController());
-
+  var auth = Get.put(AuthController());
   Widget build(BuildContext context) {
     final cart = Provider.of<CartChange>(context);
     final notif = Provider.of<NotificationChange>(context);
@@ -56,85 +56,88 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
                         child: Column(
                           children: [
                             SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Stack(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.to(NotificationScreen());
-                                        },
-                                        child: SvgPicture.asset(
-                                            "assets/icons/account_icons/notification_icon.svg"),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0, // Menentukan posisi horizontal
-                                      top: 0, // Menentukan posisi vertikal
-                                      child: Container(
-                                        padding: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: AppColors
-                                              .primaryColor, // Warna latar belakang
+                            if (auth.box.read("role") == "konsumen")
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.to(NotificationScreen());
+                                          },
+                                          child: SvgPicture.asset(
+                                              "assets/icons/account_icons/notification_icon.svg"),
                                         ),
-                                        child: Text(
-                                          notif.itemCount.toString(),
-                                          style: TextStyle(
-                                            color: Colors.white, // Warna teks
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
+                                      ),
+                                      Positioned(
+                                        right:
+                                            0, // Menentukan posisi horizontal
+                                        top: 0, // Menentukan posisi vertikal
+                                        child: Container(
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColors
+                                                .primaryColor, // Warna latar belakang
+                                          ),
+                                          child: Text(
+                                            notif.itemCount.toString(),
+                                            style: TextStyle(
+                                              color: Colors.white, // Warna teks
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Stack(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.to(CartScreen());
-                                        },
-                                        child: SvgPicture.asset(
-                                            "assets/icons/cart_icon.svg"),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0, // Menentukan posisi horizontal
-                                      top: 0, // Menentukan posisi vertikal
-                                      child: Container(
-                                        padding: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: AppColors
-                                              .primaryColor, // Warna latar belakang
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(8),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.to(CartScreen());
+                                          },
+                                          child: SvgPicture.asset(
+                                              "assets/icons/cart_icon.svg"),
                                         ),
-                                        child: Text(
-                                          cart.itemCount.toString(),
-                                          style: TextStyle(
-                                            color: Colors.white, // Warna teks
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
+                                      ),
+                                      Positioned(
+                                        right:
+                                            0, // Menentukan posisi horizontal
+                                        top: 0, // Menentukan posisi vertikal
+                                        child: Container(
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColors
+                                                .primaryColor, // Warna latar belakang
+                                          ),
+                                          child: Text(
+                                            cart.itemCount.toString(),
+                                            style: TextStyle(
+                                              color: Colors.white, // Warna teks
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                )
-                              ],
-                            ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  )
+                                ],
+                              ),
                             // SvgPicture.asset("assets/icons/app_icon_color.svg"),
                             SizedBox(
                               height: 5,
@@ -166,11 +169,6 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
                             SizedBox(
                               height: 15,
                             ),
-                            // padded(subTitle(context, "Sedang Laris",
-                            //     key: "sedang laris",
-                            //     items: controller.dataListLaris)),
-                            // getHorizontalItemSlider(
-                            //     controller.dataListLaris!, "sedang laris"),
                             SizedBox(
                               height: 15,
                             ),
