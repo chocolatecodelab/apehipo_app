@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
 import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:apehipo_app/widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +41,12 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
         width: 1.0,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.jenis.text = selectedValue;
   }
 
   @override

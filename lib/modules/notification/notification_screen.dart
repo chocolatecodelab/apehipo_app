@@ -114,9 +114,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   timeAndDate(dataNotification),
                   TextButton(
                     onPressed: dataNotification.status == "false"
-                        ? () {
-                            controller.ubahData(dataNotification.id);
-                            notif.resetValue(notifTidakTerbaca.length);
+                        ? () async {
+                            String hasil =
+                                await controller.ubahData(dataNotification.id);
+                            if (hasil == "sukses") {
+                              notif.incrementCounter(notifTidakTerbaca.length);
+                            }
                           }
                         : null,
                     child: Text(

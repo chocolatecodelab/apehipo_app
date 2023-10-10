@@ -11,6 +11,7 @@ import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/colors.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class OrderWidget extends StatefulWidget {
   final String? waktu;
@@ -37,8 +38,23 @@ class _OrderWidgetState extends State<OrderWidget> {
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitHours = twoDigits(duration.inHours.remainder(60));
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+
+    return "$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Format tanggal dan waktu dalam format yang diinginkan
+
     final auth = Get.put(AuthController());
     return Container(
       decoration: BoxDecoration(
@@ -110,19 +126,36 @@ class _OrderWidgetState extends State<OrderWidget> {
               SizedBox(
                 height: 15,
               ),
-              AppText(
-                text: "Batas akhir pembayaran: ",
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              AppText(
-                text: "2 jam setelah order dibuat",
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primaryColor,
+              StreamBuilder<Duration>(
+                stream: timerStream(
+                    widget.item.waktuKedaluarsa,
+                    widget.item
+                        .idOrder!), // Gantilah ini dengan Stream yang sesuai
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    String formattedDuration = formatDuration(snapshot.data!);
+                    return Row(
+                      children: [
+                        AppText(
+                          text: "Batas akhir pembayaran: ",
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        AppText(
+                          text: formattedDuration,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return CircularProgressIndicator(); // Tampilkan loading spinner jika data belum tersedia
+                  }
+                },
               ),
               SizedBox(
                 height: 15,
@@ -157,27 +190,42 @@ class _OrderWidgetState extends State<OrderWidget> {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: auth.box.read("role") == "konsumen"
-                        ? getKonfirmasi(
-                            context,
-                            "Konfirmasi",
-                            widget.item.totalHarga,
-                            widget.item.status,
-                            widget.item.idOrder,
-                            widget.item.idPembeli,
-                            widget.item.idPenjual,
-                          )
-                        : Text(""),
-                  )
-                ],
-              )
+              if (auth.box.read("role") == "admin")
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: auth.box.read("role") == "konsumen"
+                          ? getKonfirmasi(
+                              context,
+                              "Konfirmasi",
+                              widget.item.totalHarga,
+                              widget.item.status,
+                              widget.item.idOrder,
+                              widget.item.idPembeli,
+                              widget.item.idPenjual,
+                            )
+                          : Text(""),
+                    )
+                  ],
+                )
             ],
           )),
     );
+  }
+
+  Stream<Duration> timerStream(
+      DateTime waktuKedaluarsa, String idOrder) async* {
+    var controller = Get.put(OrderController());
+    while (DateTime.now().isBefore(waktuKedaluarsa)) {
+      final selisihWaktu = waktuKedaluarsa.difference(DateTime.now());
+      if (selisihWaktu.inSeconds <= 0) {
+        break; // Hentikan stream jika selisih waktu kurang dari atau sama dengan 0
+      }
+      yield selisihWaktu;
+      await Future.delayed(Duration(seconds: 1)); // Delay setiap detik
+    }
+    controller.deleteData(idOrder);
   }
 
   Widget imageWidget(String foto) {

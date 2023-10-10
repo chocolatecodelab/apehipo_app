@@ -6,8 +6,9 @@ import '../order/order_failed_dialog.dart';
 
 class SpesifikasiBottom extends StatefulWidget {
   final String? stok;
+  final String? alamat;
 
-  const SpesifikasiBottom(this.stok);
+  const SpesifikasiBottom(this.stok, this.alamat);
   @override
   _SpesifikasiBottomState createState() => _SpesifikasiBottomState();
 }

@@ -11,8 +11,8 @@ class NotificationChange with ChangeNotifier {
     notifyListeners();
   }
 
-  void resetValue(int count) {
-    itemCount = count;
+  void resetValue() {
+    itemCount = 0;
     notifyListeners();
   }
 }

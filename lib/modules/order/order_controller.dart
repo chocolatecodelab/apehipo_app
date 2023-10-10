@@ -21,7 +21,12 @@ class OrderController extends GetxController {
   Future getAllData(id) async {
     try {
       isLoading(true);
-      String baseUrl = '${Api().baseURL}/order/$id';
+      String baseUrl = "";
+      if (auth.box.read("role") == "admin") {
+        baseUrl = '${Api().baseURL}/order';
+      } else {
+        baseUrl = '${Api().baseURL}/order/$id';
+      }
       final response = await http.get(Uri.tryParse(baseUrl)!);
       if (response.statusCode == 200) {
         print(response.statusCode);
@@ -30,6 +35,7 @@ class OrderController extends GetxController {
         for (var item in dataBelumJsonList) {
           OrderModel orderModel = OrderModel.fromJson(item);
           dataBelumList!.add(orderModel);
+          print("hello world");
         }
 
         List<dynamic> dataSudahJsonList = data['sudah_bayar'];

@@ -76,6 +76,31 @@ class AuthController extends GetxController {
 
   Future<String> createAccount() async {
     try {
+      // Validasi username
+      if (username.text.length < 5) {
+        // Tampilkan pesan kesalahan: "Username harus memiliki setidaknya 5 karakter."
+        return "Username harus memiliki setidaknya 5 karakter.";
+      } else if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(username.text)) {
+        // Tampilkan pesan kesalahan: "Username hanya boleh mengandung huruf dan angka."
+        return "Username hanya boleh mengandung huruf dan angka.";
+      }
+
+      if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+          .hasMatch(email.text)) {
+        // Tampilkan pesan kesalahan: "Email tidak valid."
+        return "Email tidak valid.";
+      }
+
+      if (password.text.length < 8) {
+        // Tampilkan pesan kesalahan: "Password harus memiliki setidaknya 8 karakter."
+        return "Password harus memiliki setidaknya 8 karakter.";
+      } else if (!RegExp(
+              r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?\~\\-]).+$')
+          .hasMatch(password.text)) {
+        // Tampilkan pesan kesalahan: "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus."
+        return "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus.";
+      }
+
       var map = <String, dynamic>{};
       map['nama'] = nama.text;
       map['no_telpon'] = noTelpon.text;
@@ -90,17 +115,22 @@ class AuthController extends GetxController {
       String baseUrl = '${Api().baseURL}/auth/register';
       print(baseUrl);
       final response = await http.post(Uri.tryParse(baseUrl)!, body: map);
-      print(response.statusCode);
-      if (response.statusCode == 201) {
+      final jsonResponse = json.decode(response.body);
+      final status = jsonResponse['status'];
+      print(status);
+      if (status == "201") {
+        clearData();
         return "sukses";
+      } else if (status == "404") {
+        print("disini");
+        return "Username atau Email anda sudah diambil";
       } else {
+        print("atau disini");
         return "gagal";
       }
     } catch (e) {
       return "gagal";
-    } finally {
-      clearData();
-    }
+    } finally {}
   }
 
   void clearData() {

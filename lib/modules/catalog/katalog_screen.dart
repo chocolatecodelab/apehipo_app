@@ -15,9 +15,6 @@ class CatalogScreen extends StatefulWidget {
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
-  var auth = Get.put(AuthController());
-  var controller = Get.put(CatalogController());
-
   @override
   void initState() {
     super.initState();
@@ -25,6 +22,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 
   @override
+  var controller = Get.put(CatalogController());
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
@@ -220,6 +218,15 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 
   Widget getVerticalItemSlider(List<CatalogModel> items) {
+    items.sort((a, b) {
+      // Mengambil angka dari idOrder menggunakan ekstraksi substring
+      int aOrderNumber = int.parse(
+          a.kode.substring(1)); // Mengabaikan karakter pertama (biasanya 'O')
+      int bOrderNumber = int.parse(b.kode.substring(1));
+
+      // Membandingkan angka-angka tersebut
+      return bOrderNumber.compareTo(aOrderNumber);
+    });
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 490,

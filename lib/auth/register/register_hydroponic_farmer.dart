@@ -235,6 +235,17 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
                             );
                             Get.offAll(
                                 LoginPage()); // Pindah ke DashboardScreen setelah dialog sukses login
+                          } else if (regisResult ==
+                              "Username atau Email anda sudah diambil") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: regisResult,
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
                           } else if (regisResult == "gagal") {
                             await showDialog(
                               context: context,

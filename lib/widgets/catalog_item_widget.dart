@@ -12,7 +12,7 @@ import '../modules/catalog/catalog_edit.dart';
 import '../widgets/delete_confirmation_dialog.dart';
 import '../widgets/success_confirmation_dialog.dart';
 
-class CatalogItemWidget extends StatelessWidget {
+class CatalogItemWidget extends StatefulWidget {
   CatalogItemWidget({
     Key? key,
     required this.item,
@@ -24,9 +24,17 @@ class CatalogItemWidget extends StatelessWidget {
   final String? heroSuffix;
   final VoidCallback? onAddPressed;
 
+  @override
+  State<CatalogItemWidget> createState() => _CatalogItemWidgetState();
+}
+
+class _CatalogItemWidgetState extends State<CatalogItemWidget> {
   final double width = 174;
+
   final double height = 300;
+
   final Color borderColor = Color(0xffE2E2E2);
+
   final double borderRadius = 18;
 
   @override
@@ -53,7 +61,10 @@ class CatalogItemWidget extends StatelessWidget {
           children: [
             Row(children: [
               Hero(
-                tag: "KatalogItem:" + item.nama + "-" + (heroSuffix ?? ""),
+                tag: "KatalogItem:" +
+                    widget.item.nama +
+                    "-" +
+                    (widget.heroSuffix ?? ""),
                 child: imageWidget(),
               ),
               SizedBox(
@@ -64,12 +75,12 @@ class CatalogItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    text: item.nama,
+                    text: widget.item.nama,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   AppText(
-                    text: "Rp${item.harga}",
+                    text: "Rp${widget.item.harga}",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -88,7 +99,7 @@ class CatalogItemWidget extends StatelessWidget {
                       },
                     );
                     if (confirmationResult == true) {
-                      controller.deleteData(item.kode);
+                      controller.deleteData(widget.item.kode);
                     } else {
                       print("Gagal");
                     }
@@ -138,27 +149,27 @@ class CatalogItemWidget extends StatelessWidget {
                 // ),
               ],
             ),
-            SizedBox(
-              height: 15,
-            ),
-            LineSeparator(
-              height: 1,
-              color: const Color.fromARGB(255, 211, 211, 211),
-            ),
-            SizedBox(
-              height: 15,
-            ),
+            // SizedBox(
+            //   height: 15,
+            // ),
+            // LineSeparator(
+            //   height: 1,
+            //   color: const Color.fromARGB(255, 211, 211, 211),
+            // ),
+            // SizedBox(
+            //   height: 15,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 getEditButton(
                   "Edit Produk",
-                  onPressed: () => onItemClicked(context, item),
+                  onPressed: () => onItemClicked(context, widget.item),
                 ),
                 SizedBox(
                   width: 20,
                 ),
-                getAction(context, "Publish", controller, item)
+                getAction(context, "Publish", controller, widget.item)
               ],
             )
           ],
@@ -169,7 +180,7 @@ class CatalogItemWidget extends StatelessWidget {
 
   Widget imageWidget() {
     return Container(
-      child: Image.network(item.foto),
+      child: Image.network(widget.item.foto),
       width: 100,
       height: 100,
     );
@@ -177,7 +188,7 @@ class CatalogItemWidget extends StatelessWidget {
 
   Widget editWidget() {
     return GestureDetector(
-      onTap: onAddPressed,
+      onTap: widget.onAddPressed,
       child: Container(
         height: 45,
         width: 45,

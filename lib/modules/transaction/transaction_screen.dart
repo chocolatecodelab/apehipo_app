@@ -1,5 +1,3 @@
-import 'package:apehipo_app/modules/catalog/catalog_edit.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
 import 'package:apehipo_app/modules/transaction/transaction_controller.dart';
 import 'package:apehipo_app/modules/transaction/transaction_model.dart';
 import 'package:apehipo_app/modules/transaction/transaction_widget.dart';
@@ -12,15 +10,13 @@ class TransactionScreen extends StatefulWidget {
 }
 
 class _TransactionScreenState extends State<TransactionScreen> {
-  var controller = Get.put(TransactionController());
-
   @override
   void initState() {
-    super.initState();
     controller.refresh();
   }
 
   @override
+  var controller = Get.put(TransactionController());
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,

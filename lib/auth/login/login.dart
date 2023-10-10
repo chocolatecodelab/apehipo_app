@@ -94,46 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Container(
-                //   height: 45,
-                //   width: double.infinity,
-                //   child: ElevatedButton(
-                //     style: ElevatedButton.styleFrom(
-                //         elevation: 0,
-                //         backgroundColor: Colors.grey[300],
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(25),
-                //         )),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         SizedBox(
-                //           width: 25,
-                //           height: 25,
-                //           child: Image.asset("../assets/images/ic_google.png"),
-                //         ), // Tambahkan jarak horizontal antara ikon dan teks
-                //         Text(
-                //           '  Masuk dengan Google',
-                //           style: TextStyle(
-                //             fontSize: 20,
-                //             fontWeight: FontWeight.normal,
-                //             color: Colors.black,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     onPressed: () => {},
-                //   ),
-                // ),
                 SizedBox(height: 10),
-                // Text(
-                //   'atau',
-                //   style: TextStyle(
-                //     fontSize: 15,
-                //     fontWeight: FontWeight.w500,
-                //     color: Colors.black,
-                //   ),
-                // ),
                 SizedBox(height: 0),
                 Form(
                   key: _signInGlobalKey,

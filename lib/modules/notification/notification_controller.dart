@@ -65,7 +65,7 @@ class NotificationController extends GetxController {
     }
   }
 
-  Future ubahData(String id) async {
+  Future<String> ubahData(String id) async {
     try {
       var map = <String, dynamic>{};
       map['status'] = "true";
@@ -74,9 +74,13 @@ class NotificationController extends GetxController {
       if (response.statusCode == 200) {
         print(response.statusCode);
         refresh();
+        return "sukses";
+      } else {
+        return "gagal";
       }
     } catch (e) {
       Get.snackbar("Error", "Terjadi kesalahan");
+      return "gagal";
     } finally {}
   }
 }

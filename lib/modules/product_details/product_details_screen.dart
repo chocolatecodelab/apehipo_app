@@ -265,7 +265,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  void showBottomSheets(context, {String? stok, String? rincian, String? key}) {
+  void showBottomSheets(context,
+      {String? stok, String? rincian, String? alamat, String? key}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -274,7 +275,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           if (key == "products") {
             return DeskripsiBottom(rincian);
           } else if (key == "nutritions") {
-            return SpesifikasiBottom(stok);
+            return SpesifikasiBottom(stok, alamat);
           } else if (key == "review") {}
 
           return SizedBox.shrink();

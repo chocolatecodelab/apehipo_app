@@ -41,11 +41,6 @@ class HomeController extends GetxController {
           HomeModel homeModel = HomeModel.fromJson(item);
           dataListSayuran!.add(homeModel);
         }
-        // List<dynamic> sedangLarisJsonList = data['sedang_laris'];
-        // for (var item in sedangLarisJsonList) {
-        //   HomeModel homeModel = HomeModel.fromJson(item);
-        //   dataListLaris!.add(homeModel);
-        // }
       } else {
         Get.snackbar("Pesan", "Terjadi kesalahan sistem");
       }

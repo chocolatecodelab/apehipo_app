@@ -52,7 +52,7 @@ class TransactionController extends GetxController {
       dataSelesaiList!.clear();
     } catch (e) {
     } finally {
-      isLoading(true);
+      isLoading(false);
       getAllData(auth.box.read("id_user"));
     }
   }

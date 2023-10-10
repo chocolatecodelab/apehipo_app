@@ -5,7 +5,8 @@ import 'package:apehipo_app/widgets/app_button.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool showBestSeller = true;
   var katalog = Get.put(CatalogController());
   var home = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     int jumlahItem = home.dataList!
@@ -133,44 +140,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           ],
                         ),
-                        Column(
-                          children: [
-                            Text("1000",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Terjual",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("100",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Pembeli",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Text("1000",
+                        //         style: TextStyle(
+                        //           fontSize: 20,
+                        //           fontWeight: FontWeight.bold,
+                        //         )),
+                        //     const SizedBox(
+                        //       height: 15,
+                        //     ),
+                        //     Text(
+                        //       "Terjual",
+                        //       style: TextStyle(
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.w300,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                        // Column(
+                        //   children: [
+                        //     Text("100",
+                        //         style: TextStyle(
+                        //           fontSize: 20,
+                        //           fontWeight: FontWeight.bold,
+                        //         )),
+                        //     const SizedBox(
+                        //       height: 15,
+                        //     ),
+                        //     Text(
+                        //       "Pembeli",
+                        //       style: TextStyle(
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.w300,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                     SizedBox(
@@ -240,7 +247,7 @@ Widget getItemWidget(List<HomeModel> items, String idUser) {
     padding: const EdgeInsets.all(10),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
-      mainAxisExtent: 225,
+      mainAxisExtent: 245,
       crossAxisSpacing: 20,
       mainAxisSpacing: 20,
     ),

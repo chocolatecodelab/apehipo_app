@@ -67,6 +67,18 @@ class AccountController extends GetxController {
     }
   }
 
+  Future refresh() async {
+    try {
+      isLoading(true);
+      list!.clear();
+      map.clear();
+    } catch (e) {
+    } finally {
+      isLoading(false);
+      getData(auth.box.read("id_user"));
+    }
+  }
+
   Future<String> clearData() async {
     try {
       username.text = "";

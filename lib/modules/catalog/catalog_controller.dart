@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'catalog_model.dart';
@@ -134,7 +133,6 @@ class CatalogController extends GetxController {
       Get.snackbar("Gagal", e.toString());
     } finally {
       clearData();
-      Get.off(CatalogScreen());
       refresh();
     }
   }
@@ -210,7 +208,6 @@ class CatalogController extends GetxController {
     } catch (e) {
       Get.snackbar("Gagal", e.toString());
     } finally {
-      Get.off(CatalogScreen());
       clearData();
       refresh();
     }

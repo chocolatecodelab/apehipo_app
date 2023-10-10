@@ -152,6 +152,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Divider(thickness: 1),
                     getProductDataRowWidget("Spesifikasi",
                         customWidget: spesifikasiWidget(),
+                        alamat: widget.productItem.alamatPetani,
                         stok: widget.productItem.stok,
                         key: "nutritions"),
                     Divider(thickness: 1),
@@ -246,13 +247,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget getProductDataRowWidget(String label,
-      {Widget? customWidget, String? stok, String? rincian, String? key}) {
+      {Widget? customWidget,
+      String? stok,
+      String? rincian,
+      String? alamat,
+      String? key}) {
     return InkWell(
       onTap: () => {
         if (key == "products")
           {showBottomSheets(context, rincian: rincian, key: "products")}
         else if (key == "nutritions")
-          {showBottomSheets(context, stok: stok, key: "nutritions")}
+          {
+            showBottomSheets(context,
+                stok: stok, alamat: alamat, key: "nutritions")
+          }
         else if (key == "reviews")
           {showBottomSheets(context, key: "reviews")}
         else
@@ -283,7 +291,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
-  void showBottomSheets(context, {String? stok, String? rincian, String? key}) {
+  void showBottomSheets(context,
+      {String? stok, String? rincian, String? alamat, String? key}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -292,7 +301,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           if (key == "products") {
             return DeskripsiBottom(rincian);
           } else if (key == "nutritions") {
-            return SpesifikasiBottom(stok);
+            return SpesifikasiBottom(stok, alamat);
           } else if (key == "review") {}
 
           return SizedBox.shrink();

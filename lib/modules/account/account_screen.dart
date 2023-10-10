@@ -33,7 +33,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void initState() {
     super.initState();
-
+    controller.refresh();
     // Set nilai awal _nameController jika widget.katalogItem tidak null
     if (controller.map['foto'] == null) {
       controller.isLoading(true);
@@ -53,33 +53,34 @@ class _AccountScreenState extends State<AccountScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Obx(() => controller.isLoading.value
-                    ? Center(child: CircularProgressIndicator())
-                    : controller.map.isEmpty
-                        ? Center(child: Text("Tidak ada data"))
-                        : ListTile(
-                            leading: GestureDetector(
-                              onTap: () {
-                                showModal(context);
-                              },
-                              child: SizedBox(
-                                width: 60,
-                                height: 85,
-                                child: getImageHeader(controller.foto.text),
+                if (auth.box.read("role") != "admin")
+                  Obx(() => controller.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.map.isEmpty
+                          ? Center(child: Text("Tidak ada data"))
+                          : ListTile(
+                              leading: GestureDetector(
+                                onTap: () {
+                                  showModal(context);
+                                },
+                                child: SizedBox(
+                                  width: 60,
+                                  height: 85,
+                                  child: getImageHeader(controller.foto.text),
+                                ),
                               ),
-                            ),
-                            title: AppText(
-                              text: auth.box.read("nama"),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            subtitle: AppText(
-                              text: auth.box.read("role"),
-                              color: Color(0xff7C7C7C),
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                            ),
-                          )),
+                              title: AppText(
+                                text: auth.box.read("nama"),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              subtitle: AppText(
+                                text: auth.box.read("role"),
+                                color: Color(0xff7C7C7C),
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16,
+                              ),
+                            )),
                 SizedBox(
                   height: 15,
                 ),
@@ -143,11 +144,23 @@ class _AccountScreenState extends State<AccountScreen> {
         return false;
       }
       return true;
-    } else {
+    } else if (auth.box.read("role") == "konsumen") {
       if (item.label == "Transaksi Petani" ||
           item.label == "Edit Kebun" ||
           item.label == "Katalog" ||
           item.label == "Transaksi") {
+        return false;
+      }
+      return true;
+    } else {
+      if (item.label == "Transaksi Petani" ||
+          item.label == "Edit Kebun" ||
+          item.label == "Katalog" ||
+          item.label == "Transaksi" ||
+          item.label == "Edit Profil" ||
+          item.label == "Notifikasi" ||
+          item.label == "Bantuan" ||
+          item.label == "Tentang") {
         return false;
       }
       return true;

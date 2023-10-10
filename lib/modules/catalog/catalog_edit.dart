@@ -73,25 +73,6 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back),
-        //   color: Colors.black,
-        //   onPressed: () async {
-        //     bool? confirmationResult = await showDialog(
-        //       context: context,
-        //       builder: (BuildContext context) {
-        //         return ConfirmationDialog(
-        //             message: "Apakah anda yakin ingin meninggalkan perubahan?");
-        //       },
-        //     );
-        //     if (confirmationResult == true) {
-        //       controller.clearData();
-        //       Get.off(CatalogScreen());
-        //       // SuccessConfirmationDialog(
-        //       //     message: "Anda berhasil menyimpan perubahan");
-        //     }
-        //   },
-        // ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         bottom: PreferredSize(
@@ -175,8 +156,8 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                     Divider(thickness: 1),
                     getCatalogRowStok("Stok"),
                     Divider(thickness: 1),
-                    getCatalogRowPreOrder("Pre-Order"),
-                    Divider(thickness: 1),
+                    // getCatalogRowPreOrder("Pre-Order"),
+                    // Divider(thickness: 1),
                     SizedBox(height: 16),
                     DynamicButtonWidget(
                       label: "Simpan Perubahan",

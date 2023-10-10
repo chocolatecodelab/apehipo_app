@@ -6,6 +6,7 @@ class OrderModel {
   final String amount;
   final String? idOrder;
   final String totalHarga;
+  final DateTime waktuKedaluarsa;
   final String status;
   final String idPembeli;
   final String? statusTransaksi;
@@ -19,6 +20,7 @@ class OrderModel {
     required this.amount,
     required this.idOrder,
     required this.totalHarga,
+    required this.waktuKedaluarsa,
     required this.status,
     required this.idPembeli,
     required this.statusTransaksi,
@@ -34,6 +36,7 @@ class OrderModel {
       amount: json['qty'],
       idOrder: json['id_order'],
       totalHarga: json['total_harga_produk'],
+      waktuKedaluarsa: DateTime.parse(json['waktu_kedaluarsa']),
       status: json['status'],
       idPembeli: json['id_pembeli'],
       statusTransaksi: json['status_transaksi'],

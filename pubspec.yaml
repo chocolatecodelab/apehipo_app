@@ -24,6 +24,7 @@ dependencies:
   another_carousel_pro: ^1.0.0
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.1
+  url_launcher: ^6.1.14
 
 dev_dependencies:
   flutter_test:

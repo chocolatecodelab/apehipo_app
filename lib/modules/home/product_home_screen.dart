@@ -25,22 +25,23 @@ class ProductHomeScreen extends StatefulWidget {
 
 class _ProductHomeScreenState extends State<ProductHomeScreen> {
   var controller = Get.put(HomeController());
-  var notificationController = Get.put(NotificationController());
 
   @override
   void initState() {
     super.initState();
     controller.refresh();
+    notifController.refresh();
   }
 
   @override
   var cartController = Get.put(CartController());
+  var notifController = Get.put(NotificationController());
+
   Widget build(BuildContext context) {
     final cart = Provider.of<CartChange>(context);
     final notif = Provider.of<NotificationChange>(context);
-    List<NotificationModel> notifTidakTerbaca = notificationController.dataList!
-        .where((x) => x.status == "false")
-        .toList();
+    List<NotificationModel> notifTidakTerbaca =
+        notifController.dataList!.where((x) => x.status == "false").toList();
     notif.incrementCounter(notifTidakTerbaca.length);
     return Scaffold(
       body: SafeArea(
@@ -191,12 +192,21 @@ class _ProductHomeScreenState extends State<ProductHomeScreen> {
   }
 
   Widget getHorizontalItemSlider(List<HomeModel> items, String jenis) {
+    items.sort((a, b) {
+      // Mengambil angka dari idOrder menggunakan ekstraksi substring
+      int aOrderNumber = int.parse(
+          a.kode.substring(1)); // Mengabaikan karakter pertama (biasanya 'O')
+      int bOrderNumber = int.parse(b.kode.substring(1));
+
+      // Membandingkan angka-angka tersebut
+      return bOrderNumber.compareTo(aOrderNumber);
+    });
     List<HomeModel> filteredItems =
         items.where((item) => item.jenis == jenis).toList();
     filteredItems = filteredItems.take(3).toList();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: 225,
+      height: 245,
       child: ListView.separated(
         padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: filteredItems.length,

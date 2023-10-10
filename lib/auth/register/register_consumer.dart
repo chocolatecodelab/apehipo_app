@@ -199,23 +199,6 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                     ),
                     // Retry Password Input -------------------------------------
                     const SizedBox(height: 20),
-                    // TextFormField(
-                    //   controller: passwordRetryController,
-                    //   obscureText: passwordSee,
-                    //   // validator: AuthValidator.isPasswordValid,
-                    //   decoration: const InputDecoration(
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.grey),
-                    //     ),
-                    //     focusedBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.green),
-                    //     ),
-                    //     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                    //     hintText: "Konfirmasi Password",
-
-                    //     // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
-                    //   ),
-                    // ),
                     const SizedBox(height: 40),
                     // Sign Up for Button ----------------------------------
                     Container(
@@ -251,6 +234,17 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                             );
                             Get.offAll(
                                 LoginPage()); // Pindah ke DashboardScreen setelah dialog sukses login
+                          } else if (regisResult ==
+                              "Username atau Email anda sudah diambil") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: regisResult,
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
                           } else if (regisResult == "gagal") {
                             await showDialog(
                               context: context,

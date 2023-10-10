@@ -48,7 +48,7 @@ class _KlasifikasiScreenState extends State<KlasifikasiScreen> {
       padding: const EdgeInsets.all(10),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisExtent: 225,
+        mainAxisExtent: 245,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),

@@ -44,7 +44,7 @@ class _TransactionWidgetState extends State<TransactionWidget> {
 
   @override
   void initState() {
-    super.initState();
+    // super.initState();
     status = widget.item.status;
     if (status == "sudah bayar") {
       iconButton = Icons.payment_outlined;
