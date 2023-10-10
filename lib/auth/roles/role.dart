@@ -1,8 +1,10 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/auth/register/register_consumer.dart';
 import 'package:apehipo_app/auth/register/register_hydroponic_farmer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RolePage extends StatefulWidget {
   static const String id = "role_page";
@@ -13,6 +15,7 @@ class RolePage extends StatefulWidget {
 }
 
 class _RolePageState extends State<RolePage> {
+  var controller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +28,10 @@ class _RolePageState extends State<RolePage> {
                 // bottomRight: Radius.circular(30), // Atur radius sudut kanan bawah
                 ),
           ),
-          backgroundColor: Color(0xFFF53B175),
+          backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
             onPressed: () =>
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) {
@@ -39,7 +42,8 @@ class _RolePageState extends State<RolePage> {
           title: Text(
             'APEHIPO',
             style: TextStyle(
-              fontFamily: 'PoppinsMedium',
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
           centerTitle: true,
@@ -61,7 +65,7 @@ class _RolePageState extends State<RolePage> {
               children: [
                 Container(),
                 const Text(
-                  "Who are you? 🤔",
+                  "Peran kamu sebagai apa, nih?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFF404653),
@@ -75,6 +79,7 @@ class _RolePageState extends State<RolePage> {
                   onTap: () => {
                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (BuildContext context) {
+                        controller.role.text = "petani";
                         return RegisterHydroponicFarmer();
                       },
                     )),
@@ -86,13 +91,13 @@ class _RolePageState extends State<RolePage> {
                   ),
                 ),
                 const Text(
-                  "I'm Hydroponic Farmer",
+                  "Petani Hidroponik",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFF404653),
                     letterSpacing: 0.5,
                     fontSize: 15,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -100,6 +105,7 @@ class _RolePageState extends State<RolePage> {
                   onTap: () => {
                     Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (BuildContext context) {
+                        controller.role.text = "konsumen";
                         return RegisterConsumer();
                       },
                     )),
@@ -111,13 +117,13 @@ class _RolePageState extends State<RolePage> {
                   ),
                 ),
                 const Text(
-                  "I'm Consumer",
+                  "Konsumen",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color(0xFF404653),
                     letterSpacing: 0.5,
                     fontSize: 15,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],

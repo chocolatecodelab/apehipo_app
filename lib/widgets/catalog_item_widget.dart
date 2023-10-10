@@ -1,10 +1,16 @@
+import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
+import 'package:apehipo_app/modules/catalog/catalog_model.dart';
+import 'package:apehipo_app/widgets/confirmation_dialog_publish.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'LineSeparator.dart';
 import 'package:apehipo_app/widgets/theme.dart';
 import 'package:apehipo_app/widgets/app_text.dart';
 import 'package:apehipo_app/modules/account/models/katalog_item.dart';
 import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/modules/account/catalog_details.dart';
+import '../modules/catalog/catalog_edit.dart';
+import '../widgets/delete_confirmation_dialog.dart';
+import '../widgets/success_confirmation_dialog.dart';
 
 class CatalogItemWidget extends StatelessWidget {
   CatalogItemWidget({
@@ -14,7 +20,7 @@ class CatalogItemWidget extends StatelessWidget {
     this.onAddPressed,
   }) : super(key: key);
 
-  final KatalogItem item;
+  final CatalogModel item;
   final String? heroSuffix;
   final VoidCallback? onAddPressed;
 
@@ -25,6 +31,7 @@ class CatalogItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(CatalogController());
     return Container(
       width: width,
       height: height,
@@ -46,7 +53,7 @@ class CatalogItemWidget extends StatelessWidget {
           children: [
             Row(children: [
               Hero(
-                tag: "KatalogItem:" + item.name + "-" + (heroSuffix ?? ""),
+                tag: "KatalogItem:" + item.nama + "-" + (heroSuffix ?? ""),
                 child: imageWidget(),
               ),
               SizedBox(
@@ -57,17 +64,41 @@ class CatalogItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    text: item.name,
+                    text: item.nama,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   AppText(
-                    text: "\$${item.price.toStringAsFixed(2)}",
+                    text: "\$${item.harga}",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ],
               )),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: InkWell(
+                  onTap: () async {
+                    bool? confirmationResult = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return DeleteConfirmationDialog(
+                            message:
+                                "Apakah anda yakin ingin menghapus produk?");
+                      },
+                    );
+                    if (confirmationResult == true) {
+                      controller.deleteData(item.kode);
+                    } else {
+                      print("Gagal");
+                    }
+                  },
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: const Color.fromARGB(255, 193, 45, 34),
+                  ),
+                ),
+              ),
             ]),
             SizedBox(
               height: 15,
@@ -81,51 +112,12 @@ class CatalogItemWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(
-                  Icons.favorite_border_outlined,
-                  color: Color(0xFF7C7C7C),
-                  size: 14,
-                ),
+                Icon(Icons.layers_outlined, size: 14, color: Color(0xFF7C7C7C)),
                 SizedBox(
                   width: 5,
                 ),
                 AppText(
-                  text: "Favorit: " + item.favorit.toString(),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
-                SizedBox(
-                  width: 150,
-                ),
-                Icon(
-                  Icons.layers_outlined,
-                  color: Color(0xFF7C7C7C),
-                  size: 14,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                AppText(
-                  text: "Stok: " + item.stock.toString(),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Icon(Icons.remove_red_eye_outlined,
-                    size: 14, color: Color(0xFF7C7C7C)),
-                SizedBox(
-                  width: 5,
-                ),
-                AppText(
-                  text: "Dilihat: " + item.dilihat.toString(),
+                  text: "Stok: " + item.stok.toString(),
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF7C7C7C),
@@ -139,7 +131,7 @@ class CatalogItemWidget extends StatelessWidget {
                   width: 5,
                 ),
                 AppText(
-                  text: "Terjual: " + item.sold.toString(),
+                  text: "Terjual: 2",
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF7C7C7C),
@@ -166,7 +158,7 @@ class CatalogItemWidget extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                getArsipButton("Arsipkan")
+                getAction(context, "Publish", controller, item)
               ],
             )
           ],
@@ -177,7 +169,7 @@ class CatalogItemWidget extends StatelessWidget {
 
   Widget imageWidget() {
     return Container(
-      child: Image.asset(item.imagePath),
+      child: Image.network(item.foto),
       width: 100,
       height: 100,
     );
@@ -197,14 +189,6 @@ class CatalogItemWidget extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text(
-            //   "Edit",
-            //   style: TextStyle(
-            //     color: Colors.white,
-            //     fontSize: 12,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
             Icon(
               Icons.edit_square,
               color: Colors.white,
@@ -275,19 +259,25 @@ Widget getEditButton(String label,
   );
 }
 
-Widget getArsipButton(String label, {Widget? trailingWidget}) {
+Widget getAction(BuildContext context, label, CatalogController controller,
+    CatalogModel item,
+    {Widget? trailingWidget}) {
   return Container(
     width: 150,
     height: 50,
     child: ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        controller.ubahStatus(item.kode, item.status);
+      },
       style: ElevatedButton.styleFrom(
         visualDensity: VisualDensity.compact,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),
         elevation: 0,
-        backgroundColor: Colors.grey,
+        backgroundColor: item.status == "tampil"
+            ? AppColors.darkGrey
+            : AppColors.primaryColor,
         textStyle: TextStyle(
           color: Colors.white,
           fontFamily: gilroyFontFamily,
@@ -303,7 +293,9 @@ Widget getArsipButton(String label, {Widget? trailingWidget}) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                label,
+                label = item.status == "arsip"
+                    ? label = "Publish"
+                    : label = "Arsipkan",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
@@ -314,7 +306,7 @@ Widget getArsipButton(String label, {Widget? trailingWidget}) {
                 width: 8,
               ),
               Icon(
-                Icons.archive_outlined,
+                Icons.publish_outlined,
                 size: 18,
                 color: Colors.white,
               ),
@@ -332,12 +324,12 @@ Widget getArsipButton(String label, {Widget? trailingWidget}) {
   );
 }
 
-void onItemClicked(BuildContext context, KatalogItem katalogItem) {
+void onItemClicked(BuildContext context, CatalogModel catalogModel) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => CatalogDetailsScreen(
-              katalogItem,
+        builder: (context) => CatalogEditScreen(
+              catalogModel,
               heroSuffix: "account_katalog",
             )),
   );

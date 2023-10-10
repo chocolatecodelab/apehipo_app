@@ -1,6 +1,9 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/login/login.dart';
 import 'package:apehipo_app/auth/roles/role.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:ui_one/features/auth/presentation/components/buttons.dart';
 // import 'package:ui_one/features/auth/presentation/validator/auth_validator.dart';
 // import 'package:ui_one/service._locator.dart';
@@ -21,6 +24,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordRetryController = TextEditingController();
   bool passwordSee = true;
+  var controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +38,10 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                 // bottomRight: Radius.circular(30), // Atur radius sudut kanan bawah
                 ),
           ),
-          backgroundColor: Color(0xFFF53B175),
+          backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
             onPressed: () =>
                 Navigator.of(context).pushReplacement(new MaterialPageRoute(
               builder: (BuildContext context) {
@@ -47,13 +51,13 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
           ),
           title: Text(
             'APEHIPO',
-            style: TextStyle(),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           ),
           centerTitle: true,
         ),
       ),
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
@@ -65,7 +69,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                 Row(
                   children: const [
                     const Text(
-                      "Sign up as Consumer",
+                      "Daftar sebagai Konsumen",
                       style: TextStyle(
                         color: Color(0xFF404653),
                         letterSpacing: 0.5,
@@ -80,7 +84,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                   children: [
                     // Name Input -------------------------------------
                     TextFormField(
-                      controller: nameController,
+                      controller: controller.nama,
                       // validator: AuthValidator.isNameValid,
                       decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -90,13 +94,32 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                           borderSide: BorderSide(color: Colors.green),
                         ),
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        hintText: "Full name",
+                        hintText: "Nama",
                         // hintStyle: TextStyle(fontFamily: "PoppinsRegular")
                       ),
                     ),
                     const SizedBox(height: 20),
+                    // No Telpon Input -------------------------------------
                     TextFormField(
-                      controller: nameController,
+                      controller: controller.noTelpon,
+                      keyboardType: TextInputType.phone,
+                      // validator: AuthValidator.isNameValid,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "No Telpon",
+                        // hintStyle: TextStyle(fontFamily: "PoppinsRegular")
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // Username Input -------------------------------
+                    TextFormField(
+                      controller: controller.username,
                       // validator: AuthValidator.isNameValid,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
@@ -110,10 +133,29 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                         // hintStyle: TextStyle(fontFamily: "PoppinsRegular")
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Text("Username harus mengandung minimal 8 karakter dengan huruf kecil dan/atau angka", textAlign: TextAlign.left, style: TextStyle(fontSize: 12),),
+                    // Alamat Input -------------------------------
+                    TextFormField(
+                      controller: controller.alamat,
+                      // validator: AuthValidator.isNameValid,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                        hintText: "Alamat",
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ),
+                        // hintStyle: TextStyle(fontFamily: "PoppinsRegular")
+                      ),
+                    ),
                     // Email Input -------------------------------------
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: emailController,
+                      controller: controller.email,
+                      keyboardType: TextInputType.emailAddress,
                       // validator: AuthValidator.isEmailValid,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
@@ -130,7 +172,7 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                     // Password Input -------------------------------------
                     const SizedBox(height: 20),
                     TextFormField(
-                      controller: passwordController,
+                      controller: controller.password,
                       obscureText: passwordSee,
                       // validator: AuthValidator.isPasswordValid,
                       decoration: InputDecoration(
@@ -142,38 +184,41 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                         ),
                         contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         hintText: "Password",
-                        // suffixIcon: GestureDetector(
-                        //   onTap: () {
-                        //     passwordSee = !passwordSee;
-                        //     setState(() {});
-                        //   },
-                        //   child: Icon(
-                        //     passwordSee
-                        //         ? Icons.visibility_off_outlined
-                        //         : Icons.visibility_outlined,
-                        //   ),
-                        // ),
-                        // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            passwordSee = !passwordSee;
+                            setState(() {});
+                          },
+                          child: Icon(
+                            passwordSee
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                          ),
+                        ),
+                        hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Text("Password harus mengandung minimal 8 karakter, termasuk huruf besar, huruf kecil, karakter spesial, dan angka.", textAlign: TextAlign.left, style: TextStyle(fontSize: 12),),
                     // Retry Password Input -------------------------------------
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      controller: passwordRetryController,
-                      obscureText: passwordSee,
-                      // validator: AuthValidator.isPasswordValid,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green),
-                        ),
-                        contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        hintText: "Confirm password",
-                        // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
-                      ),
-                    ),
+                    const SizedBox(height: 10),
+                    // TextFormField(
+                    //   controller: passwordRetryController,
+                    //   obscureText: passwordSee,
+                    //   // validator: AuthValidator.isPasswordValid,
+                    //   decoration: const InputDecoration(
+                    //     enabledBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Colors.grey),
+                    //     ),
+                    //     focusedBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(color: Colors.green),
+                    //     ),
+                    //     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                    //     hintText: "Konfirmasi Password",
+
+                    //     // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
+                    //   ),
+                    // ),
                     const SizedBox(height: 40),
                     // Sign Up for Button ----------------------------------
                     Container(
@@ -184,28 +229,58 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                             elevation: 0,
                             backgroundColor: Color(0xFFF53B175),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(15),
                             )),
                         child: const Text(
-                          'Sign Up',
+                          'Daftar',
                           style: TextStyle(
                             // fontFamily: "PoppinsRegular",
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () => {
-                          Navigator.of(context)
-                              .pushReplacement(new MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return LoginPage();
-                            },
-                          )),
+                        onPressed: () async {
+                          String? regisResult =
+                              await controller.createAccount();
+                          if (regisResult == "sukses") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: "Anda berhasil mendaftar",
+                                  icon: Icons.check_circle_outline,
+                                );
+                              },
+                            );
+                            Get.offAll(
+                                LoginPage()); // Pindah ke DashboardScreen setelah dialog sukses login
+                          } else if (regisResult == "gagal") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: "Anda gagal mendaftar",
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: regisResult,
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
+                          }
                         },
                       ),
                     ),
                   ],
                 ),
+                const SizedBox(height: 40),
               ],
             ),
           ),

@@ -1,8 +1,13 @@
+import 'package:apehipo_app/auth/auth_controller.dart';
 import 'package:apehipo_app/auth/roles/role.dart';
 import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
 import 'package:apehipo_app/splash/welcome_screen.dart';
+import 'package:apehipo_app/widgets/colors.dart';
+import 'package:apehipo_app/widgets/confirmation_dialog.dart';
+import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = "login_page";
@@ -15,12 +20,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _signInGlobalKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   bool passwordSee = true;
 
   @override
+  var controller = Get.put(AuthController());
   Widget build(BuildContext context) {
+    // final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50),
@@ -31,10 +36,10 @@ class _LoginPageState extends State<LoginPage> {
                   // bottomRight: Radius.circular(30), // Atur radius sudut kanan bawah
                   ),
             ),
-            backgroundColor: Color(0xFFF53B175),
+            backgroundColor: Colors.white,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.black),
               onPressed: () =>
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (BuildContext context) {
@@ -43,19 +48,19 @@ class _LoginPageState extends State<LoginPage> {
               )),
             ),
             title: Text(
-              '',
-              style: TextStyle(
-                fontFamily: 'PoppinsMedium',
-              ),
+              'APEHIPO',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
             ),
             centerTitle: true,
           ),
         ),
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
+          reverse: true,
           // Menggunakan SingleChildScrollView
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(32),
             child: Column(
               children: [
                 const SizedBox(height: 40),
@@ -66,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Center(
                   child: Text(
-                    "Welcome back!",
+                    "Selamat Datang!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 30,
@@ -74,9 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 const Center(
                   child: Text(
-                    "You've been missed",
+                    "Silahkan login terlebih dahulu.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
@@ -85,53 +93,53 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  height: 45,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: Colors.grey[300],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        )),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 25,
-                          height: 25,
-                          child: Image.asset("../assets/images/ic_google.png"),
-                        ), // Tambahkan jarak horizontal antara ikon dan teks
-                        Text(
-                          '  Sign in with Google',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onPressed: () => {},
-                  ),
-                ),
+                // Container(
+                //   height: 45,
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //     style: ElevatedButton.styleFrom(
+                //         elevation: 0,
+                //         backgroundColor: Colors.grey[300],
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(25),
+                //         )),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         SizedBox(
+                //           width: 25,
+                //           height: 25,
+                //           child: Image.asset("../assets/images/ic_google.png"),
+                //         ), // Tambahkan jarak horizontal antara ikon dan teks
+                //         Text(
+                //           '  Masuk dengan Google',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.normal,
+                //             color: Colors.black,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     onPressed: () => {},
+                //   ),
+                // ),
                 SizedBox(height: 10),
-                Text(
-                  'or',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
+                // Text(
+                //   'atau',
+                //   style: TextStyle(
+                //     fontSize: 15,
+                //     fontWeight: FontWeight.w500,
+                //     color: Colors.black,
+                //   ),
+                // ),
                 SizedBox(height: 0),
                 Form(
                   key: _signInGlobalKey,
                   child: Column(
                     children: [
                       TextFormField(
-                        controller: emailController,
+                        controller: controller.username,
                         // validator: AuthValidator.isEmailValid,
                         decoration: const InputDecoration(
                           hintText: "Username",
@@ -146,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        controller: passwordController,
+                        controller: controller.password,
                         obscureText: passwordSee,
                         // validator: AuthValidator.isPasswordValid,
                         decoration: InputDecoration(
@@ -163,53 +171,73 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Forgot password?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Container(
                   height: 45,
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Color(0xFFF53B175),
+                        backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25),
+                          borderRadius: BorderRadius.circular(15),
                         )),
                     child: const Text(
-                      'Sign In',
+                      'Masuk',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () => {
-                      Navigator.of(context)
-                          .pushReplacement(new MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return DashboardScreen();
-                        },
-                      )),
+                    onPressed: () async {
+                      String? loginResult = await controller.doLogin();
+                      if (loginResult == "sukses") {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: "Anda berhasil login",
+                              icon: Icons.check_circle_outline,
+                            );
+                          },
+                        );
+                        Get.offAll(
+                            DashboardScreen()); // Pindah ke DashboardScreen setelah dialog sukses login
+                      } else if (loginResult == "gagal") {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: "Anda gagal login",
+                              icon: Icons.close_rounded,
+                            );
+                          },
+                        );
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: loginResult,
+                              icon: Icons.close_rounded,
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
                 Text.rich(
                   TextSpan(
-                    text: "Don't have an account? ",
+                    text: "Nggak punya akun? ",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                     children: [
                       TextSpan(
-                        text: "Sign up",
+                        text: "Daftar yuk!",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
                         ),
@@ -234,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
   // void signIn() {
   //   if (_signInGlobalKey.currentState!.validate()) {
   //     final message = authController.login(
-  //       emailController.text.trim(),
+  //       userController.text.trim(),
   //       passwordController.text.trim(),
   //     );
   //     ScaffoldMessenger.of(context).showSnackBar(
@@ -251,17 +279,17 @@ class _LoginPageState extends State<LoginPage> {
   //     );
   //     if (message["next"] == "next") {
   //       AppWidget.isLogin = true;
-  //       AppWidget.loggedUser["email"] = emailController.text.trim();
+  //       AppWidget.loggedUser["email"] = userController.text.trim();
   //       AppWidget.loggedUser["password"] = passwordController.text.trim();
   //       Navigator.pushNamed(context, AdminPage.id);
   //     }
   //   }
   // }
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   userController.dispose();
+  //   passwordController.dispose();
+  //   super.dispose();
+  // }
 }

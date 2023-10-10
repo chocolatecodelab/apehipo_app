@@ -1,3 +1,4 @@
+import '.././modules/cards/card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -8,7 +9,12 @@ class SearchBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Aksi yang ingin dilakukan saat widget diklik
+        Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CardScreen(),
+        ),
+  );
       },
       child: Container(
         padding: EdgeInsets.all(16),
@@ -27,7 +33,7 @@ class SearchBarWidget extends StatelessWidget {
               width: 8,
             ),
             Text(
-              "Search Store",
+              "Cari",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
