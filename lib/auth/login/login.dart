@@ -1,6 +1,8 @@
 import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:Apehipo/auth/roles/role.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
 import 'package:Apehipo/modules/dashboard/dashboard_screen.dart';
+import 'package:Apehipo/modules/notification/notification_controller.dart';
 import 'package:Apehipo/splash/welcome_screen.dart';
 import 'package:Apehipo/widgets/colors.dart';
 import 'package:Apehipo/widgets/confirmation_dialog.dart';
@@ -8,6 +10,8 @@ import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = "login_page";
@@ -22,9 +26,24 @@ class _LoginPageState extends State<LoginPage> {
   final _signInGlobalKey = GlobalKey<FormState>();
   bool passwordSee = true;
 
+  Future<void> _launchWhatsApp(String phoneNumber, String message) async {
+    final encodedMessage =
+        Uri.encodeComponent(message); // Mengekodekan pesan dengan benar
+
+    final url = 'https://wa.me/$phoneNumber/?text=$encodedMessage';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Tidak dapat membuka WhatsApp';
+    }
+  }
+
   @override
   var controller = Get.put(AuthController());
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
+
     // final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
         appBar: PreferredSize(
@@ -93,37 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Container(
-                //   height: 45,
-                //   width: double.infinity,
-                //   child: ElevatedButton(
-                //     style: ElevatedButton.styleFrom(
-                //         elevation: 0,
-                //         backgroundColor: Colors.grey[300],
-                //         shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(25),
-                //         )),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         SizedBox(
-                //           width: 25,
-                //           height: 25,
-                //           child: Image.asset("../assets/images/ic_google.png"),
-                //         ), // Tambahkan jarak horizontal antara ikon dan teks
-                //         Text(
-                //           '  Masuk dengan Google',
-                //           style: TextStyle(
-                //             fontSize: 20,
-                //             fontWeight: FontWeight.normal,
-                //             color: Colors.black,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     onPressed: () => {},
-                //   ),
-                // ),
                 SizedBox(height: 10),
                 // Text(
                 //   'atau',
@@ -166,11 +154,41 @@ class _LoginPageState extends State<LoginPage> {
                             borderSide: BorderSide(color: Colors.green),
                           ),
                           contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              passwordSee = !passwordSee;
+                              setState(() {});
+                            },
+                            child: Icon(
+                              passwordSee
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                            ),
+                          ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
                 ),
+                Row(children: [
+                  Expanded(
+                      child: GestureDetector(
+                    onTap: () {
+                      _launchWhatsApp('6285921357723',
+                          "Halo Admin, saya lupa password. Atas nama: , Sebagai pengguna (konsumen/petani)");
+                    },
+                    child: Text(
+                      "Lupa Password?",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ))
+                ]),
                 const SizedBox(height: 20),
                 Container(
                   height: 45,
@@ -203,6 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                         Get.offAll(
                             DashboardScreen()); // Pindah ke DashboardScreen setelah dialog sukses login
+                        cart.resetValue();
                       } else if (loginResult == "gagal") {
                         await showDialog(
                           context: context,

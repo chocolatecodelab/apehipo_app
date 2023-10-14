@@ -15,14 +15,26 @@ class CatalogScreen extends StatefulWidget {
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
+  var controller = Get.put(CatalogController());
+
   @override
   void initState() {
     super.initState();
-    controller.refresh();
+  }
+
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
   }
 
   @override
-  var controller = Get.put(CatalogController());
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
@@ -91,36 +103,46 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
           body: TabBarView(children: [
             SafeArea(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(
-                      () => controller.isLoading.value
-                          ? Center(child: CircularProgressIndicator())
-                          : controller.dataTampilList!.isEmpty
-                              ? Center(child: Text("Tidak ada Produk"))
-                              : SingleChildScrollView(
-                                  child: Center(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        padded(subTitle("Produk Anda")),
-                                        getVerticalItemSlider(
-                                            controller.dataTampilList!),
-                                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Obx(
+                        () => controller.isLoading.value
+                            ? Center(child: CircularProgressIndicator())
+                            : controller.dataTampilList!.isEmpty
+                                ? Center(child: Text("Tidak ada Produk"))
+                                : SingleChildScrollView(
+                                    child: Center(
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          RefreshIndicator(
+                                            key: _refreshKey,
+                                            onRefresh: () => refreshData(),
+                                            child: Column(
+                                              children: [
+                                                padded(subTitle("Produk Anda")),
+                                                getVerticalItemSlider(
+                                                    controller.dataTampilList!),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: getTambahButton(context, "Tambah Produk Baru"),
-                    )
-                  ]),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                        child: getTambahButton(context, "Tambah Produk Baru"),
+                      )
+                    ]),
+              ),
             ),
             SafeArea(
                 child: Column(children: [
@@ -136,9 +158,17 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  padded(subTitle("Arsip Anda")),
-                                  getVerticalItemSlider(
-                                      controller.dataArsipList!),
+                                  RefreshIndicator(
+                                    key: _refreshKey,
+                                    onRefresh: () => refreshData(),
+                                    child: Column(
+                                      children: [
+                                        padded(subTitle("Arsip Anda")),
+                                        getVerticalItemSlider(
+                                            controller.dataArsipList!),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             ),

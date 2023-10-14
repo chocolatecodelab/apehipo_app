@@ -1,9 +1,10 @@
 import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:Apehipo/modules/notification/notification_change.dart';
 import 'package:Apehipo/modules/notification/notification_controller.dart';
-import 'package:Apehipo/modules/notification/notification_model.dart';
+import 'package:Apehipo/modules/notification/notif_model.dart';
 import 'package:Apehipo/modules/order/order_screen.dart';
 import 'package:Apehipo/modules/transaction/transaction_screen.dart';
+import 'package:Apehipo/widgets/delete_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +54,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ));
   }
 
-  Widget listViewMethod(List<NotificationModel> dataNotification) {
+  Widget listViewMethod(List<NotifModel> dataNotification) {
     dataNotification.sort((a, b) {
       // Mengambil angka dari idOrder menggunakan ekstraksi substring
       int aOrderNumber = int.parse(
@@ -86,10 +87,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  Widget listViewItem(NotificationModel dataNotification) {
+  Widget listViewItem(NotifModel dataNotification) {
     var controller = Get.put(NotificationController());
     final notif = Provider.of<NotificationChange>(context);
-    List<NotificationModel> notifTidakTerbaca = notificationController.dataList!
+    List<NotifModel> notifTidakTerbaca = notificationController.dataList!
         .where((x) => x.status == "false")
         .toList();
     return Container(
@@ -137,6 +138,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: InkWell(
+              onTap: () async {
+                bool? confirmationResult = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DeleteConfirmationDialog(
+                        message: "Apakah anda yakin ingin menghapus produk?");
+                  },
+                );
+                if (confirmationResult == true) {
+                  controller.deleteData(dataNotification.id);
+                } else {
+                  print("Gagal");
+                }
+              },
+              child: Icon(
+                Icons.delete_outline,
+                color: const Color.fromARGB(255, 193, 45, 34),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -159,7 +183,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  Widget message(NotificationModel dataNotification) {
+  Widget message(NotifModel dataNotification) {
     double textSize = 14;
     return Container(
       child: RichText(
@@ -176,7 +200,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     );
   }
 
-  Widget detailMessage(NotificationModel dataNotification) {
+  Widget detailMessage(NotifModel dataNotification) {
     double textSize = 14;
     return Container(
         child: RichText(
@@ -193,7 +217,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     ));
   }
 
-  Widget timeAndDate(NotificationModel dataNotification) {
+  Widget timeAndDate(NotifModel dataNotification) {
     return Container(
       margin: EdgeInsets.only(top: 5),
       child: Row(

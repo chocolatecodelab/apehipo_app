@@ -29,7 +29,6 @@ class _OrderAcceptedScreenState extends State<OrderAcceptedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String waktu = formattedTime;
     return Scaffold(
       body: Container(
         width: double.maxFinite,
@@ -70,9 +69,7 @@ class _OrderAcceptedScreenState extends State<OrderAcceptedScreen> {
             AppButton(
               label: "Lihat Pesanan",
               onPressed: () {
-                Get.off(OrderScreen(
-                  waktu: waktu,
-                ));
+                Get.off(OrderScreen());
               },
             ),
             Spacer(

@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 import '../../services/api.dart';
 
 class HomeController extends GetxController {
-  List<HomeModel>? dataListBuah = [];
-  List<HomeModel>? dataListSayuran = [];
-  // List<HomeModel>? dataListLaris = [];
-  List<HomeModel>? dataList = [];
+  RxList<HomeModel>? dataListBuah = <HomeModel>[].obs;
+  RxList<HomeModel>? dataListSayuran = <HomeModel>[].obs;
+  RxList<HomeModel>? dataList = <HomeModel>[].obs;
+
   var isLoading = false.obs;
 
   @override

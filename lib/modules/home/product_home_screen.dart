@@ -7,7 +7,7 @@ import 'package:Apehipo/modules/home/product_all_detail.dart';
 import 'package:Apehipo/modules/home/home_model.dart';
 import 'package:Apehipo/modules/notification/notification_change.dart';
 import 'package:Apehipo/modules/notification/notification_controller.dart';
-import 'package:Apehipo/modules/notification/notification_model.dart';
+import 'package:Apehipo/modules/notification/notif_model.dart';
 import 'package:Apehipo/modules/notification/notification_screen.dart';
 import 'package:Apehipo/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
@@ -25,159 +25,174 @@ class ProductHomeScreen extends StatefulWidget {
 }
 
 class _ProductHomeScreenState extends State<ProductHomeScreen> {
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
   var controller = Get.put(HomeController());
+  var auth = Get.put(AuthController());
 
   @override
   void initState() {
     super.initState();
-    controller.refresh();
+  }
+
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
   }
 
   @override
-  var cartController = Get.put(CartController());
-  var notifController = Get.put(NotificationController());
-  var auth = Get.put(AuthController());
   Widget build(BuildContext context) {
+    var notifController = Get.put(NotificationController());
     final cart = Provider.of<CartChange>(context);
     final notif = Provider.of<NotificationChange>(context);
-    List<NotificationModel> notifTidakTerbaca =
+    List<NotifModel> notifTidakTerbaca =
         notifController.dataList!.where((x) => x.status == "false").toList();
     notif.incrementCounter(notifTidakTerbaca.length);
     return Scaffold(
       body: SafeArea(
-        child: Container(
-            child: Obx(
-          () => controller.isLoading.value
-              ? Center(child: CircularProgressIndicator())
-              : controller.dataListSayuran!.isEmpty
-                  ? Center(child: Text("Tidak ada data"))
-                  : SingleChildScrollView(
-                      child: Center(
-                        child: Column(
+        child: RefreshIndicator(
+          key: _refreshKey,
+          onRefresh: () => refreshData(),
+          child: Container(
+              child: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  if (auth.box.read("role") == "konsumen")
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Stack(
                           children: [
-                            SizedBox(height: 20),
-                            if (auth.box.read("role") == "konsumen")
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(8),
-                                        child: InkWell(
-                                          onTap: () {
-                                            Get.to(NotificationScreen());
-                                          },
-                                          child: SvgPicture.asset(
-                                              "assets/icons/account_icons/notification_icon.svg"),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right:
-                                            0, // Menentukan posisi horizontal
-                                        top: 0, // Menentukan posisi vertikal
-                                        child: Container(
-                                          padding: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors
-                                                .primaryColor, // Warna latar belakang
-                                          ),
-                                          child: Text(
-                                            notif.itemCount.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white, // Warna teks
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.all(8),
-                                        child: InkWell(
-                                          onTap: () {
-                                            Get.to(CartScreen());
-                                          },
-                                          child: SvgPicture.asset(
-                                              "assets/icons/cart_icon.svg"),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        right:
-                                            0, // Menentukan posisi horizontal
-                                        top: 0, // Menentukan posisi vertikal
-                                        child: Container(
-                                          padding: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors
-                                                .primaryColor, // Warna latar belakang
-                                          ),
-                                          child: Text(
-                                            cart.itemCount.toString(),
-                                            style: TextStyle(
-                                              color: Colors.white, // Warna teks
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  )
-                                ],
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(NotificationScreen());
+                                },
+                                child: SvgPicture.asset(
+                                    "assets/icons/account_icons/notification_icon.svg"),
                               ),
-                            // SvgPicture.asset("assets/icons/app_icon_color.svg"),
-                            SizedBox(
-                              height: 5,
                             ),
-                            // padded(locationWidget()),
-                            SizedBox(
-                              height: 15,
+                            Positioned(
+                              right: 0, // Menentukan posisi horizontal
+                              top: 0, // Menentukan posisi vertikal
+                              child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors
+                                      .primaryColor, // Warna latar belakang
+                                ),
+                                child: Text(
+                                  notif.itemCount.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white, // Warna teks
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
-                            padded(SearchBarWidget()),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            padded(HomeBanner()),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            padded(subTitle(context, "Sayur-sayuran",
-                                key: "sayur",
-                                items: controller.dataListSayuran)),
-                            getHorizontalItemSlider(
-                                controller.dataListSayuran!, "Sayuran"),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            padded(subTitle(context, "Buah-buahan",
-                                key: "buah", items: controller.dataListBuah)),
-                            getHorizontalItemSlider(
-                                controller.dataListBuah!, "Buah"),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Container(),
                           ],
                         ),
-                      ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(CartScreen());
+                                },
+                                child: SvgPicture.asset(
+                                    "assets/icons/cart_icon.svg"),
+                              ),
+                            ),
+                            Positioned(
+                              right: 0, // Menentukan posisi horizontal
+                              top: 0, // Menentukan posisi vertikal
+                              child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors
+                                      .primaryColor, // Warna latar belakang
+                                ),
+                                child: Text(
+                                  cart.itemCount.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white, // Warna teks
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 20,
+                        )
+                      ],
                     ),
-        )),
+                  // SvgPicture.asset("assets/icons/app_icon_color.svg"),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  // padded(locationWidget()),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  padded(SearchBarWidget()),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  padded(HomeBanner()),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Obx(() => controller.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : controller.dataListSayuran!.isEmpty
+                          ? Center(child: Text("Tidak ada data"))
+                          : Column(
+                              children: [
+                                padded(subTitle(context, "Sayur-sayuran",
+                                    key: "sayur",
+                                    items: controller.dataListSayuran)),
+                                getHorizontalItemSlider(
+                                    controller.dataListSayuran!, "Sayuran"),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                padded(subTitle(context, "Buah-buahan",
+                                    key: "buah",
+                                    items: controller.dataListBuah)),
+                                getHorizontalItemSlider(
+                                    controller.dataListBuah!, "Buah"),
+                              ],
+                            )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(),
+                ],
+              ),
+            ),
+          )),
+        ),
       ),
     );
   }

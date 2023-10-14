@@ -44,7 +44,6 @@ class _TransactionWidgetState extends State<TransactionWidget> {
 
   @override
   void initState() {
-    // super.initState();
     status = widget.item.status;
     if (status == "sudah bayar") {
       iconButton = Icons.payment_outlined;
@@ -59,7 +58,7 @@ class _TransactionWidgetState extends State<TransactionWidget> {
     } else if (status == "antar") {
       iconButton = Icons.watch_later_rounded;
       iconDesc = Icons.credit_score_outlined;
-      textStatus = "Pesanan sedang anda kirim";
+      textStatus = "Pesanan siap diantar";
       textButton = "Tunggu konfirmasi pembeli";
     } else {
       iconButton = Icons.watch_later_rounded;
@@ -124,8 +123,7 @@ class _TransactionWidgetState extends State<TransactionWidget> {
                     );
                   } else if (hasil == "antar") {
                     pesan = "Pesanan dengan id: " + idOrder;
-                    detailPesan =
-                        "Pesanan anda sedang diantar oleh penjual/toko.";
+                    detailPesan = "Pesanan siap untuk diantar petani.";
                     notificationController.sendData(
                         pesan, detailPesan, idPenerima, idPengirim);
                     setState(() {
@@ -136,7 +134,8 @@ class _TransactionWidgetState extends State<TransactionWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessConfirmationDialog(
-                          message: "Terima kasih! Anda telah mengantar pesanan",
+                          message:
+                              "Terima kasih! Anda telah menyiapkan pesanan",
                           icon: Icons.directions_car_filled_outlined,
                         );
                       },

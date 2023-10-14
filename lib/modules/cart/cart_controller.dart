@@ -96,11 +96,9 @@ class CartController extends GetxController {
         return "gagal";
       }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      // Get.snackbar("Error", e.toString());
       return "gagal";
-    } finally {
-      order.refresh();
-    }
+    } finally {}
   }
 
   Future<String> deleteData(id, int amount) async {

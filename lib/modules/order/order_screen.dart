@@ -20,10 +20,27 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  @override
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
   var auth = Get.put(AuthController());
   var controller = Get.put(OrderController());
   var homeController = Get.put(HomeController());
+
+  @override
+  void initState() {
+    super.initState();
+    refreshData();
+  }
+
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
+  }
 
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -45,6 +62,7 @@ class _OrderScreenState extends State<OrderScreen> {
               onPressed: () {
                 // Handle the back button press
                 Get.back();
+                refreshData();
               },
             ),
             bottom: PreferredSize(
@@ -115,8 +133,16 @@ class _OrderScreenState extends State<OrderScreen> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  getVerticalItemSlider(
-                                      controller.dataBelumList!),
+                                  RefreshIndicator(
+                                    key: _refreshKey,
+                                    onRefresh: () => refreshData(),
+                                    child: Column(
+                                      children: [
+                                        getVerticalItemSlider(
+                                            controller.dataBelumList!),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -137,8 +163,15 @@ class _OrderScreenState extends State<OrderScreen> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  getVerticalItemSlider2(
-                                      controller.dataSudahList!),
+                                  RefreshIndicator(
+                                      child: Column(
+                                        children: [
+                                          getVerticalItemSlider2(
+                                              controller.dataSudahList!),
+                                        ],
+                                        key: _refreshKey,
+                                      ),
+                                      onRefresh: () => refreshData())
                                 ],
                               ),
                             ),
@@ -181,10 +214,8 @@ class _OrderScreenState extends State<OrderScreen> {
           List<OrderModel> filtered2Items = items
               .where((x) => x.idOrder == filteredItems[index].idOrder)
               .toList();
-          return GestureDetector(
-            onTap: () {},
+          return Container(
             child: OrderWidget(
-              waktu: widget.waktu,
               key: orderWidgetKeys[index],
               items: filtered2Items,
               item: filteredItems[index],

@@ -4,6 +4,7 @@ import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:Apehipo/modules/order/order_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import '../../services/api.dart';
 
 class OrderController extends GetxController {
@@ -35,9 +36,7 @@ class OrderController extends GetxController {
         for (var item in dataBelumJsonList) {
           OrderModel orderModel = OrderModel.fromJson(item);
           dataBelumList!.add(orderModel);
-          print("hello world");
         }
-
         List<dynamic> dataSudahJsonList = data['sudah_bayar'];
         for (var item in dataSudahJsonList) {
           OrderModel orderModel = OrderModel.fromJson(item);
@@ -51,7 +50,7 @@ class OrderController extends GetxController {
         }
       }
     } catch (e) {
-      Get.snackbar("Kesalahan", e.toString());
+      // Get.snackbar("Kesalahan", e.toString());
     } finally {
       isLoading(false);
     }
@@ -125,6 +124,33 @@ class OrderController extends GetxController {
       return false;
     } finally {
       refresh();
+    }
+  }
+
+  Future<String> kirimBukti(String id, XFile? image) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.tryParse('${Api().baseURL}/order/bukti/$id')!,
+      );
+      print("sukses");
+      if (image != null) {
+        var imgFileName = image.path.split('/').last;
+        var imgStream =
+            http.ByteStream(Stream.castFrom(XFile(image.path).openRead()));
+        var imgLength = await XFile(image.path).length();
+        var imgMultiPart = http.MultipartFile('foto', imgStream, imgLength,
+            filename: imgFileName);
+        request.files.add(imgMultiPart);
+      }
+      var response = await request.send();
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print("berhasil");
+      }
+      return "sukses";
+    } catch (e) {
+      return "gagal";
     }
   }
 

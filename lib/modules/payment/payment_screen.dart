@@ -1,29 +1,70 @@
+import 'dart:io';
+
+import 'package:Apehipo/modules/account/account_toko.dart';
+import 'package:Apehipo/modules/order/order_controller.dart';
 import 'package:Apehipo/modules/order/order_screen.dart';
 import 'package:Apehipo/widgets/app_button.dart';
 import 'package:Apehipo/widgets/app_text.dart';
 import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import 'package:Apehipo/widgets/dynamic_button.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PaymentScreen extends StatefulWidget {
   final String totalHarga;
-  const PaymentScreen(this.totalHarga, {super.key});
+  final String? buktiPembayaran;
+  final String idOrder;
+  const PaymentScreen(this.totalHarga, this.buktiPembayaran, this.idOrder,
+      {super.key});
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
+  var controller = Get.put(OrderController());
   bool _isExpandedMethod1 = false;
   bool _isExpandedMethod2 = false;
   bool _isExpandedMethod3 = false;
+  bool _isExpandedMethod4 = false;
   bool _isExpanded1 = false; // Variabel untuk mengontrol ekspansi panel
   bool _isExpanded2 = false;
   bool _isExpanded3 = false;
+  bool _isExpanded4 = false;
+  XFile? _selectedImage;
+  final formFieldKey = GlobalKey<FormState>();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    setState(() {
+      _selectedImage = pickedImage;
+    });
+  }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, {Widget? trailingWidget}) {
     final String textBni = "1288333921";
     final String textDANAGOPAY = "+6285921357723";
     return Scaffold(
@@ -82,30 +123,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                     SizedBox(
                       height: 10,
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        AppText(
-                          text: "Batas Pembayaran",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        Spacer(),
-                        AppText(
-                          text: "2 jam setelah order dibuat",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: AppColors.primaryColor,
-                          textAlign: TextAlign.end,
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -567,7 +584,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
 
-              // Bagian Informasi Pembayaran Gopay
+              // Bagian informasi GoPay
               Container(
                 padding: EdgeInsets.all(20),
                 margin: EdgeInsets.only(bottom: 10),
@@ -734,7 +751,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   ),
                                 ),
                                 Icon(
-                                  _isExpanded1
+                                  _isExpanded3
                                       ? Icons.keyboard_arrow_up
                                       : Icons.keyboard_arrow_down,
                                 ),
@@ -781,16 +798,234 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ),
 
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 15, left: 10, right: 10),
-                  child: AppButton(label: "Konfirmasi Pembayaran"),
+              // Batas bukti pembayaran
+              Container(
+                padding: EdgeInsets.all(20),
+                margin: EdgeInsets.only(bottom: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 3,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
                 ),
-              )
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isExpandedMethod4 = !_isExpandedMethod4;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.camera_alt_outlined),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          AppText(
+                            text: "Foto Bukti Pembayaran",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            textAlign: TextAlign.end,
+                          ),
+                          Spacer(),
+                          Icon(
+                            _isExpandedMethod4
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    if (_isExpandedMethod4)
+                      Column(
+                        children: [
+                          getImageBukti(_selectedImage, widget.buktiPembayaran),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          if (_selectedImage != null)
+                            DynamicButtonWidget(
+                              label: "Simpan gambar",
+                              textColor: Colors.white,
+                              backgroundColor: AppColors.darkGrey,
+                              iconData: Icons.add,
+                              onPressed: () async {
+                                bool? confirmationResult = await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return ConfirmationDialog(
+                                        message:
+                                            "Apakah anda yakin ingin mengirim bukti pembayaran ini?");
+                                  },
+                                );
+                                if (confirmationResult == true) {
+                                  String hasil = await controller.kirimBukti(
+                                      widget.idOrder, _selectedImage);
+                                  if (hasil == "sukses") {
+                                    await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return SuccessConfirmationDialog(
+                                              message:
+                                                  "Anda berhasil menambahkan gambar",
+                                              icon: Icons.check_circle_outline);
+                                        });
+                                    Get.back();
+                                    refreshData();
+                                  } else if (hasil == "gagal") {
+                                    await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return SuccessConfirmationDialog(
+                                              message:
+                                                  "Gagal menambahkan gambar",
+                                              icon: Icons.close_rounded);
+                                        });
+                                  }
+                                }
+                              },
+                            ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          if (_selectedImage == null)
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                child: ElevatedButton(
+                                  onPressed: _selectedImage == null
+                                      ? () {
+                                          print(widget.buktiPembayaran);
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return SafeArea(
+                                                child: Form(
+                                                  key: formFieldKey,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      ListTile(
+                                                        leading: Icon(Icons
+                                                            .photo_library),
+                                                        title: Text(
+                                                            'Pilih dari Galeri'),
+                                                        onTap: () {
+                                                          _pickImage(ImageSource
+                                                              .gallery);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                      ListTile(
+                                                        leading: Icon(
+                                                            Icons.camera_alt),
+                                                        title:
+                                                            Text('Ambil Foto'),
+                                                        onTap: () {
+                                                          _pickImage(ImageSource
+                                                              .camera);
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }
+                                      : null,
+                                  style: ElevatedButton.styleFrom(
+                                    visualDensity: VisualDensity.compact,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                    elevation: 0,
+                                    backgroundColor: _selectedImage == null
+                                        ? AppColors.primaryColor
+                                        : AppColors.darkGrey,
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: gilroyFontFamily,
+                                    ),
+                                    padding: EdgeInsets.symmetric(vertical: 24),
+                                    maximumSize: Size(350, 60),
+                                  ),
+                                  child: Stack(
+                                    fit: StackFit.passthrough,
+                                    children: <Widget>[
+                                      Center(
+                                          child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            _selectedImage == null
+                                                ? "Konfirmasi Pembayaran"
+                                                : "Bukti Pembayaran diproses",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Icon(Icons.add_a_photo_outlined)
+                                        ],
+                                      )),
+                                      if (trailingWidget != null)
+                                        Positioned(
+                                          top: 0,
+                                          right: 25,
+                                          child: trailingWidget,
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget getImageBukti(XFile? _selectedImage, String? foto) {
+    return Container(
+      child: ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(10),
+        ),
+        child: _selectedImage == null
+            ? Image.network(foto!)
+            : Image.file(File(_selectedImage.path)),
       ),
     );
   }

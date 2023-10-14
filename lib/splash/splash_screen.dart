@@ -27,14 +27,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void onTimerFinished(AuthController auth) {
     if (auth.box.hasData("nama")) {
-      Get.snackbar("Hai", "Error nya dimana?");
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (BuildContext context) {
           return DashboardScreen();
         },
       ));
     } else {
-      print("Hai");
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
         builder: (BuildContext context) {
           return LoginPage();

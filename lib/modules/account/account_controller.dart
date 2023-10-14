@@ -45,6 +45,7 @@ class AccountController extends GetxController {
   getData(id) async {
     try {
       isLoading(true);
+      print(id);
       String baseUrl = '${Api().baseURL}/account/$id';
       final response = await http.get(Uri.tryParse(baseUrl)!);
       print(response.statusCode);
@@ -93,7 +94,7 @@ class AccountController extends GetxController {
     }
   }
 
-  updateData(String id, XFile? image) async {
+  Future<String> updateData(String id, XFile? image) async {
     try {
       print("disini?");
       var request = http.MultipartRequest(
@@ -147,9 +148,12 @@ class AccountController extends GetxController {
       var response = await request.send();
       print(response.statusCode);
       if (response.statusCode == 200) {
-      } else {}
+        return "sukses";
+      } else {
+        return "gagal";
+      }
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      return "gagal";
     } finally {
       getData(auth.box.read("id_user"));
     }

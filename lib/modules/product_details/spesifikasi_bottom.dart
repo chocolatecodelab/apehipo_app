@@ -92,51 +92,33 @@ class _SpesifikasiBottomState extends State<SpesifikasiBottom> {
   Widget productDescription(stok) {
     return Column(
       children: [
-        Row(
-          children: [
-            Container(
-              width: 80,
-              child: AppText(
-                text: "Stok",
-                fontSize: 18,
-              ),
-            ),
-            SizedBox(
-              width: 100,
-            ), // Gunakan nilai labelWidth untuk lebar label
-            AppText(text: stok, fontSize: 18),
-          ],
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            "Stok:",
+            style: TextStyle(fontSize: 18),
+          ),
+          subtitle: AppText(
+            text: widget.stok!,
+            fontSize: 14,
+            color: Color(0xff7C7C7C),
+          ),
         ),
         SizedBox(
           height: 5,
         ),
-        Row(
-          children: [
-            Container(
-              width: 120,
-              child: AppText(
-                text: "Dikirim dari ",
-                fontSize: 18,
-              ),
-            ),
-            AppText(text: "Kabupaten Banjarbaru", fontSize: 18),
-          ],
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            "Dikirim dari:",
+            style: TextStyle(fontSize: 18),
+          ),
+          subtitle: AppText(
+            text: widget.alamat!,
+            fontSize: 14,
+            color: Color(0xff7C7C7C),
+          ),
         ),
-
-        // ListTile(
-        //   contentPadding: EdgeInsets.zero,
-        //   title: Text(
-        //     "Stok: ",
-        //     style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-        //   ),
-        //   subtitle: AppText(
-        //     text: stok,
-        //     fontSize: 16,
-        //     fontWeight: FontWeight.w600,
-        //     color: Color(0xff7C7C7C),
-        //   ),
-        //   // trailing: Icon(icons),
-        // ),
       ],
     );
   }

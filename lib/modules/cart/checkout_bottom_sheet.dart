@@ -2,9 +2,9 @@ import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:Apehipo/modules/address/address_bottom_sheet.dart';
 import 'package:Apehipo/modules/cart/cart_controller.dart';
 import 'package:Apehipo/modules/cart/cart_change.dart';
-import 'package:Apehipo/modules/payment/payment_page.dart';
 import 'package:Apehipo/modules/order/order_accepted_screen.dart';
 import 'package:Apehipo/modules/order/order_failed_dialog.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
 import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:Apehipo/widgets/app_button.dart';
@@ -85,14 +85,24 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                 vertical: 25,
               ),
               onPressed: () async {
-                String? hasil = await controller.sendData(
-                    jumlahHarga, auth.box.read("id_user"));
-                if (hasil == "sukses") {
-                  controller.clearData();
-                  cart.resetValue();
-                  onPlaceOrderClicked(jumlahHarga, hasil);
-                } else if (hasil == "sudah") {
-                  onPlaceOrderClicked(jumlahHarga, hasil);
+                bool? confirmationResult = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ConfirmationDialog(
+                        message:
+                            "Apakah anda yakin ingin memesan?\nMohon pastikan kembali bahwa anda satu daerah dengan petani");
+                  },
+                );
+                if (confirmationResult!) {
+                  String? hasil = await controller.sendData(
+                      jumlahHarga, auth.box.read("id_user"));
+                  if (hasil == "sukses") {
+                    controller.clearData();
+                    cart.resetValue();
+                    onPlaceOrderClicked(jumlahHarga, hasil);
+                  } else if (hasil == "sudah") {
+                    onPlaceOrderClicked(jumlahHarga, hasil);
+                  }
                 }
               },
             ),
@@ -143,9 +153,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (BuildContext bc) {
-          if (key == "payment") {
-            return PaymentPage(value);
-          } else if (key == "alamat") {
+          if (key == "alamat") {
             return AddressBottom();
           }
           return SizedBox.shrink();

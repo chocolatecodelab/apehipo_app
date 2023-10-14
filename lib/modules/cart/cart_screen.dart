@@ -1,4 +1,8 @@
 import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_model.dart';
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/modules/home/product_all_detail.dart';
 import 'package:Apehipo/modules/order/order_accepted_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:Apehipo/widgets/app_button.dart';
@@ -16,8 +20,10 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   double totalHarga = 0;
-  var controller = Get.put(CartController());
+  var homeController = Get.put(HomeController());
+
   @override
+  var controller = Get.put(CartController());
   Widget build(BuildContext context) {
     controller.dataList!.sort((a, b) {
       // Mengambil angka dari idOrder menggunakan ekstraksi substring
@@ -56,17 +62,36 @@ class _CartScreenState extends State<CartScreen> {
                 SizedBox(
                   height: 25,
                 ),
-                Obx(
-                  () => controller.isLoading.value
-                      ? Center(child: CircularProgressIndicator())
-                      : controller.dataList!.isEmpty
-                          ? Center(child: Text("Tidak ada data."))
-                          : Column(
-                              children: [
-                                ...getChildrenWithSeperator(
-                                  addToLastChild: false,
-                                  widgets: controller.dataList!.map((e) {
-                                    return Container(
+                Obx(() => controller.isLoading.value
+                    ? Center(child: CircularProgressIndicator())
+                    : controller.dataList!.isEmpty
+                        ? Center(child: Text("Tidak ada data."))
+                        : Column(
+                            children: [
+                              ...getChildrenWithSeperator(
+                                addToLastChild: false,
+                                widgets: controller.dataList!
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  CartModel cartItem = entry
+                                      .value; // Dapatkan elemen dari CartModel
+
+                                  int homeModelIndex = homeController.dataList!
+                                      .indexWhere((homeItem) =>
+                                          homeItem.kode == cartItem.id);
+                                  print(homeModelIndex);
+                                  CartModel e = entry.value;
+                                  return InkWell(
+                                    onTap: () {
+                                      if (homeModelIndex != -1) {
+                                        // Jika indeks ditemukan, navigasikan ke layar detail dengan HomeModel yang sesuai
+                                        Get.to(ProductDetailScreen(
+                                            homeController
+                                                .dataList![homeModelIndex]));
+                                      }
+                                    },
+                                    child: Container(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: 25,
                                       ),
@@ -74,22 +99,22 @@ class _CartScreenState extends State<CartScreen> {
                                       child: ChartItemWidget(
                                         item: e,
                                       ),
-                                    );
-                                  }).toList(),
-                                  seperator: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 25,
                                     ),
+                                  );
+                                }).toList(),
+                                seperator: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 25,
                                   ),
                                 ),
-                                Divider(
-                                  thickness: 1,
-                                ),
-                                getCheckoutButton(
-                                    context), // Tambahkan tombol checkout di sini
-                              ],
-                            ),
-                ),
+                              ),
+                              Divider(
+                                thickness: 1,
+                              ),
+                              getCheckoutButton(
+                                  context), // Tambahkan tombol checkout di sini
+                            ],
+                          )),
               ],
             ),
           ),

@@ -1,4 +1,6 @@
 import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:Apehipo/modules/home/product_all_detail.dart';
 import 'package:Apehipo/modules/notification/notification_controller.dart';
 import 'package:Apehipo/modules/order/order_controller.dart';
 import 'package:Apehipo/modules/order/order_model.dart';
@@ -15,7 +17,7 @@ import 'package:intl/intl.dart';
 
 class OrderWidget extends StatefulWidget {
   final String? waktu;
-  final Key key;
+  final Key? key;
   final List<OrderModel> items;
   final OrderModel item;
   final String? heroSuffix;
@@ -53,8 +55,7 @@ class _OrderWidgetState extends State<OrderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Format tanggal dan waktu dalam format yang diinginkan
-
+    var homeController = Get.put(HomeController());
     final auth = Get.put(AuthController());
     return Container(
       decoration: BoxDecoration(
@@ -79,40 +80,55 @@ class _OrderWidgetState extends State<OrderWidget> {
                     NeverScrollableScrollPhysics(), // Nonaktifkan guliran ListView
                 itemCount: widget.items.length,
                 itemBuilder: (context, index) {
+                  int searchIndex = homeController.dataList!.indexWhere(
+                      (item) => item.kode == widget.items[index].idProduk);
                   final item = widget.items[index];
-                  return Row(
-                    children: [
-                      Hero(
-                        tag:
-                            "KatalogItem:${item.nama}-${widget.heroSuffix ?? ""}",
-                        child: imageWidget(item.foto),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText(
-                              text: item.nama,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            AppText(
-                              text: "x" + item.amount,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            AppText(
-                              text: "Rp${item.harga}",
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ],
+                  return GestureDetector(
+                    onTap: () {
+                      if (searchIndex != -1) {
+                        Get.to(ProductDetailScreen(
+                            homeController.dataList![searchIndex]));
+                        // Item ditemukan, Anda dapat mengaksesnya dengan homeController.dataList[index].
+                        // Lakukan sesuatu dengan item ini.
+                      } else {
+                        // Item tidak ditemukan.
+                      }
+                    },
+                    child: Row(
+                      children: [
+                        Hero(
+                          tag:
+                              "KatalogItem:${item.nama}-${widget.heroSuffix ?? ""}",
+                          child: imageWidget(item.foto),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: item.nama,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              AppText(
+                                text: "x" + item.amount,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              AppText(
+                                text:
+                                    "Rp${getTotalPrice(item.harga, item.amount).toStringAsFixed(0)}",
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -179,11 +195,8 @@ class _OrderWidgetState extends State<OrderWidget> {
                   SizedBox(
                     width: 20,
                   ),
-                  getBayarButton(
-                    context,
-                    "Bayar",
-                    widget.item.totalHarga,
-                  )
+                  getBayarButton(context, "Bayar", widget.item.totalHarga,
+                      widget.item.buktiPembayaran, widget.item.idOrder)
                 ],
               ),
               // error nanti jika K nya besar
@@ -210,6 +223,12 @@ class _OrderWidgetState extends State<OrderWidget> {
             ],
           )),
     );
+  }
+
+  int getTotalPrice(String harga, String amount) {
+    int currentHarga = int.parse(harga);
+    int currentAmount = int.parse(amount);
+    return currentHarga * currentAmount;
   }
 
   Stream<Duration> timerStream(
@@ -341,6 +360,7 @@ Widget getCancelButton(BuildContext context, String label, String? idOrder,
 }
 
 Widget getBayarButton(BuildContext context, String label, String totalHarga,
+    String? buktiPembayaran, String? idOrder,
     {Widget? trailingWidget}) {
   return Container(
     width: 150,
@@ -351,7 +371,8 @@ Widget getBayarButton(BuildContext context, String label, String totalHarga,
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PaymentScreen(totalHarga),
+              builder: (context) =>
+                  PaymentScreen(totalHarga, buktiPembayaran!, idOrder!),
             )),
       },
       style: ElevatedButton.styleFrom(

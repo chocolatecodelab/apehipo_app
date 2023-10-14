@@ -7,6 +7,9 @@ import 'package:Apehipo/widgets/theme.dart';
 import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
+  MyApp({super.key});
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

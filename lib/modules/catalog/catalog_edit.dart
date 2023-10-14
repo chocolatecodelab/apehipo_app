@@ -6,6 +6,7 @@ import 'package:Apehipo/modules/catalog/katalog_screen.dart';
 import 'package:Apehipo/widgets/confirmation_dialog.dart';
 import 'package:Apehipo/widgets/colors.dart';
 import 'package:Apehipo/widgets/dynamic_button.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:Apehipo/widgets/theme.dart';
 import 'package:get/get.dart';
@@ -42,6 +43,7 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
     controller.stok.text = widget.katalogItem.stok.toString();
     controller.foto.text = widget.katalogItem.foto;
     controller.status.text = widget.katalogItem.status;
+    controller.jenis.text = selectedValue;
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -148,9 +150,10 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                     ),
                     SizedBox(height: 16),
                     Divider(thickness: 1),
-                    getCatalogRowName("Nama"),
+                    getCatalogRowName("Nama", "Contoh:\nPakcoy 1/2kg"),
                     Divider(thickness: 1),
-                    getCatalogRowDeskripsi("Deskripsi"),
+                    getCatalogRowDeskripsi("Deskripsi",
+                        "Contoh:\nApel ini adalah apel dari hasil perkebunan hidroponik. Ready daerah Banjarbaru. Free Ongkir daerah Landasan Ulin. "),
                     Divider(thickness: 1),
                     getCatalogRowHarga("Harga"),
                     Divider(thickness: 1),
@@ -174,11 +177,30 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
                           },
                         );
                         if (confirmationResult == true) {
-                          print("halaman edit");
-                          controller.updateData(
+                          String hasil = await controller.updateData(
                             widget.katalogItem.kode,
                             _selectedImage,
                           );
+                          if (hasil == "sukses") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                    message: "Produk berhasil diubah",
+                                    icon: Icons.check_circle_outline);
+                              },
+                            );
+                            Get.back();
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                    message: "Produk gagal diubah",
+                                    icon: Icons.close_rounded);
+                              },
+                            );
+                          }
                           // SuccessConfirmationDialog(
                           //     message: "Anda berhasil menyimpan perubahan");
                         } else {
@@ -572,7 +594,8 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
     );
   }
 
-  Widget getCatalogRowDeskripsi(String label, {Widget? customWidget}) {
+  Widget getCatalogRowDeskripsi(String label, String? example,
+      {Widget? customWidget}) {
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -586,15 +609,26 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
               width: 20,
             ),
           ],
-          Icon(Icons.description_outlined),
           SizedBox(
             width: 5,
           ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+          Container(
+            width: 120, // Gunakan nilai labelWidth untuk lebar label
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  example!,
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                ),
+              ],
             ),
           ),
           SizedBox(
@@ -637,7 +671,8 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
     );
   }
 
-  Widget getCatalogRowName(String label, {Widget? customWidget}) {
+  Widget getCatalogRowName(String label, String? example,
+      {Widget? customWidget}) {
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -651,28 +686,39 @@ class _CatalogEditScreenState extends State<CatalogEditScreen> {
               width: 20,
             ),
           ],
-          Icon(Icons.dataset_outlined),
           SizedBox(
             width: 5,
           ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+          Container(
+            width: 120, // Gunakan nilai labelWidth untuk lebar label
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  example!,
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+                ),
+              ],
             ),
           ),
           SizedBox(
             width: 10,
           ),
-          Expanded(
+          Flexible(
             child: TextField(
               controller: controller.nama,
               textAlign: TextAlign.left,
               decoration: InputDecoration(
                 hintText: 'Masukkan Nama Produk',
                 labelText: null,
-                contentPadding: EdgeInsets.only(left: 40.0),
+                contentPadding: EdgeInsets.only(left: 20.0),
                 floatingLabelStyle: TextStyle(
                   color: AppColors.primaryColor,
                 ),

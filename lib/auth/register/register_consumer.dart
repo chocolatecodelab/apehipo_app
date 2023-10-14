@@ -204,29 +204,13 @@ class _RegisterConsumerState extends State<RegisterConsumer> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Password harus mengandung minimal 8 karakter, termasuk huruf besar, huruf kecil, karakter spesial, dan angka.",
+                      "Password harus mengandung minimal 8 karakter, termasuk huruf besar, huruf kecil, dan angka.",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontSize: 12),
                     ),
                     // Retry Password Input -------------------------------------
                     const SizedBox(height: 10),
-                    // TextFormField(
-                    //   controller: passwordRetryController,
-                    //   obscureText: passwordSee,
-                    //   // validator: AuthValidator.isPasswordValid,
-                    //   decoration: const InputDecoration(
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.grey),
-                    //     ),
-                    //     focusedBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(color: Colors.green),
-                    //     ),
-                    //     contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                    //     hintText: "Konfirmasi Password",
 
-                    //     // hintStyle: TextStyle(fontFamily: "PoppinsRegular"),
-                    //   ),
-                    // ),
                     const SizedBox(height: 40),
                     // Sign Up for Button ----------------------------------
                     Container(

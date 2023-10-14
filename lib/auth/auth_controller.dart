@@ -69,7 +69,7 @@ class AuthController extends GetxController {
         return "gagal";
       }
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      // Get.snackbar("Gagal", e.toString());
       return "gagal";
     }
   }
@@ -94,8 +94,7 @@ class AuthController extends GetxController {
       if (password.text.length < 8) {
         // Tampilkan pesan kesalahan: "Password harus memiliki setidaknya 8 karakter."
         return "Password harus memiliki setidaknya 8 karakter.";
-      } else if (!RegExp(
-              r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?\~\\-]).+$')
+      } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$')
           .hasMatch(password.text)) {
         // Tampilkan pesan kesalahan: "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus."
         return "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus.";

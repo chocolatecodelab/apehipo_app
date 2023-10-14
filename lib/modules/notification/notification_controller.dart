@@ -1,13 +1,14 @@
 import 'dart:convert';
-
+import 'package:Apehipo/app.dart';
 import 'package:Apehipo/auth/auth_controller.dart';
-import 'package:Apehipo/modules/notification/notification_model.dart';
+import 'package:Apehipo/modules/notification/notif_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../services/api.dart';
 
 class NotificationController extends GetxController {
-  List<NotificationModel>? dataList = [];
+  List<NotifModel>? dataList = [];
   var isLoading = false.obs;
 
   @override
@@ -26,7 +27,7 @@ class NotificationController extends GetxController {
       if (response.statusCode == 200) {
         print(response.statusCode);
         List data = jsonDecode(response.body); // Ubah 'result' menjadi 'data'
-        dataList = data.map((x) => NotificationModel.fromJson(x)).toList();
+        dataList = data.map((x) => NotifModel.fromJson(x)).toList();
       }
     } catch (e) {
       Get.snackbar("Error", e.toString());
@@ -71,6 +72,23 @@ class NotificationController extends GetxController {
       map['status'] = "true";
       String baseurl = '${Api().baseURL}/notifikasi/status/$id';
       final response = await http.post(Uri.tryParse(baseurl)!, body: map);
+      if (response.statusCode == 200) {
+        print(response.statusCode);
+        refresh();
+        return "sukses";
+      } else {
+        return "gagal";
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Terjadi kesalahan");
+      return "gagal";
+    } finally {}
+  }
+
+  Future<String> deleteData(String id) async {
+    try {
+      String baseurl = '${Api().baseURL}/notifikasi/$id';
+      final response = await http.delete(Uri.tryParse(baseurl)!);
       if (response.statusCode == 200) {
         print(response.statusCode);
         refresh();

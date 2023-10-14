@@ -29,10 +29,10 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int amount = 1;
-
-  @override
   var controller = Get.put(CartController());
   var auth = Get.put(AuthController());
+
+  @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartChange>(context);
     return Scaffold(
@@ -174,7 +174,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               this.amount);
                           if (result == "sukses") {
                             cart.incrementCounter(controller.dataList!.length);
-                            await showDialog(
+                            showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return SuccessConfirmationDialog(

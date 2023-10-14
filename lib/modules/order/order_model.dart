@@ -10,6 +10,7 @@ class OrderModel {
   final String status;
   final String idPembeli;
   final String? statusTransaksi;
+  final String? buktiPembayaran;
   final String idPenjual;
 
   OrderModel({
@@ -24,6 +25,7 @@ class OrderModel {
     required this.status,
     required this.idPembeli,
     required this.statusTransaksi,
+    required this.buktiPembayaran,
     required this.idPenjual,
   });
 
@@ -40,6 +42,7 @@ class OrderModel {
       status: json['status'],
       idPembeli: json['id_pembeli'],
       statusTransaksi: json['status_transaksi'],
+      buktiPembayaran: json['bukti_pembayaran'] ?? "",
       idPenjual: json['id_penjual'],
     );
   }

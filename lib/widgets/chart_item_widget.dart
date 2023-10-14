@@ -26,8 +26,8 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   final double borderRadius = 18;
 
   @override
-  var controller = Get.put(CartController());
   Widget build(BuildContext context) {
+    var controller = Get.put(CartController());
     final cart = Provider.of<CartChange>(context);
     return Container(
       height: height,
@@ -95,9 +95,14 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   }
 
   Widget imageWidget() {
-    return Container(
-      width: 100,
-      child: Image.network(widget.item.foto),
+    return InkWell(
+      onTap: () {
+        // Tambahkan aksi yang ingin dilakukan saat gambar diklik di sini.
+      },
+      child: Container(
+        width: 100,
+        child: Image.network(widget.item.foto),
+      ),
     );
   }
 

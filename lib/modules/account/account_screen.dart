@@ -1,9 +1,14 @@
 import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:Apehipo/auth/login/login.dart';
+import 'package:Apehipo/modules/account/account_bantuan.dart';
 import 'package:Apehipo/modules/account/account_controller.dart';
+import 'package:Apehipo/modules/account/account_tentang.dart';
 import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
 import 'package:Apehipo/modules/notification/notification_screen.dart';
 import 'package:Apehipo/modules/order/order_screen.dart';
+import 'package:Apehipo/modules/transaction/transaction_controller.dart';
 import 'package:Apehipo/modules/transaction/transaction_screen.dart';
 import 'package:Apehipo/modules/transaction/transcation_screen_petani.dart';
 import 'package:Apehipo/widgets/confirmation_dialog_logout.dart';
@@ -28,12 +33,16 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
   var auth = Get.put(AuthController());
   var controller = Get.put(AccountController());
-
+  var transaksiController = Get.put(TransactionController());
+  var katalogController = Get.put(CatalogController());
+  var cartController = Get.put(CartController());
+  @override
   void initState() {
     super.initState();
-    controller.refresh();
     // Set nilai awal _nameController jika widget.katalogItem tidak null
     if (controller.map['foto'] == null) {
       controller.isLoading(true);
@@ -42,70 +51,84 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                if (auth.box.read("role") != "admin")
-                  Obx(() => controller.isLoading.value
-                      ? Center(child: CircularProgressIndicator())
-                      : controller.map.isEmpty
-                          ? Center(child: Text("Tidak ada data"))
-                          : ListTile(
-                              leading: GestureDetector(
-                                onTap: () {
-                                  showModal(context);
-                                },
-                                child: SizedBox(
-                                  width: 60,
-                                  height: 85,
-                                  child: getImageHeader(controller.foto.text),
+        child: RefreshIndicator(
+          key: _refreshKey,
+          onRefresh: () => refreshData(),
+          child: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  if (auth.box.read("role") != "admin")
+                    Obx(() => controller.isLoading.value
+                        ? Center(child: CircularProgressIndicator())
+                        : controller.map.isEmpty
+                            ? Center(child: Text("Tidak ada data"))
+                            : ListTile(
+                                leading: GestureDetector(
+                                  onTap: () {
+                                    showModal(context);
+                                  },
+                                  child: SizedBox(
+                                    width: 60,
+                                    height: 85,
+                                    child: getImageHeader(controller.foto.text),
+                                  ),
                                 ),
-                              ),
-                              title: AppText(
-                                text: auth.box.read("nama"),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              subtitle: AppText(
-                                text: auth.box.read("role"),
-                                color: Color(0xff7C7C7C),
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16,
-                              ),
-                            )),
-                SizedBox(
-                  height: 15,
-                ),
-                // getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
-                Column(
-                  children: getChildrenWithSeperator(
-                    widgets: accountItems
-                        .where((item) => shouldDisplay(
-                            item)) // Ganti shouldDisplay dengan kondisi yang sesuai
-                        .map((e) {
-                      return getAccountItemWidget(context, e);
-                    }).toList(),
-                    seperator: Divider(
-                      thickness: 1,
+                                title: AppText(
+                                  text: controller.nama.text.toString(),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                subtitle: AppText(
+                                  text: auth.box.read("role"),
+                                  color: Color(0xff7C7C7C),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16,
+                                ),
+                              )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
+                  Column(
+                    children: getChildrenWithSeperator(
+                      widgets: accountItems
+                          .where((item) => shouldDisplay(
+                              item)) // Ganti shouldDisplay dengan kondisi yang sesuai
+                          .map((e) {
+                        return getAccountItemWidget(context, e);
+                      }).toList(),
+                      seperator: Divider(
+                        thickness: 1,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                logoutButton(context),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                  SizedBox(
+                    height: 20,
+                  ),
+                  logoutButton(context),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -254,6 +277,7 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget logoutButton(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.symmetric(horizontal: 25),
@@ -305,6 +329,11 @@ class _AccountScreenState extends State<AccountScreen> {
               SuccessConfirmationDialog(
                   message: "Anda telah keluar dari akun",
                   icon: Icons.check_circle_outline);
+              katalogController.dataArsipList!.clear();
+              katalogController.dataTampilList!.clear();
+              katalogController.dataGabungList.clear();
+              transaksiController.dataProsesList!.clear();
+              transaksiController.dataSelesaiList!.clear();
               Get.offAll(LoginPage());
             }
           }
@@ -356,6 +385,14 @@ class _AccountScreenState extends State<AccountScreen> {
           case "Transaksi Petani":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => TransactionScreen()));
+            break;
+          case "Bantuan":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AccountBantuan()));
+            break;
+          case "Tentang":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AccountTentang()));
             break;
         }
       },

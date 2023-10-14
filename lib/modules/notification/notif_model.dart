@@ -1,4 +1,4 @@
-class NotificationModel {
+class NotifModel {
   final String id;
   final String datetime;
   final String pesan;
@@ -7,7 +7,7 @@ class NotificationModel {
   final String idPengirim;
   final String status;
 
-  NotificationModel({
+  NotifModel({
     required this.id,
     required this.datetime,
     required this.pesan,
@@ -17,8 +17,8 @@ class NotificationModel {
     required this.status,
   });
 
-  factory NotificationModel.fromJson(Map<String, dynamic> json) {
-    return NotificationModel(
+  factory NotifModel.fromJson(Map<String, dynamic> json) {
+    return NotifModel(
         id: json['id'],
         datetime: json['date_time'],
         pesan: json['pesan'],

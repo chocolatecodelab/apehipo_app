@@ -25,6 +25,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var katalog = Get.put(CatalogController());
   var home = Get.put(HomeController());
 
+  Future<void> _launchWhatsApp(String phoneNumber, String message) async {
+    if (phoneNumber.startsWith('0')) {
+      // Mengganti "0" di awal nomor dengan "62"
+      phoneNumber = '62${phoneNumber.substring(1)}';
+    }
+    final encodedMessage =
+        Uri.encodeComponent(message); // Mengekodekan pesan dengan benar
+
+    final url = 'https://wa.me/$phoneNumber/?text=$encodedMessage';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Tidak dapat membuka WhatsApp';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -188,7 +205,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 50,
                       child: AppButton(
                         label: "Chat on WhatsApp",
-                        onPressed: () => {},
+                        onPressed: () => {
+                          _launchWhatsApp(
+                              widget.productItem.noTelpon.toString(),
+                              "Halo Petani, saya ingin bertanya mengenai produk Hidroponik Anda")
+                        },
                         fontWeight: FontWeight.normal,
                       ),
                     ),

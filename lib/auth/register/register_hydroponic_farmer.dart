@@ -208,7 +208,7 @@ class _RegisterHydroponicFarmer extends State<RegisterHydroponicFarmer> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Password harus mengandung minimal 8 karakter, termasuk huruf besar, huruf kecil, karakter spesial, dan angka.",
+                      "Password harus mengandung minimal 8 karakter, termasuk huruf besar, huruf kecil, dan angka.",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontSize: 12),
                     ),

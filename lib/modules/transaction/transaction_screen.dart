@@ -10,10 +10,21 @@ class TransactionScreen extends StatefulWidget {
 }
 
 class _TransactionScreenState extends State<TransactionScreen> {
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
+
   @override
   void initState() {
     super.initState();
-    controller.refresh();
+  }
+
+  Future<void> refreshData() async {
+    await controller.refresh();
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
   }
 
   @override
@@ -104,14 +115,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         SizedBox(
                           height: 20,
                         ),
-                        Obx(
-                          () => controller.isLoading.value
-                              ? Center(child: CircularProgressIndicator())
-                              : controller.dataProsesList!.isEmpty
-                                  ? Center(child: Text("Tidak ada data"))
-                                  : getVerticalTransaksi(
-                                      controller.dataProsesList!),
-                        )
+                        Obx(() => controller.isLoading.value
+                            ? Center(child: CircularProgressIndicator())
+                            : controller.dataProsesList!.isEmpty
+                                ? Center(child: Text("Tidak ada data"))
+                                : RefreshIndicator(
+                                    key: _refreshKey,
+                                    onRefresh: () => refreshData(),
+                                    child: Column(
+                                      children: [
+                                        getVerticalTransaksi(
+                                            controller.dataProsesList!),
+                                      ],
+                                    ),
+                                  ))
                       ],
                     ),
                   ),
@@ -128,14 +145,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      Obx(
-                        () => controller.isLoading.value
-                            ? Center(child: CircularProgressIndicator())
-                            : controller.dataSelesaiList!.isEmpty
-                                ? Center(child: Text("Tidak ada data"))
-                                : getVerticalTransaksi(
-                                    controller.dataSelesaiList!),
-                      )
+                      Obx(() => controller.isLoading.value
+                          ? Center(child: CircularProgressIndicator())
+                          : controller.dataSelesaiList!.isEmpty
+                              ? Center(child: Text("Tidak ada data"))
+                              : RefreshIndicator(
+                                  key: _refreshKey,
+                                  onRefresh: () => refreshData(),
+                                  child: Column(
+                                    children: [
+                                      getVerticalTransaksi(
+                                          controller.dataSelesaiList!),
+                                    ],
+                                  ),
+                                ))
                     ],
                   ),
                 ),

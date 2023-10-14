@@ -168,7 +168,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Spacer(),
                     if (auth.box.read("role") == "konsumen")
                       AppButton(
-                        label: "Add To Basket",
+                        label: "Tambah ke Keranjang",
                         onPressed: () async {
                           String result = await controller.tambahData(
                               widget.productItem.kode,
