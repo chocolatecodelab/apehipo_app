@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'catalog_model.dart';
@@ -12,9 +10,9 @@ import 'package:http/http.dart' as http;
 import '../../services/api.dart';
 
 class CatalogController extends GetxController {
-  List<CatalogModel>? dataTampilList = [];
-  List<CatalogModel>? dataArsipList = [];
-  List<CatalogModel> dataGabungList = [];
+  RxList<CatalogModel>? dataTampilList = <CatalogModel>[].obs;
+  RxList<CatalogModel>? dataArsipList = <CatalogModel>[].obs;
+  RxList<CatalogModel> dataGabungList = <CatalogModel>[].obs;
   int jumlahDataGabung = 0;
   XFile? image;
   var isLoading = false.obs;
@@ -69,7 +67,7 @@ class CatalogController extends GetxController {
         jumlahDataGabung = dataGabungList.length;
       }
     } catch (e) {
-      Get.snackbar("kesalahan", e.toString());
+      // Get.snackbar("kesalahan", e.toString());
     } finally {
       isLoading(false);
     }
@@ -131,11 +129,9 @@ class CatalogController extends GetxController {
         print('Failed to send data: ${response.statusCode}');
       }
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      // Get.snackbar("Gagal", e.toString());
     } finally {
       clearData();
-      Get.off(CatalogScreen());
-      refresh();
     }
   }
 
@@ -166,13 +162,13 @@ class CatalogController extends GetxController {
         print('Failed to send data: ${response.statusCode}');
       }
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      // Get.snackbar("Gagal", e.toString());
     } finally {
       refresh();
     }
   }
 
-  updateData(String id, XFile? image) async {
+  Future<String> updateData(String id, XFile? image) async {
     try {
       var request = http.MultipartRequest(
         'POST',
@@ -205,12 +201,11 @@ class CatalogController extends GetxController {
       // Mengirim request dan menunggu responsenya
       var response = await request.send();
       print(response.statusCode);
-      if (response.statusCode == 200) {
-      } else {}
+      return "sukses";
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      // Get.snackbar("Gagal", e.toString());
+      return "gagal";
     } finally {
-      Get.off(CatalogScreen());
       clearData();
       refresh();
     }
@@ -229,7 +224,7 @@ class CatalogController extends GetxController {
       if (response.statusCode == 200) {
       } else {}
     } catch (e) {
-      Get.snackbar("kesalahan", e.toString());
+      // Get.snackbar("kesalahan", e.toString());
     } finally {
       isLoading(false);
       clearData();

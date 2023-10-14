@@ -1,8 +1,9 @@
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/LineSeparator.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 
 class CardItemDashboard extends StatelessWidget {
   CardItemDashboard(
@@ -14,7 +15,7 @@ class CardItemDashboard extends StatelessWidget {
 
   final BuildContext context;
   final double width = 174;
-  final double height = 250;
+  final double height = 260;
   final Color borderColor = Color(0xffE2E2E2);
   final double borderRadius = 18;
 
@@ -68,6 +69,43 @@ class CardItemDashboard extends StatelessWidget {
                 ),
                 Spacer(),
                 addWidget()
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            LineSeparator(
+              height: 1,
+              color: const Color.fromARGB(255, 207, 207, 207),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.home_filled,
+                  size: 15,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: item.alamatPetani.length <= 16
+                        ? item.alamatPetani
+                        : '${item.alamatPetani.substring(0, 16)}...',
+                    style: TextStyle(
+                      color: Colors
+                          .black, // Ganti warna teks "Banjarmasin" dengan warna lain sesuai keinginan Anda
+                      fontSize: 14, // Ukuran font "Banjarmasin"
+                      fontWeight: FontWeight.normal, // Gaya teks "Banjarmasin"
+                      // Add other text styles as needed
+                    ),
+                  ),
+                  overflow: TextOverflow
+                      .ellipsis, // Efek elipsis jika teks terlalu panjang
+                ),
               ],
             )
           ],

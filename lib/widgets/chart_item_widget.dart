@@ -1,10 +1,12 @@
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/cart/cart_model.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_model.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/home/models/grocery_item.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'item_counter_widget.dart';
 
@@ -24,8 +26,9 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   final double borderRadius = 18;
 
   @override
-  var controller = Get.put(CartController());
   Widget build(BuildContext context) {
+    var controller = Get.put(CartController());
+    final cart = Provider.of<CartChange>(context);
     return Container(
       height: height,
       margin: EdgeInsets.symmetric(
@@ -69,8 +72,12 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
             Column(
               children: [
                 IconButton(
-                  onPressed: () {
-                    controller.deleteData(widget.item.id, widget.item.amount);
+                  onPressed: () async {
+                    String hasil = await controller.deleteData(
+                        widget.item.id, widget.item.amount);
+                    if (hasil == "sukses") {
+                      cart.incrementCounter(controller.dataList!.length);
+                    }
                     // Tindakan yang ingin dilakukan saat tombol ditekan
                   },
                   icon: Icon(Icons.close),
@@ -88,9 +95,14 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   }
 
   Widget imageWidget() {
-    return Container(
-      width: 100,
-      child: Image.network(widget.item.foto),
+    return InkWell(
+      onTap: () {
+        // Tambahkan aksi yang ingin dilakukan saat gambar diklik di sini.
+      },
+      child: Container(
+        width: 100,
+        child: Image.network(widget.item.foto),
+      ),
     );
   }
 

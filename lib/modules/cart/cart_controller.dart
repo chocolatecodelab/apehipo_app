@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/modules/cart/cart_model.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/order/order_controller.dart';
-import 'package:apehipo_app/services/api.dart';
+import 'package:Apehipo/modules/cart/cart_model.dart';
+import 'package:Apehipo/modules/order/order_controller.dart';
+import 'package:Apehipo/modules/order/order_model.dart';
+import 'package:Apehipo/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -19,7 +19,6 @@ class CartController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    // var orderController = Get.put(OrderController());
     super.onInit();
     id = TextEditingController();
     nama = TextEditingController();
@@ -28,8 +27,10 @@ class CartController extends GetxController {
     amount = TextEditingController();
   }
 
-  Future<String> tambahData(
-      String id, String nama, String harga, String foto, int amount) async {
+  var order = Get.put(OrderController());
+
+  Future<String> tambahData(String id, String nama, String harga, String foto,
+      String namaPetani, int amount) async {
     try {
       if (amount <= 0) {
         return "gagal";
@@ -43,6 +44,13 @@ class CartController extends GetxController {
       if (dataAda) {
         return "duplikat";
       }
+
+      bool petaniBeda =
+          dataList!.any((element) => element.namaPetani != namaPetani);
+      if (petaniBeda) {
+        return "petani beda";
+      }
+
       var map = <String, dynamic>{};
       map['id'] = id;
       map['nama'] = nama;
@@ -50,8 +58,14 @@ class CartController extends GetxController {
       map['foto'] = foto;
       map['amount'] = amount;
       amount = map['amount'];
+      map['nama_petani'] = namaPetani;
       CartModel cartModel = CartModel(
-          id: id, nama: nama, foto: foto, harga: harga, amount: amount);
+          id: id,
+          nama: nama,
+          foto: foto,
+          harga: harga,
+          amount: amount,
+          namaPetani: namaPetani);
       dataList!.add(cartModel);
       return "sukses";
     } catch (e) {
@@ -61,9 +75,11 @@ class CartController extends GetxController {
 
   Future<String> sendData(double harga, String idUser) async {
     try {
+      if (order.dataBelumList!.isNotEmpty) {
+        return "sudah";
+      }
       String totalHarga = harga.toString();
       var map = <String, dynamic>{};
-      // String jsonData = jsonEncode(dataList);
       map["total_harga_produk"] = totalHarga;
       map["status"] = "belum bayar";
       map["data_produk"] = dataList;
@@ -80,19 +96,25 @@ class CartController extends GetxController {
         return "gagal";
       }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      // Get.snackbar("Error", e.toString());
       return "gagal";
     } finally {}
   }
 
-  deleteData(id, int amount) {
+  Future<String> deleteData(id, int amount) async {
     try {
       dataList!.removeWhere(
           (element) => element.id == id && element.amount == amount);
       isLoading(true);
+      return "sukses";
     } catch (e) {
+      return "gagal";
     } finally {
       isLoading(false);
     }
+  }
+
+  clearData() {
+    dataList!.clear();
   }
 }

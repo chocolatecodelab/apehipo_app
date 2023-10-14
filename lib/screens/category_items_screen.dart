@@ -1,9 +1,8 @@
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/product_details/product_details_screen.dart';
 
 import 'filter_screen.dart';
 

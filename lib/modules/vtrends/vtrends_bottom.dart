@@ -1,9 +1,9 @@
-import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
+import 'package:Apehipo/modules/product_details/spesifikasi_bottom.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 
-import '../../screens/order_failed_dialog.dart';
+import '../order/order_failed_dialog.dart';
 
 class VtrendsBottom extends StatefulWidget {
   final String? rincian;

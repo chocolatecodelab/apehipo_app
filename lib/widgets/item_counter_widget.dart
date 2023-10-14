@@ -1,6 +1,6 @@
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
 
 class ItemCounterWidget extends StatefulWidget {

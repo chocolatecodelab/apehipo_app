@@ -1,4 +1,4 @@
-import 'package:apehipo_app/modules/vtrends/vtrends_bottom.dart';
+import 'package:Apehipo/modules/vtrends/vtrends_bottom.dart';
 import 'package:flutter/widgets.dart';
 
 class Vtrends extends StatelessWidget {

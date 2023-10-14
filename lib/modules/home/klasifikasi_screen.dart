@@ -1,8 +1,6 @@
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/home/home_controller.dart';
-import 'package:apehipo_app/modules/home/product_all_detail.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/widgets/card_item_dashboard.dart';
+import 'package:Apehipo/modules/home/product_all_detail.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +48,7 @@ class _KlasifikasiScreenState extends State<KlasifikasiScreen> {
       padding: const EdgeInsets.all(10),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisExtent: 225,
+        mainAxisExtent: 245,
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
@@ -73,13 +71,14 @@ class _KlasifikasiScreenState extends State<KlasifikasiScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => DashboardDetailScreen(
+          builder: (context) => ProductDetailScreen(
                 dashboardItem,
                 heroSuffix: "home_screen",
               )),
     );
   }
 }
+
 
   // Widget getItemCard(List<GroceryItem> items) {
   //   return Container(

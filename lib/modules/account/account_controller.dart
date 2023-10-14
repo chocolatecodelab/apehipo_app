@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/account/account_screen.dart';
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/home/product_home_screen.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'account_model.dart';
@@ -48,6 +45,7 @@ class AccountController extends GetxController {
   getData(id) async {
     try {
       isLoading(true);
+      print(id);
       String baseUrl = '${Api().baseURL}/account/$id';
       final response = await http.get(Uri.tryParse(baseUrl)!);
       print(response.statusCode);
@@ -70,7 +68,33 @@ class AccountController extends GetxController {
     }
   }
 
-  updateData(String id, XFile? image) async {
+  Future refresh() async {
+    try {
+      isLoading(true);
+      list!.clear();
+      map.clear();
+    } catch (e) {
+    } finally {
+      isLoading(false);
+      getData(auth.box.read("id_user"));
+    }
+  }
+
+  Future<String> clearData() async {
+    try {
+      username.text = "";
+      email.text = "";
+      nama.text = "";
+      noTelpon.text = "";
+      noRekening.text = "";
+      alamat.text = "";
+      return "sukses";
+    } catch (e) {
+      return "gagal";
+    }
+  }
+
+  Future<String> updateData(String id, XFile? image) async {
     try {
       print("disini?");
       var request = http.MultipartRequest(
@@ -120,14 +144,16 @@ class AccountController extends GetxController {
             filename: imgFileName);
         request.files.add(imgMultiPart);
       }
-      print("sukses lagi");
       // Mengirim request dan menunggu responsenya
       var response = await request.send();
       print(response.statusCode);
       if (response.statusCode == 200) {
-      } else {}
+        return "sukses";
+      } else {
+        return "gagal";
+      }
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      return "gagal";
     } finally {
       getData(auth.box.read("id_user"));
     }

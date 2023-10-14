@@ -1,5 +1,5 @@
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationDialogKonfirmasi extends StatefulWidget {
@@ -68,18 +68,6 @@ class _ConfirmationDialogKonfirmasiState
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).pop(true);
-                    bool? confirmationResult = await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SuccessConfirmationDialog(
-                          message:
-                              "Terima kasih! Anda telah mengonfirmasi pesanan",
-                          icon: Icons.check_circle_outline,
-                        );
-                      },
-                    );
-                    if (confirmationResult == true) {
-                    } else {}
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(30, 45),

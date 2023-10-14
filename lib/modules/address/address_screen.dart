@@ -1,9 +1,9 @@
-import 'package:apehipo_app/modules/address/address_bottom_sheet.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/order/order_screen.dart';
-import 'package:apehipo_app/splash/splash_screen.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/modules/address/address_bottom_sheet.dart';
+import 'package:Apehipo/modules/cart/cart_screen.dart';
+import 'package:Apehipo/modules/order/order_screen.dart';
+import 'package:Apehipo/splash/splash_screen.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
