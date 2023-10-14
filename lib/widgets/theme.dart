@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 
 String gilroyFontFamily = "Gilroy";
 String montserratFontFamily = "Montserrat";

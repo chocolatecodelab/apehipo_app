@@ -1,18 +1,18 @@
-import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/catalog/catalog_model.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_publish.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/modules/catalog/catalog_model.dart';
+import 'package:Apehipo/widgets/confirmation_dialog_publish.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'LineSeparator.dart';
-import 'package:apehipo_app/widgets/theme.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/modules/account/models/katalog_item.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/theme.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/modules/account/models/katalog_item.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import '../modules/catalog/catalog_edit.dart';
 import '../widgets/delete_confirmation_dialog.dart';
 import '../widgets/success_confirmation_dialog.dart';
 
-class CatalogItemWidget extends StatelessWidget {
+class CatalogItemWidget extends StatefulWidget {
   CatalogItemWidget({
     Key? key,
     required this.item,
@@ -24,9 +24,17 @@ class CatalogItemWidget extends StatelessWidget {
   final String? heroSuffix;
   final VoidCallback? onAddPressed;
 
+  @override
+  State<CatalogItemWidget> createState() => _CatalogItemWidgetState();
+}
+
+class _CatalogItemWidgetState extends State<CatalogItemWidget> {
   final double width = 174;
-  final double height = 300;
+
+  final double height = 220;
+
   final Color borderColor = Color(0xffE2E2E2);
+
   final double borderRadius = 18;
 
   @override
@@ -53,7 +61,10 @@ class CatalogItemWidget extends StatelessWidget {
           children: [
             Row(children: [
               Hero(
-                tag: "KatalogItem:" + item.nama + "-" + (heroSuffix ?? ""),
+                tag: "KatalogItem:" +
+                    widget.item.nama +
+                    "-" +
+                    (widget.heroSuffix ?? ""),
                 child: imageWidget(),
               ),
               SizedBox(
@@ -64,12 +75,12 @@ class CatalogItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    text: item.nama,
+                    text: widget.item.nama,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                   AppText(
-                    text: "\$${item.harga}",
+                    text: "Rp${widget.item.harga}",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -88,7 +99,7 @@ class CatalogItemWidget extends StatelessWidget {
                       },
                     );
                     if (confirmationResult == true) {
-                      controller.deleteData(item.kode);
+                      controller.deleteData(widget.item.kode);
                     } else {
                       print("Gagal");
                     }
@@ -112,53 +123,53 @@ class CatalogItemWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(Icons.layers_outlined, size: 14, color: Color(0xFF7C7C7C)),
+                // Icon(Icons.layers_outlined, size: 14, color: Color(0xFF7C7C7C)),
                 SizedBox(
                   width: 5,
                 ),
-                AppText(
-                  text: "Stok: " + item.stok.toString(),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
+                // AppText(
+                //   text: "Stok: " + item.stok.toString(),
+                //   fontSize: 14,
+                //   fontWeight: FontWeight.w600,
+                //   color: Color(0xFF7C7C7C),
+                // ),
                 SizedBox(
                   width: 150,
                 ),
-                Icon(Icons.monetization_on_outlined,
-                    size: 14, color: Color(0xFF7C7C7C)),
+                // Icon(Icons.monetization_on_outlined,
+                //     size: 14, color: Color(0xFF7C7C7C)),
                 SizedBox(
                   width: 5,
                 ),
-                AppText(
-                  text: "Terjual: 2",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF7C7C7C),
-                ),
+                // AppText(
+                //   text: "Terjual: 2",
+                //   fontSize: 14,
+                //   fontWeight: FontWeight.w600,
+                //   color: Color(0xFF7C7C7C),
+                // ),
               ],
             ),
-            SizedBox(
-              height: 15,
-            ),
-            LineSeparator(
-              height: 1,
-              color: const Color.fromARGB(255, 211, 211, 211),
-            ),
-            SizedBox(
-              height: 15,
-            ),
+            // SizedBox(
+            //   height: 15,
+            // ),
+            // LineSeparator(
+            //   height: 1,
+            //   color: const Color.fromARGB(255, 211, 211, 211),
+            // ),
+            // SizedBox(
+            //   height: 15,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 getEditButton(
                   "Edit Produk",
-                  onPressed: () => onItemClicked(context, item),
+                  onPressed: () => onItemClicked(context, widget.item),
                 ),
                 SizedBox(
                   width: 20,
                 ),
-                getAction(context, "Publish", controller, item)
+                getAction(context, "Publish", controller, widget.item)
               ],
             )
           ],
@@ -169,7 +180,7 @@ class CatalogItemWidget extends StatelessWidget {
 
   Widget imageWidget() {
     return Container(
-      child: Image.network(item.foto),
+      child: Image.network(widget.item.foto),
       width: 100,
       height: 100,
     );
@@ -177,7 +188,7 @@ class CatalogItemWidget extends StatelessWidget {
 
   Widget editWidget() {
     return GestureDetector(
-      onTap: onAddPressed,
+      onTap: widget.onAddPressed,
       child: Container(
         height: 45,
         width: 45,

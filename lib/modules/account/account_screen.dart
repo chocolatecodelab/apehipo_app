@@ -1,22 +1,29 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/account/account_controller.dart';
-import 'package:apehipo_app/modules/kelola_kebun/kelola_kebun_bottom.dart';
-import 'package:apehipo_app/modules/notification/notification_screen.dart';
-import 'package:apehipo_app/modules/order/order_screen.dart';
-import 'package:apehipo_app/modules/transaction/transaction_screen.dart';
-import 'package:apehipo_app/modules/transaction/transcation_screen_petani.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog_logout.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/auth/login/login.dart';
+import 'package:Apehipo/modules/account/account_bantuan.dart';
+import 'package:Apehipo/modules/account/account_controller.dart';
+import 'package:Apehipo/modules/account/account_tentang.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/modules/notification/notification_screen.dart';
+import 'package:Apehipo/modules/order/order_screen.dart';
+import 'package:Apehipo/modules/transaction/transaction_controller.dart';
+import 'package:Apehipo/modules/transaction/transaction_screen.dart';
+import 'package:Apehipo/modules/transaction/transcation_screen_petani.dart';
+import 'package:Apehipo/widgets/confirmation_dialog_logout.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/column_with_seprator.dart';
-import 'package:apehipo_app/modules/account/account_edit.dart';
-import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
-import 'package:apehipo_app/modules/account/account_toko.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/column_with_seprator.dart';
+import 'package:Apehipo/modules/account/account_edit.dart';
+import 'package:Apehipo/modules/catalog/katalog_screen.dart';
+import 'package:Apehipo/modules/account/account_toko.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 import 'account_item.dart';
 
@@ -26,12 +33,16 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  GlobalKey<RefreshIndicatorState> _refreshKey =
+      GlobalKey<RefreshIndicatorState>();
   var auth = Get.put(AuthController());
   var controller = Get.put(AccountController());
-
+  var transaksiController = Get.put(TransactionController());
+  var katalogController = Get.put(CatalogController());
+  var cartController = Get.put(CartController());
+  @override
   void initState() {
     super.initState();
-
     // Set nilai awal _nameController jika widget.katalogItem tidak null
     if (controller.map['foto'] == null) {
       controller.isLoading(true);
@@ -40,58 +51,67 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Obx(() => controller.isLoading.value
-                    ? Center(child: CircularProgressIndicator())
-                    : controller.map.isEmpty
-                        ? Center(child: Text("Tidak ada data"))
-                        : ListTile(
-                            leading: GestureDetector(
-                              onTap: () {
-                                showModal(context);
-                              },
-                              child: SizedBox(
-                                width: 60,
-                                height: 85,
-                                child: getImageHeader(controller.foto.text),
-                              ),
-                            ),
-                            title: AppText(
-                              text: controller.nama.text,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            subtitle: AppText(
-                              text: auth.box.read("role") == "petani"
-                                  ? "Petani"
-                                  : "Konsumen",
-                              color: Color(0xff7C7C7C),
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                            ),
-                          )),
-                SizedBox(
-                  height: 15,
-                ),
-                Column(
-                  children: [
-                    if (auth.box.read("role") == "petani") ...[
-                      getHorizontalItemSlider(),
-                      Divider(thickness: 1),
-                    ],
-                    ...getChildrenWithSeperator(
+        child: RefreshIndicator(
+          key: _refreshKey,
+          onRefresh: () => refreshData(),
+          child: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  if (auth.box.read("role") != "admin")
+                    Obx(() => controller.isLoading.value
+                        ? Center(child: CircularProgressIndicator())
+                        : controller.map.isEmpty
+                            ? Center(child: Text("Tidak ada data"))
+                            : ListTile(
+                                leading: GestureDetector(
+                                  onTap: () {
+                                    showModal(context);
+                                  },
+                                  child: SizedBox(
+                                    width: 60,
+                                    height: 85,
+                                    child: getImageHeader(controller.foto.text),
+                                  ),
+                                ),
+                                title: AppText(
+                                  text: controller.nama.text.toString(),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                subtitle: AppText(
+                                  text: auth.box.read("role"),
+                                  color: Color(0xff7C7C7C),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16,
+                                ),
+                              )),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // getHorizontalItemSlider(), // Tambahkan widget getHorizontalItemSlider() di sini
+                  Column(
+                    children: getChildrenWithSeperator(
                       widgets: accountItems
-                          .where((item) => shouldDisplay(item))
+                          .where((item) => shouldDisplay(
+                              item)) // Ganti shouldDisplay dengan kondisi yang sesuai
                           .map((e) {
                         return getAccountItemWidget(context, e);
                       }).toList(),
@@ -99,16 +119,16 @@ class _AccountScreenState extends State<AccountScreen> {
                         thickness: 1,
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                logoutButton(context),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  logoutButton(context),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -141,14 +161,29 @@ class _AccountScreenState extends State<AccountScreen> {
 
   bool shouldDisplay(AccountItem item) {
     if (auth.box.read("role") == "petani") {
-      if (item.label == "Transaksi" || item.label == "Status Pembelian") {
+      if (item.label == "Transaksi" ||
+          item.label == "Status Pembelian" ||
+          item.label == "Edit Kebun") {
+        return false;
+      }
+      return true;
+    } else if (auth.box.read("role") == "konsumen") {
+      if (item.label == "Transaksi Petani" ||
+          item.label == "Edit Kebun" ||
+          item.label == "Katalog" ||
+          item.label == "Transaksi") {
         return false;
       }
       return true;
     } else {
       if (item.label == "Transaksi Petani" ||
           item.label == "Edit Kebun" ||
-          item.label == "Katalog") {
+          item.label == "Katalog" ||
+          item.label == "Transaksi" ||
+          item.label == "Edit Profil" ||
+          item.label == "Notifikasi" ||
+          item.label == "Bantuan" ||
+          item.label == "Tentang") {
         return false;
       }
       return true;
@@ -166,7 +201,7 @@ class _AccountScreenState extends State<AccountScreen> {
               onTap: () {
                 // Aksi yang ingin dilakukan saat widget "Kelola Kebun" di klik
                 // Misalnya, tampilkan halaman kelola kebun
-                showBottomSheets2(context, key: "kelola_kebun");
+                print('Kelola Kebun diklik');
               },
               borderRadius:
                   BorderRadius.circular(10), // Rounded dengan radius 10
@@ -204,7 +239,7 @@ class _AccountScreenState extends State<AccountScreen> {
               onTap: () {
                 // Aksi yang ingin dilakukan saat widget "Jaringan Bisnis" di klik
                 // Misalnya, tampilkan halaman jaringan bisnis
-                showBottomSheets2(context, key: "kelola_kebun");
+                print('Jaringan Bisnis diklik');
               },
               borderRadius:
                   BorderRadius.circular(10), // Rounded dengan radius 10
@@ -241,26 +276,8 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-  void showBottomSheets2(context,
-      {String? stok, String? rincian, String? key}) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) {
-          if (key == "kelola_kebun") {
-            return KelolaKebunBottom("Maaf, fitur sedang dalam pengembangan.");
-          }
-
-          // } else if (key == "nutritions") {
-          //   return SpesifikasiBottom(stok);
-          // } else if (key == "review") {}
-
-          return SizedBox.shrink();
-        });
-  }
-
   Widget logoutButton(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Container(
       width: double.maxFinite,
       margin: EdgeInsets.symmetric(horizontal: 25),
@@ -279,21 +296,22 @@ class _AccountScreenState extends State<AccountScreen> {
           minimumSize: const Size.fromHeight(50),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 50,
+              width: 20,
               height: 20,
               child: SvgPicture.asset(
-                  "assets/icons/account_icons/logout_icon.svg"),
+                "assets/icons/account_icons/logout_icon.svg",
+              ),
             ),
             Text(
               "Keluar",
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  color: AppColors.primaryColor),
             ),
           ],
         ),
@@ -305,10 +323,19 @@ class _AccountScreenState extends State<AccountScreen> {
                   message: "Apakah anda yakin ingin keluar?");
             },
           );
-          if (confirmationResult == true) {
-            auth.logOut();
-          } else {
-            print("gagal");
+          if (confirmationResult!) {
+            String? hasil = await auth.logOut();
+            if (hasil == "sukses") {
+              SuccessConfirmationDialog(
+                  message: "Anda telah keluar dari akun",
+                  icon: Icons.check_circle_outline);
+              katalogController.dataArsipList!.clear();
+              katalogController.dataTampilList!.clear();
+              katalogController.dataGabungList.clear();
+              transaksiController.dataProsesList!.clear();
+              transaksiController.dataSelesaiList!.clear();
+              Get.offAll(LoginPage());
+            }
           }
         },
       ),
@@ -351,19 +378,21 @@ class _AccountScreenState extends State<AccountScreen> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => NotificationScreen()));
             break;
-          case "Transaksi":
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => TransactionScreen()));
-            break;
           case "Status Pembelian":
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => OrderScreen()));
             break;
           case "Transaksi Petani":
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => TransactionPetaniScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => TransactionScreen()));
+            break;
+          case "Bantuan":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AccountBantuan()));
+            break;
+          case "Tentang":
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AccountTentang()));
             break;
         }
       },
@@ -390,5 +419,10 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -1,13 +1,13 @@
-import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/contoh_api/product_model.dart';
-import 'package:apehipo_app/modules/home/home_controller.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/card_item_dashboard.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/card_item_dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/modules/home/models/grocery_item.dart';
-import 'package:apehipo_app/modules/product_details/product_details_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:Apehipo/modules/product_details/product_details_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -24,6 +24,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool showBestSeller = true;
   var katalog = Get.put(CatalogController());
   var home = Get.put(HomeController());
+
+  Future<void> _launchWhatsApp(String phoneNumber, String message) async {
+    if (phoneNumber.startsWith('0')) {
+      // Mengganti "0" di awal nomor dengan "62"
+      phoneNumber = '62${phoneNumber.substring(1)}';
+    }
+    final encodedMessage =
+        Uri.encodeComponent(message); // Mengekodekan pesan dengan benar
+
+    final url = 'https://wa.me/$phoneNumber/?text=$encodedMessage';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Tidak dapat membuka WhatsApp';
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     int jumlahItem = home.dataList!
@@ -134,44 +157,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           ],
                         ),
-                        Column(
-                          children: [
-                            Text("1000",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Terjual",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text("100",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Pembeli",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            )
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        //     Text("1000",
+                        //         style: TextStyle(
+                        //           fontSize: 20,
+                        //           fontWeight: FontWeight.bold,
+                        //         )),
+                        //     const SizedBox(
+                        //       height: 15,
+                        //     ),
+                        //     Text(
+                        //       "Terjual",
+                        //       style: TextStyle(
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.w300,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                        // Column(
+                        //   children: [
+                        //     Text("100",
+                        //         style: TextStyle(
+                        //           fontSize: 20,
+                        //           fontWeight: FontWeight.bold,
+                        //         )),
+                        //     const SizedBox(
+                        //       height: 15,
+                        //     ),
+                        //     Text(
+                        //       "Pembeli",
+                        //       style: TextStyle(
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.w300,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                     SizedBox(
@@ -182,7 +205,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 50,
                       child: AppButton(
                         label: "Chat on WhatsApp",
-                        onPressed: () => {},
+                        onPressed: () => {
+                          _launchWhatsApp(
+                              widget.productItem.noTelpon.toString(),
+                              "Halo Petani, saya ingin bertanya mengenai produk Hidroponik Anda")
+                        },
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -241,7 +268,7 @@ Widget getItemWidget(List<HomeModel> items, String idUser) {
     padding: const EdgeInsets.all(10),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
-      mainAxisExtent: 225,
+      mainAxisExtent: 245,
       crossAxisSpacing: 20,
       mainAxisSpacing: 20,
     ),

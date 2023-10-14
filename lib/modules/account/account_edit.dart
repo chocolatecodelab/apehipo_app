@@ -1,15 +1,13 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/modules/account/account_controller.dart';
-import 'package:apehipo_app/modules/account/account_model.dart';
-import 'package:apehipo_app/modules/account/account_screen.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/dynamic_button.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/account/account_controller.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import 'package:Apehipo/widgets/dynamic_button.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_button.dart';
 import '../../widgets/theme.dart';
 
 import 'dart:io';
@@ -190,9 +188,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 getRowTextField("Nomor Telepon", controller.noTelpon,
                     "Masukkan Nomor Telepon", "Contoh:\n081349479839"),
                 Divider(thickness: 1),
-                // if (auth.box.read("role") == "petani")
-                //   getRowTextField("Nomor Rekening", controller.noRekening,
-                //       "Masukkan Nomor Rekening", "Contoh: 120038832891"),
+                if (auth.box.read("role") == "petani")
+                  getRowTextField("Nomor Rekening", controller.noRekening,
+                      "Masukkan Nomor Rekening", "Contoh: 120038832891"),
                 if (auth.box.read("role") == "petani") Divider(thickness: 1),
                 SizedBox(height: 24.0),
                 DynamicButtonWidget(
@@ -210,10 +208,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       },
                     );
                     if (confirmationResult == true) {
-                      controller.updateData(
-                        auth.box.read("id_user"),
-                        _selectedImage,
-                      );
+                      String hasil = await controller.updateData(
+                          auth.box.read("id_user"), _selectedImage);
+                      if (hasil == "sukses") {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return SuccessConfirmationDialog(
+                              message: "Sukses! Profil telah diubah",
+                              icon: Icons.check_circle_outline,
+                            );
+                          },
+                        );
+                      }
+                      Get.back();
                       // SuccessConfirmationDialog(
                       //     message: "Anda berhasil menyimpan perubahan");
                     } else {
@@ -354,13 +362,9 @@ Widget getRowTextField(String label, TextEditingController? controller,
               ),
               Text(
                 example!,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal
-                ),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
               ),
             ],
-            
           ),
         ),
         SizedBox(
@@ -403,29 +407,41 @@ Widget getRowTextField(String label, TextEditingController? controller,
   );
 }
 
-Widget getButton(BuildContext context, String label, XFile _selectedImage,
-    AccountController controller, AuthController auth,
-    {required Function() onPressed}) {
-  return AppButton(
-    label: label,
-    fontWeight: FontWeight.w300,
-    padding: EdgeInsets.symmetric(vertical: 25),
-    onPressed: () async {
-      bool? confirmationResult = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ConfirmationDialog(
-              message: "Apakah anda yakin ingin menyimpan perubahan?");
-        },
-      );
-      if (confirmationResult == true) {
-        controller.updateData(auth.box.read("id_user"), _selectedImage);
-      } else {
-        print("Gagal");
-      }
-    },
-  );
-}
+// Widget getButton(BuildContext context, String label, XFile _selectedImage,
+//     AccountController controller, AuthController auth,
+//     {required Function() onPressed}) {
+//   return AppButton(
+//     label: label,
+//     fontWeight: FontWeight.w300,
+//     padding: EdgeInsets.symmetric(vertical: 25),
+//     onPressed: () async {
+//       bool? confirmationResult = await showDialog(
+//         context: context,
+//         builder: (BuildContext context) {
+//           return ConfirmationDialog(
+//               message: "Apakah anda yakin ingin menyimpan perubahan?");
+//         },
+//       );
+//       if (confirmationResult!) {
+//         String hasil = await controller.updateData(
+//             auth.box.read("id_user"), _selectedImage);
+//         if (hasil == "sukses") {
+//           await showDialog(
+//             context: context,
+//             builder: (BuildContext context) {
+//               return SuccessConfirmationDialog(
+//                 message: "Sukses! Profil telah diubah",
+//                 icon: Icons.check_circle_outline_outlined,
+//               );
+//             },
+//           );
+//         }
+//       } else {
+//         print("Gagal");
+//       }
+//     },
+//   );
+// }
 
 Widget getLupa(String label, {Widget? trailingWidget}) {
   return Container(

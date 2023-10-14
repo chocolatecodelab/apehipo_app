@@ -1,7 +1,7 @@
-import 'package:apehipo_app/auth/auth_controller.dart';
-import 'package:apehipo_app/auth/login/login.dart';
-import 'package:apehipo_app/auth/register/register_consumer.dart';
-import 'package:apehipo_app/auth/register/register_hydroponic_farmer.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/auth/login/login.dart';
+import 'package:Apehipo/auth/register/register_consumer.dart';
+import 'package:Apehipo/auth/register/register_hydroponic_farmer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

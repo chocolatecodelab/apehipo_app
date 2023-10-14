@@ -1,6 +1,6 @@
-import 'package:apehipo_app/modules/order/order_screen.dart';
-import 'package:apehipo_app/splash/splash_screen.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/modules/order/order_screen.dart';
+import 'package:Apehipo/splash/splash_screen.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -44,22 +44,29 @@ class _TrackScreenState extends State<TrackScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(child: Icon(Icons.delivery_dining, size: 100,),)
+                Expanded(
+                  child: Icon(
+                    Icons.delivery_dining,
+                    size: 100,
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: AppText(
-                  text: "Produk Anda disortir dari Bandung",
-                  fontSize: 20,
-                  textAlign: TextAlign.center,
-                  fontWeight: FontWeight.normal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: AppText(
+                    text: "Produk Anda disortir dari Bandung",
+                    fontSize: 20,
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
-              ),
-            ],
+              ],
             ),
           ],
         ),

@@ -1,9 +1,9 @@
-import 'package:apehipo_app/modules/address/address_screen.dart';
+import 'package:Apehipo/modules/address/address_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 
-import '../../screens/order_failed_dialog.dart';
+import '../order/order_failed_dialog.dart';
 
 class TrackEditBottom extends StatefulWidget {
   @override
@@ -59,7 +59,9 @@ class _TrackEditBottomState extends State<TrackEditBottom> {
             ),
           ),
           Divider(),
-          SizedBox(height: 15,),
+          SizedBox(
+            height: 15,
+          ),
           AppButton(
             label: "Edit",
             onPressed: () => {

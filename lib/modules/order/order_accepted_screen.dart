@@ -1,10 +1,32 @@
-import 'package:apehipo_app/modules/dashboard/dashboard_screen.dart';
-import 'package:apehipo_app/modules/order/order_screen.dart';
+import 'package:Apehipo/modules/dashboard/dashboard_screen.dart';
+import 'package:Apehipo/modules/order/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
-class OrderAcceptedScreen extends StatelessWidget {
+class OrderAcceptedScreen extends StatefulWidget {
+  @override
+  State<OrderAcceptedScreen> createState() => _OrderAcceptedScreenState();
+}
+
+class _OrderAcceptedScreenState extends State<OrderAcceptedScreen> {
+  late DateTime currentTimePlus2Hours;
+  late String formattedTime;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Mendapatkan waktu saat ini
+    final currentTime = DateTime.now();
+
+    // Menambahkan 2 jam ke waktu saat ini
+    currentTimePlus2Hours = currentTime.add(Duration(hours: 2));
+    formattedTime = DateFormat('HH:mm:ss').format(currentTimePlus2Hours);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,12 +69,7 @@ class OrderAcceptedScreen extends StatelessWidget {
             AppButton(
               label: "Lihat Pesanan",
               onPressed: () {
-                Navigator.pop(context);
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return OrderScreen();
-                    });
+                Get.off(OrderScreen());
               },
             ),
             Spacer(

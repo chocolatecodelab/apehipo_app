@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 
 class FavouriteScreen extends StatelessWidget {
   @override

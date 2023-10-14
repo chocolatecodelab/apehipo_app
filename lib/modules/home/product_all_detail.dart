@@ -1,46 +1,86 @@
-import 'package:apehipo_app/modules/cart/cart_controller.dart';
-import 'package:apehipo_app/modules/home/home_model.dart';
-import 'package:apehipo_app/modules/product_details/spesifikasi_bottom.dart';
-import 'package:apehipo_app/modules/product_details/deskripsi_bottom.dart';
+import 'package:Apehipo/auth/auth_controller.dart';
+import 'package:Apehipo/modules/cart/cart_controller.dart';
+import 'package:Apehipo/modules/cart/cart_screen.dart';
+import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/home/home_model.dart';
+import 'package:Apehipo/modules/product_details/spesifikasi_bottom.dart';
+import 'package:Apehipo/modules/product_details/deskripsi_bottom.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
-import 'package:apehipo_app/modules/cart/cart_screen.dart';
-import 'package:apehipo_app/modules/product_details/stocks_bottom.dart';
-// import 'package:apehipo_app/modules/product_details/product_details_bottom.dart';
-import 'package:apehipo_app/screens/profile_screen.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:Apehipo/screens/profile_screen.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/app_button.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
-import 'package:apehipo_app/widgets/item_counter_widget.dart';
+import 'package:Apehipo/widgets/app_button.dart';
+import 'package:Apehipo/widgets/app_text.dart';
+import 'package:Apehipo/widgets/item_counter_widget.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-// import '../favourite_toggle_icon_widget.dart';
-
-class DashboardDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends StatefulWidget {
   final HomeModel productItem;
   final String? heroSuffix;
 
-  const DashboardDetailScreen(this.productItem, {this.heroSuffix});
+  const ProductDetailScreen(this.productItem, {this.heroSuffix});
 
   @override
-  _DashboardDetailScreenState createState() => _DashboardDetailScreenState();
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int amount = 1;
+  var controller = Get.put(CartController());
+  var auth = Get.put(AuthController());
 
   @override
-  var controller = Get.put(CartController());
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartChange>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Rincian Produk',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Row(
+            children: [
+              Text(
+                'Rincian Produk',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Spacer(),
+              if (auth.box.read("role") == "konsumen")
+                Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(8),
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(CartScreen());
+                        },
+                        child: SvgPicture.asset("assets/icons/cart_icon.svg"),
+                      ),
+                    ),
+                    Positioned(
+                      right: 0, // Menentukan posisi horizontal
+                      top: 0, // Menentukan posisi vertikal
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.primaryColor, // Warna latar belakang
+                        ),
+                        child: Text(
+                          cart.itemCount.toString(),
+                          style: TextStyle(
+                            color: Colors.white, // Warna teks
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            ],
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -87,26 +127,27 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                       ),
                       // trailing: FavoriteToggleIcon(),
                     ),
-                    Row(
-                      children: [
-                        ItemCounterWidget(
-                          onAmountChanged: (newAmount) {
-                            setState(() {
-                              amount = newAmount;
-                            });
-                          },
-                        ),
-                        Spacer(),
-                        Text(
-                          "Rp${getTotalPrice().toStringAsFixed(0)}",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                    if (auth.box.read("role") == "konsumen")
+                      Row(
+                        children: [
+                          ItemCounterWidget(
+                            onAmountChanged: (newAmount) {
+                              setState(() {
+                                amount = newAmount;
+                              });
+                            },
                           ),
-                        )
-                      ],
-                    ),
-                    Spacer(),
+                          Spacer(),
+                          Text(
+                            "Rp${getTotalPrice().toStringAsFixed(0)}",
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        ],
+                      ),
+                    // Spacer(),
                     Divider(thickness: 1),
                     getProfile(widget.productItem),
                     Divider(thickness: 1),
@@ -115,50 +156,59 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
                     Divider(thickness: 1),
                     getProductDataRowWidget("Spesifikasi",
                         customWidget: spesifikasiWidget(),
+                        alamat: widget.productItem.alamatPetani,
                         stok: widget.productItem.stok,
                         key: "nutritions"),
                     Divider(thickness: 1),
-                    // getProductDataRowWidget(
-                    //   "Review",
-                    //   customWidget: ratingWidget(),
-                    // ),
                     Spacer(),
-                    AppButton(
-                      label: "Tambah ke Keranjang",
-                      onPressed: () async {
-                        String result = await controller.tambahData(
-                            widget.productItem.kode,
-                            widget.productItem.nama,
-                            widget.productItem.harga,
-                            widget.productItem.foto,
-                            this.amount);
-                        if (result == "sukses") {
-                          await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return SuccessConfirmationDialog(
-                                    message: "Anda berhasil menambahkan produk",
-                                    icon: Icons.check_circle_outline);
-                              });
-                        } else if (result == "gagal") {
-                          await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return SuccessConfirmationDialog(
-                                    message: "Gagal menambahkan produk",
-                                    icon: Icons.close_rounded);
-                              });
-                        } else {
-                          await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return SuccessConfirmationDialog(
-                                    message: "Produk sudah ditambahkan",
-                                    icon: Icons.close_rounded);
-                              });
-                        }
-                      },
-                    ),
+                    if (auth.box.read("role") == "konsumen")
+                      AppButton(
+                        label: "Tambah ke Keranjang",
+                        onPressed: () async {
+                          String result = await controller.tambahData(
+                              widget.productItem.kode,
+                              widget.productItem.nama,
+                              widget.productItem.harga,
+                              widget.productItem.foto,
+                              widget.productItem.namaPetani,
+                              this.amount);
+                          if (result == "sukses") {
+                            cart.incrementCounter(controller.dataList!.length);
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SuccessConfirmationDialog(
+                                      message:
+                                          "Anda berhasil menambahkan produk",
+                                      icon: Icons.check_circle_outline);
+                                });
+                          } else if (result == "gagal") {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SuccessConfirmationDialog(
+                                      message: "Gagal menambahkan produk",
+                                      icon: Icons.close_rounded);
+                                });
+                          } else if (result == "duplikat") {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SuccessConfirmationDialog(
+                                      message: "Produk sudah ditambahkan",
+                                      icon: Icons.close_rounded);
+                                });
+                          } else {
+                            await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SuccessConfirmationDialog(
+                                      message: "Pesanan harus satu toko/petani",
+                                      icon: Icons.close_rounded);
+                                });
+                          }
+                        },
+                      ),
                     Spacer(),
                   ],
                 ),
@@ -203,13 +253,20 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
   }
 
   Widget getProductDataRowWidget(String label,
-      {Widget? customWidget, String? stok, String? rincian, String? key}) {
+      {Widget? customWidget,
+      String? stok,
+      String? rincian,
+      String? alamat,
+      String? key}) {
     return InkWell(
       onTap: () => {
         if (key == "products")
           {showBottomSheets(context, rincian: rincian, key: "products")}
         else if (key == "nutritions")
-          {showBottomSheets(context, stok: stok, key: "nutritions")}
+          {
+            showBottomSheets(context,
+                stok: stok, alamat: alamat, key: "nutritions")
+          }
         else if (key == "reviews")
           {showBottomSheets(context, key: "reviews")}
         else
@@ -240,7 +297,8 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
     );
   }
 
-  void showBottomSheets(context, {String? stok, String? rincian, String? key}) {
+  void showBottomSheets(context,
+      {String? stok, String? rincian, String? alamat, String? key}) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -249,26 +307,12 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
           if (key == "products") {
             return DeskripsiBottom(rincian);
           } else if (key == "nutritions") {
-            return SpesifikasiBottom(stok);
+            return SpesifikasiBottom(stok, alamat);
           } else if (key == "review") {}
 
           return SizedBox.shrink();
         });
   }
-
-  // Widget getProductDetails(context) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.end,
-  //     children: [
-  //       IconButton(
-  //       onPressed: () => {
-  //         showBottomSheets(context)
-  //       },
-  //       icon: Icon(Icons.arrow_forward_ios),
-  //     ),
-  //     ],
-  //   );
-  // }
 
   Widget getProfile(HomeModel productItem) {
     return InkWell(
@@ -354,26 +398,6 @@ class _DashboardDetailScreenState extends State<DashboardDetailScreen> {
       ),
     );
   }
-
-  // Widget ratingWidget() {
-  //   Widget starIcon() {
-  //     return Icon(
-  //       Icons.star,
-  //       color: Color(0xffF3603F),
-  //       size: 20,
-  //     );
-  //   }
-
-  //   return Row(
-  //     children: [
-  //       starIcon(),
-  //       starIcon(),
-  //       starIcon(),
-  //       starIcon(),
-  //       starIcon(),
-  //     ],
-  //   );
-  // }
 
   int getTotalPrice() {
     int harga = int.parse(widget.productItem.harga);

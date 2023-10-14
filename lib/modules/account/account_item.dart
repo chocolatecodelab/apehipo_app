@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AccountItem {
   final String label;
   final String iconPath;

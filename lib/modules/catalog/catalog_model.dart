@@ -1,14 +1,5 @@
 class CatalogModel {
-  final String kode,
-      nama,
-      jenis,
-      harga,
-      stok,
-      deskripsi,
-      foto,
-      klasifikasi,
-      status,
-      idUser;
+  final String kode, nama, jenis, harga, stok, deskripsi, foto, status, idUser;
 
   CatalogModel(
       {required this.kode,
@@ -18,7 +9,6 @@ class CatalogModel {
       required this.stok,
       required this.deskripsi,
       required this.foto,
-      required this.klasifikasi,
       required this.status,
       required this.idUser});
 
@@ -31,7 +21,6 @@ class CatalogModel {
         stok: json['stok'],
         deskripsi: json['deskripsi'],
         foto: json['foto'],
-        klasifikasi: json['klasifikasi'],
         status: json['status'],
         idUser: json['id_user']);
   }

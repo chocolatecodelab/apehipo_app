@@ -1,16 +1,14 @@
 import 'dart:io';
 
-import 'package:apehipo_app/modules/catalog/catalog_controller.dart';
-import 'package:apehipo_app/modules/catalog/katalog_screen.dart';
-import 'package:apehipo_app/widgets/confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/dynamic_button.dart';
+import 'package:Apehipo/modules/catalog/catalog_controller.dart';
+import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
-import 'package:apehipo_app/widgets/theme.dart';
+import 'package:Apehipo/widgets/theme.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:apehipo_app/widgets/app_text.dart';
+import 'package:Apehipo/widgets/app_text.dart';
 
 // import 'favourite_toggle_icon_widget.dart';
 
@@ -43,6 +41,12 @@ class _CatalogTambahScreenState extends State<CatalogTambahScreen> {
         width: 1.0,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.jenis.text = selectedValue;
   }
 
   @override

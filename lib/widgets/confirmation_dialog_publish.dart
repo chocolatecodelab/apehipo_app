@@ -1,8 +1,8 @@
-import 'package:apehipo_app/widgets/arsip_confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/logout_confirmation.dart';
-import 'package:apehipo_app/widgets/publish_confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/arsip_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/logout_confirmation.dart';
+import 'package:Apehipo/widgets/publish_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationDialogPublish extends StatefulWidget {
@@ -11,7 +11,8 @@ class ConfirmationDialogPublish extends StatefulWidget {
   ConfirmationDialogPublish({required this.message});
 
   @override
-  _ConfirmationDialogPublishState createState() => _ConfirmationDialogPublishState();
+  _ConfirmationDialogPublishState createState() =>
+      _ConfirmationDialogPublishState();
 }
 
 class _ConfirmationDialogPublishState extends State<ConfirmationDialogPublish> {

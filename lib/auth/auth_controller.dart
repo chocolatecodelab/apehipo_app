@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:apehipo_app/auth/auth_model.dart';
-import 'package:apehipo_app/auth/login/login.dart';
-import 'package:apehipo_app/modules/account/account_controller.dart';
+import 'package:Apehipo/auth/auth_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -72,13 +69,37 @@ class AuthController extends GetxController {
         return "gagal";
       }
     } catch (e) {
-      Get.snackbar("Gagal", e.toString());
+      // Get.snackbar("Gagal", e.toString());
       return "gagal";
     }
   }
 
   Future<String> createAccount() async {
     try {
+      // Validasi username
+      if (username.text.length < 5) {
+        // Tampilkan pesan kesalahan: "Username harus memiliki setidaknya 5 karakter."
+        return "Username harus memiliki setidaknya 5 karakter.";
+      } else if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(username.text)) {
+        // Tampilkan pesan kesalahan: "Username hanya boleh mengandung huruf dan angka."
+        return "Username hanya boleh mengandung huruf dan angka.";
+      }
+
+      if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+          .hasMatch(email.text)) {
+        // Tampilkan pesan kesalahan: "Email tidak valid."
+        return "Email tidak valid.";
+      }
+
+      if (password.text.length < 8) {
+        // Tampilkan pesan kesalahan: "Password harus memiliki setidaknya 8 karakter."
+        return "Password harus memiliki setidaknya 8 karakter.";
+      } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$')
+          .hasMatch(password.text)) {
+        // Tampilkan pesan kesalahan: "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus."
+        return "Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus.";
+      }
+
       var map = <String, dynamic>{};
       map['nama'] = nama.text;
       map['no_telpon'] = noTelpon.text;
@@ -93,17 +114,22 @@ class AuthController extends GetxController {
       String baseUrl = '${Api().baseURL}/auth/register';
       print(baseUrl);
       final response = await http.post(Uri.tryParse(baseUrl)!, body: map);
-      print(response.statusCode);
-      if (response.statusCode == 201) {
+      final jsonResponse = json.decode(response.body);
+      final status = jsonResponse['status'];
+      print(status);
+      if (status == "201") {
+        clearData();
         return "sukses";
+      } else if (status == "404") {
+        print("disini");
+        return "Username atau Email anda sudah diambil";
       } else {
+        print("atau disini");
         return "gagal";
       }
     } catch (e) {
       return "gagal";
-    } finally {
-      clearData();
-    }
+    } finally {}
   }
 
   void clearData() {
@@ -116,11 +142,16 @@ class AuthController extends GetxController {
     alamat.text = "";
   }
 
-  logOut() async {
-    box.remove("id_user");
-    box.remove("nama");
-    box.remove("role");
-    clearData();
-    await Get.offAll(LoginPage());
+  Future<String> logOut() async {
+    try {
+      box.remove("id_user");
+      box.remove("nama");
+      box.remove("role");
+      clearData();
+
+      return "sukses";
+    } catch (e) {
+      return "gagal";
+    }
   }
 }

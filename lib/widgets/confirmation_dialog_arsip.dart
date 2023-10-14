@@ -1,7 +1,7 @@
-import 'package:apehipo_app/widgets/arsip_confirmation_dialog.dart';
-import 'package:apehipo_app/widgets/colors.dart';
-import 'package:apehipo_app/widgets/logout_confirmation.dart';
-import 'package:apehipo_app/widgets/success_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/arsip_confirmation_dialog.dart';
+import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/logout_confirmation.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationDialogArsip extends StatefulWidget {
@@ -10,7 +10,8 @@ class ConfirmationDialogArsip extends StatefulWidget {
   ConfirmationDialogArsip({required this.message});
 
   @override
-  _ConfirmationDialogArsipState createState() => _ConfirmationDialogArsipState();
+  _ConfirmationDialogArsipState createState() =>
+      _ConfirmationDialogArsipState();
 }
 
 class _ConfirmationDialogArsipState extends State<ConfirmationDialogArsip> {

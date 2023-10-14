@@ -1,6 +1,6 @@
-import 'package:apehipo_app/auth/login/login.dart';
-import 'package:apehipo_app/splash/welcome_screen.dart';
-import 'package:apehipo_app/widgets/colors.dart';
+import 'package:Apehipo/auth/login/login.dart';
+import 'package:Apehipo/splash/welcome_screen.dart';
+import 'package:Apehipo/widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
