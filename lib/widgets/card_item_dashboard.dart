@@ -92,9 +92,9 @@ class CardItemDashboard extends StatelessWidget {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: item.alamatPetani.length <= 16
+                    text: item.alamatPetani.length <= 15
                         ? item.alamatPetani
-                        : '${item.alamatPetani.substring(0, 16)}...',
+                        : '${item.alamatPetani.substring(0, 15)}...',
                     style: TextStyle(
                       color: Colors
                           .black, // Ganti warna teks "Banjarmasin" dengan warna lain sesuai keinginan Anda

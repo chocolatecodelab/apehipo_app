@@ -27,6 +27,7 @@ class NotificationController extends GetxController {
       if (response.statusCode == 200) {
         print(response.statusCode);
         List data = jsonDecode(response.body); // Ubah 'result' menjadi 'data'
+        print(data);
         dataList = data.map((x) => NotifModel.fromJson(x)).toList();
       }
     } catch (e) {

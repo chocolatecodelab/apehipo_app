@@ -1,3 +1,6 @@
+import 'package:Apehipo/modules/home/home_controller.dart';
+import 'package:get/get.dart';
+
 import '../modules/home/card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,40 +12,41 @@ class SearchBarWidgets extends StatefulWidget {
 
 class _SearchBarWidgetState extends State<SearchBarWidgets> {
   final String searchIcon = "../assets/icons/search_icon.svg";
-  TextEditingController _searchController = TextEditingController();
+  var homeController = Get.put(HomeController());
 
   @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    homeController.search.text = "";
   }
 
   void _onSearchTextChanged(String text) {
     // Perform search operations based on the text
-    print('Search Query: $text');
   }
 
   void _submitSearch() {
-    String query = _searchController.text.trim();
+    String query = homeController.search.text.trim();
     // Perform search operations based on the query
-    print('Search Query: $query');
+    print('Submit Query: $query');
     // Clear the search input
-    _searchController.clear();
+    homeController.getSpesifikData(query);
+
+    // homeController.search.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus(); // Unfocus the text field
-        _submitSearch();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return CardScreen();
-            },
-          ),
-        );
+        // FocusScope.of(context).unfocus(); // Unfocus the text field
+        // _submitSearch();
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (BuildContext context) {
+        //       return CardScreen();
+        //     },
+        //   ),
+        // );
       },
       child: Container(
         padding: EdgeInsets.all(16),
@@ -64,11 +68,10 @@ class _SearchBarWidgetState extends State<SearchBarWidgets> {
             ),
             Expanded(
               child: TextField(
-                controller: _searchController,
+                controller: homeController.search,
                 onChanged: _onSearchTextChanged,
-                onSubmitted: (_) => _submitSearch(),
                 decoration: InputDecoration.collapsed(
-                  hintText: 'Cari',
+                  hintText: 'Cari Produk',
                   hintStyle: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

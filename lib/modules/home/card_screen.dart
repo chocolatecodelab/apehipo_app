@@ -6,6 +6,7 @@ import 'package:Apehipo/modules/home/home_model.dart';
 import 'package:Apehipo/modules/product_details/product_details_screen.dart';
 import 'package:Apehipo/widgets/card_item.dart';
 import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,19 @@ class CardScreen extends StatefulWidget {
 }
 
 class _CardScreenState extends State<CardScreen> {
-  @override
   var controller = Get.put(HomeController());
+
+  Future<void> refreshData() async {
+    await controller.refresh(); // Panggil metode refresh dari controller
+    // Untuk menghentikan indikator refresh, panggil setState
+    if (mounted) {
+      setState(() {
+        // Ini akan menghentikan indikator refresh
+      });
+    }
+  }
+
+  @override
   var auth = Get.put(AuthController());
   Widget build(BuildContext context) {
     final cart = Provider.of<CartChange>(context);
@@ -35,32 +47,46 @@ class _CardScreenState extends State<CardScreen> {
           icon: Icon(Icons.arrow_back),
           color: Colors.black,
           onPressed: () {
+            FocusScope.of(context).unfocus();
+            refreshData();
+            // Tombol hanya dapat diaktifkan jika tidak ada fokus dalam teks input
             Get.back();
           },
         ),
         title: Container(
-          width: double.infinity,
+          width: 190,
           child: SearchBarWidgets(),
         ),
         actions: [
-          // PopupMenuButton(
-          //     icon: Icon(
-          //       Icons.filter_list_alt,
-          //       color: Colors.black,
-          //     ),
-          //     offset:
-          //         Offset(0, 80), // Menggeser menu ke bawah sebesar 40 piksel
-          //     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-          //           const PopupMenuItem(
-          //             child: Text('Terbaru'),
-          //           ),
-          //           const PopupMenuItem(
-          //             child: Text('Terlaris'),
-          //           ),
-          //           const PopupMenuItem(
-          //             child: Text('Termurah'),
-          //           ),
-          //         ]),
+          Container(
+              padding: EdgeInsets.only(top: 15, bottom: 15),
+              margin: EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () async {
+                  String hasil =
+                      await controller.getSpesifikData(controller.search.text);
+                  if (hasil == "gagal") {
+                    SuccessConfirmationDialog(
+                        message: "Produk gagal ditemukan",
+                        icon: Icons.close_rounded);
+                  }
+                },
+                child: Container(
+                  height: 45,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: AppColors.primaryColor,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                  ),
+                ),
+              )),
           if (auth.box.read("role") == "konsumen")
             Container(
               margin: EdgeInsets.only(top: 20, right: 15),
@@ -118,6 +144,7 @@ class _CardScreenState extends State<CardScreen> {
                         // String id = controller.dataList![i].kode;
                         return GestureDetector(
                           onTap: () {
+                            FocusScope.of(context).unfocus();
                             Get.to(ProductDetailsScreen(
                               controller.dataList![i],
                               heroSuffix: "home screen",
