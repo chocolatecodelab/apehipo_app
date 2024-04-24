@@ -33,6 +33,8 @@ APEHIPO bertujuan untuk:
    - Clone repository ini ke dalam sistem lokal Anda.
    - Pastikan sudah terhubung ke backend API CodeIgniter yang terintegrasi.
    - Jalankan aplikasi di emulator atau perangkat fisik menggunakan perintah `flutter run`.
+3. **Instal Aplikasi di Android**
+   - https://apehipo.com/APEHIPO.apk
 
 ## Kontribusi
 
