@@ -25,7 +25,6 @@ dependencies:
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.1
   url_launcher: ^6.1.14
-  awesome_notifications_core: ^0.8.0
   awesome_notifications: any
 
 dev_dependencies:

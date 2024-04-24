@@ -51,6 +51,7 @@ class AppButton extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
+                  color: AppColors.whiteGrey,
                   fontWeight: fontWeight,
                 ),
               ),

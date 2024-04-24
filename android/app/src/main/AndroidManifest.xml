@@ -7,7 +7,7 @@
     <application
         android:name="${applicationName}"
         android:label="APEHIPO"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
 
         <activity
             android:name=".MainActivity"

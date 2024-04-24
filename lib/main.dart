@@ -1,6 +1,5 @@
-import 'package:Apehipo/modules/cart/cart_change.dart';
+import 'package:Apehipo/modules/cart/screen/cart_change.dart';
 import 'package:Apehipo/modules/notification/notification_change.dart';
-import 'package:Apehipo/modules/notification/notification_handle_notification.dart';
 import 'package:flutter/material.dart';
 import 'app.dart';
 import 'package:provider/provider.dart';

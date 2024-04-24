@@ -1,6 +1,5 @@
 import 'package:Apehipo/widgets/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SuccessConfirmationDialog extends StatefulWidget {
   final String message;

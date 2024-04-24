@@ -1,4 +1,4 @@
-import 'package:Apehipo/modules/notification/notification_controller.dart';
+import 'package:Apehipo/modules/notification/controller/notification_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 

@@ -1,8 +1,5 @@
-import 'package:Apehipo/modules/dashboard/dashboard_screen.dart';
 import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   final String message;
@@ -77,7 +74,10 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Text('Ya'),
+                  child: Text(
+                    'Ya',
+                    style: TextStyle(color: AppColors.whiteGrey),
+                  ),
                 ),
               ],
             ),

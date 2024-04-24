@@ -1,10 +1,7 @@
-import 'package:Apehipo/splash/splash_screen.dart';
-import 'package:Apehipo/splash/welcome_screen.dart';
-import 'package:Apehipo/widgets/dropdown.dart';
+import 'package:Apehipo/modules/splash/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:Apehipo/widgets/theme.dart';
-import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});

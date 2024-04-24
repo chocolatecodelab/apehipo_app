@@ -4,14 +4,14 @@ class DynamicButtonWidget extends StatelessWidget {
   final String label;
   final Color textColor;
   final Color backgroundColor;
-  final IconData iconData;
+  final IconData? iconData;
   final VoidCallback onPressed;
 
   const DynamicButtonWidget({
     required this.label,
     required this.textColor,
     required this.backgroundColor,
-    required this.iconData,
+    this.iconData,
     required this.onPressed,
   });
 
@@ -40,7 +40,10 @@ class DynamicButtonWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(label),
+            Text(
+              label,
+              style: TextStyle(color: textColor),
+            ),
             SizedBox(width: 8),
             Icon(
               iconData,
