@@ -480,6 +480,7 @@ Widget getKonfirmasi(BuildContext context, String label, String totalHarga,
                 label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  color: AppColors.whiteGrey,
                   fontSize: 18,
                   fontWeight: FontWeight.w300,
                 ),

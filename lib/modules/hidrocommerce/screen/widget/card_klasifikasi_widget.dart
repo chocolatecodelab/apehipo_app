@@ -53,7 +53,7 @@ class CardKlasifikasiWidget extends StatelessWidget {
                     text: item.nama,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       // Add other text styles as needed
                     ),
@@ -85,7 +85,7 @@ class CardKlasifikasiWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 10,
+              height: item.nama.length < 22 ? 20 : 10,
             ),
             LineSeparator(
               height: 1,

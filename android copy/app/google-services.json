@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "189129207043",
+    "project_id": "apehipo-push-notifications",
+    "storage_bucket": "apehipo-push-notifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189129207043:android:fb7176093371c051848d36",
+        "android_client_info": {
+          "package_name": "com.example.apehipo_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr9Km-legpzBKHSzVT7U4P3Eu5TcyCUv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

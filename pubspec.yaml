@@ -25,7 +25,9 @@ dependencies:
   pin_code_fields: ^8.0.1
   shared_preferences: ^2.2.1
   url_launcher: ^6.1.14
-  awesome_notifications: any
+  firebase_core: ^2.30.1
+  firebase_messaging: ^14.9.1
+  flutter_local_notifications: ^17.1.0
 
 dev_dependencies:
   flutter_test:

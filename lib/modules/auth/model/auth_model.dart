@@ -12,6 +12,7 @@ class AuthModel {
     return AuthModel(
       username: json['username'],
       role: json['role'],
+      // fcmToken: json['fcmToken'],
       nama: json['nama'] ?? "",
       idUser: json['id_user'] ?? "",
     );

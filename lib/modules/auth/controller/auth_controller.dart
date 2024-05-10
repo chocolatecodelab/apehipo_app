@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:Apehipo/modules/auth/model/auth_model.dart';
+import 'package:Apehipo/widgets/popup_loading_widget.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -38,9 +40,14 @@ class AuthController extends GetxController {
 
   Future<String> doLogin() async {
     try {
+      isLoading(true);
+      final _firebaseMessaging = FirebaseMessaging.instance;
+      final fcmToken = await _firebaseMessaging.getToken();
+      print("Token: $fcmToken");
       var map = <String, dynamic>{};
       map['username'] = username.text;
       map['password'] = password.text;
+      map['fcmToken'] = fcmToken;
       if (map['username'] == "" || map['password'] == "") {
         return "Username dan Password Salah";
       }
@@ -71,6 +78,8 @@ class AuthController extends GetxController {
     } catch (e) {
       // Get.snackbar("Gagal", e.toString());
       return "gagal";
+    } finally {
+      isLoading(false);
     }
   }
 
@@ -148,6 +157,7 @@ class AuthController extends GetxController {
       box.remove("nama");
       box.remove("role");
       clearData();
+      isLoading(false);
 
       return "sukses";
     } catch (e) {

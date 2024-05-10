@@ -92,13 +92,13 @@ class _HidrocommerceProfileScreenState
                       alignment: Alignment.bottomCenter,
                       children: [
                         CircleAvatar(
-                          radius: 64,
+                          radius: 45,
                           child: ClipOval(
                             child: Image.network(
                               widget.hidrocommerceModel.fotoPetani,
                               fit: BoxFit.cover,
-                              width: 128,
-                              height: 128,
+                              width: 90,
+                              height: 90,
                             ),
                           ),
                         ),
@@ -115,7 +115,7 @@ class _HidrocommerceProfileScreenState
                     //   ),
                     // ),
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(10),
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
                         title: Center(
@@ -149,7 +149,7 @@ class _HidrocommerceProfileScreenState
                                   fontWeight: FontWeight.bold,
                                 )),
                             const SizedBox(
-                              height: 15,
+                              height: 5,
                             ),
                             Text(
                               "Produk",
@@ -201,7 +201,7 @@ class _HidrocommerceProfileScreenState
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     Container(
                       width: 350,
@@ -220,7 +220,7 @@ class _HidrocommerceProfileScreenState
                       height: 30,
                     ),
                     Container(
-                      height: 300,
+                      height: 350,
                       child: DefaultTabController(
                         length: 2,
                         child: Column(
@@ -267,6 +267,7 @@ Widget getItemWidget(List<HidrocommerceModel> items, String idUser) {
   List<HidrocommerceModel> filteredItems =
       items.where((item) => item.idUser == idUser).toList();
   return Container(
+      // margin: EdgeInsets.only(bottom: 12),
       child: GridView.builder(
     padding: const EdgeInsets.all(10),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

@@ -173,7 +173,14 @@ class _HidrocommerceScreenState extends State<HidrocommerceScreen> {
                           ],
                         )
                       : controller.dataListSayuran!.isEmpty
-                          ? Center(child: Text("Tidak ada data"))
+                          ? Column(
+                              children: [
+                                SizedBox(
+                                  height: 200,
+                                ),
+                                Center(child: Text("Tidak ada data")),
+                              ],
+                            )
                           : Column(
                               children: [
                                 padded(subTitle(context, "Sayur-sayuran",

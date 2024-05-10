@@ -4,6 +4,7 @@ import 'package:Apehipo/modules/bottom_bar_navigation/bottom_bar_navigation_scre
 import 'package:Apehipo/modules/cart/screen/cart_change.dart';
 import 'package:Apehipo/modules/splash/welcome_screen.dart';
 import 'package:Apehipo/widgets/colors.dart';
+import 'package:Apehipo/widgets/popup_loading_widget.dart';
 import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -71,206 +72,219 @@ class _LoginScreenState extends State<LoginScreen> {
             centerTitle: true,
           ),
         ),
-        resizeToAvoidBottomInset: true,
+        // resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           reverse: true,
           // Menggunakan SingleChildScrollView
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              children: [
-                const SizedBox(height: 40),
-                Image.asset(
-                  "assets/images/welcome.png",
-                  width: 250,
-                  height: 250,
-                ),
-                const Center(
-                  child: Text(
-                    "Selamat Datang!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 40),
+                    Image.asset(
+                      "assets/images/welcome.png",
+                      width: 250,
+                      height: 250,
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                const Center(
-                  child: Text(
-                    "Silahkan login terlebih dahulu.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(height: 10),
-                // Text(
-                //   'atau',
-                //   style: TextStyle(
-                //     fontSize: 15,
-                //     fontWeight: FontWeight.w500,
-                //     color: Colors.black,
-                //   ),
-                // ),
-                SizedBox(height: 0),
-                Form(
-                  key: _signInGlobalKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: controller.username,
-                        // validator: AuthValidator.isEmailValid,
-                        decoration: const InputDecoration(
-                          hintText: "Username",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                    const Center(
+                      child: Text(
+                        "Selamat Datang!",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: controller.password,
-                        obscureText: passwordSee,
-                        // validator: AuthValidator.isPasswordValid,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              passwordSee = !passwordSee;
-                              setState(() {});
-                            },
-                            child: Icon(
-                              passwordSee
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    const Center(
+                      child: Text(
+                        "Silahkan login terlebih dahulu.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    SizedBox(height: 10),
+                    // Text(
+                    //   'atau',
+                    //   style: TextStyle(
+                    //     fontSize: 15,
+                    //     fontWeight: FontWeight.w500,
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
+                    SizedBox(height: 0),
+                    Form(
+                      key: _signInGlobalKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: controller.username,
+                            // validator: AuthValidator.isEmailValid,
+                            decoration: const InputDecoration(
+                              hintText: "Username",
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green),
+                              ),
+                              contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                ),
-                Row(children: [
-                  Expanded(
-                      child: GestureDetector(
-                    onTap: () {
-                      _launchWhatsApp('6285921357723',
-                          "Halo Admin, saya lupa password. Atas nama: , Sebagai pengguna (konsumen/petani)");
-                    },
-                    child: Text(
-                      "Lupa Password?",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ))
-                ]),
-                const SizedBox(height: 20),
-                Container(
-                  height: 45,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                    child: const Text(
-                      'Masuk',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.whiteGrey),
-                    ),
-                    onPressed: () async {
-                      String? loginResult = await controller.doLogin();
-                      if (loginResult == "sukses") {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return SuccessConfirmationDialog(
-                              message: "Anda berhasil login",
-                              icon: Icons.check_circle_outline,
-                            );
-                          },
-                        );
-                        Get.offAll(
-                            BottomBarNavigationScreen()); // Pindah ke DashboardScreen setelah dialog sukses login
-                        cart.resetValue();
-                      } else if (loginResult == "gagal") {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return SuccessConfirmationDialog(
-                              message: "Anda gagal login",
-                              icon: Icons.close_rounded,
-                            );
-                          },
-                        );
-                      } else {
-                        await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return SuccessConfirmationDialog(
-                              message: loginResult,
-                              icon: Icons.close_rounded,
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Text.rich(
-                  TextSpan(
-                    text: "Nggak punya akun? ",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: "Daftar yuk!",
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Navigator.of(context)
-                                  .pushReplacement(new MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return RolePage();
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            controller: controller.password,
+                            obscureText: passwordSee,
+                            // validator: AuthValidator.isPasswordValid,
+                            decoration: InputDecoration(
+                              hintText: "Password",
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.green),
+                              ),
+                              contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  passwordSee = !passwordSee;
+                                  setState(() {});
                                 },
-                              )),
+                                child: Icon(
+                                  passwordSee
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Row(children: [
+                      Expanded(
+                          child: GestureDetector(
+                        onTap: () {
+                          _launchWhatsApp('6285921357723',
+                              "Halo Admin, saya lupa password. Atas nama: , Sebagai pengguna (konsumen/petani)");
+                        },
+                        child: Text(
+                          "Lupa Password?",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ))
+                    ]),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 45,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: AppColors.primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            )),
+                        child: const Text(
+                          'Masuk',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.whiteGrey),
+                        ),
+                        onPressed: () async {
+                          String? loginResult = await controller.doLogin();
+                          if (loginResult == "sukses") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: "Anda berhasil login",
+                                  icon: Icons.check_circle_outline,
+                                );
+                              },
+                            );
+                            Get.offAll(
+                                BottomBarNavigationScreen()); // Pindah ke DashboardScreen setelah dialog sukses login
+                            cart.resetValue();
+                          } else if (loginResult == "gagal") {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: "Anda gagal login",
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
+                          } else {
+                            await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SuccessConfirmationDialog(
+                                  message: loginResult,
+                                  icon: Icons.close_rounded,
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Text.rich(
+                      TextSpan(
+                        text: "Nggak punya akun? ",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Daftar yuk!",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => Navigator.of(context)
+                                      .pushReplacement(new MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return RolePage();
+                                    },
+                                  )),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 40),
-              ],
-            ),
+              ),
+              Obx(() => controller.isLoading.value
+                  ? Container(
+                      child: Positioned(
+                        top: 350,
+                        left: 110,
+                        child: PopUpWidget(),
+                      ),
+                    )
+                  : Container())
+            ],
           ),
         ));
   }

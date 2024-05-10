@@ -120,11 +120,11 @@ class _HidrocommerceDetailProdukScreenState
                       title: Text(
                         widget.hidrocommerceModel.nama,
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       subtitle: AppText(
                         text: widget.hidrocommerceModel.jenis,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Color(0xff7C7C7C),
                       ),
