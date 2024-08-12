@@ -225,7 +225,7 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
                           ),
                           Text(
                             // {tanamModels[index].bibit}
-                            "${rumah.idRumah}",
+                            "${rumah.deskripsi}",
                             style: TextStyle(
                               fontSize: 10,
                               color: Colors.white,
