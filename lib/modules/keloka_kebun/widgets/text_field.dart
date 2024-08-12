@@ -38,9 +38,6 @@ class _TextFieldKelolaKebunState extends State<TextFieldKelolaKebun> {
         cursorColor: AppColors.primaryColor,
         keyboardType:
             widget.isNumber ? TextInputType.number : TextInputType.text,
-        inputFormatters: widget.isNumber
-            ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))]
-            : null,
         onTap: () {
           if (widget.getDate) {
             _selectDate();
