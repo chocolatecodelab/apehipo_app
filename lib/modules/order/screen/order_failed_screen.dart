@@ -1,7 +1,7 @@
-import 'package:Apehipo/modules/order/screen/order_screen.dart';
+import 'order_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_button.dart';
-import 'package:Apehipo/widgets/app_text.dart';
+import '../../../widgets/app_button.dart';
+import '../../../widgets/app_text.dart';
 import 'package:get/get.dart';
 
 class OrderFailedScreen extends StatelessWidget {

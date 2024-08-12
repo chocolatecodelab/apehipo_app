@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/hidrocommerce/model/hidrocommerce_model.dart';
+import '../model/hidrocommerce_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

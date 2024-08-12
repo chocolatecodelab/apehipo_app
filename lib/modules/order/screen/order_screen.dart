@@ -1,12 +1,12 @@
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/catalog/screen/catalog_edit_screen.dart';
-import 'package:Apehipo/modules/catalog/model/catalog_model.dart';
-import 'package:Apehipo/modules/hidrocommerce/controller/hidrocommerce_controller.dart';
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
-import 'package:Apehipo/modules/order/controller/order_controller.dart';
-import 'package:Apehipo/modules/order/model/order_model.dart';
-import 'package:Apehipo/modules/order/screen/widget/order_belum_bayar_widget.dart';
-import 'package:Apehipo/modules/order/screen/widget/order_widget_bayar.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../../catalog/screen/catalog_edit_screen.dart';
+import '../../catalog/model/catalog_model.dart';
+import '../../hidrocommerce/controller/hidrocommerce_controller.dart';
+import '../../hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
+import '../controller/order_controller.dart';
+import '../model/order_model.dart';
+import 'widget/order_belum_bayar_widget.dart';
+import 'widget/order_widget_bayar.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 

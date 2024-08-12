@@ -1,8 +1,8 @@
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_screen.dart';
-import 'package:Apehipo/modules/order/screen/order_screen.dart';
+import '../../hidrocommerce/screen/hidrocommerce_screen.dart';
+import 'order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:Apehipo/widgets/app_button.dart';
+import '../../../widgets/app_button.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 

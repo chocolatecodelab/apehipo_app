@@ -1,17 +1,17 @@
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/hidrocommerce/controller/hidrocommerce_controller.dart';
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
-import 'package:Apehipo/modules/notification/controller/notification_controller.dart';
-import 'package:Apehipo/modules/order/controller/order_controller.dart';
-import 'package:Apehipo/modules/order/model/order_model.dart';
-import 'package:Apehipo/modules/order/screen/payment_screen.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../../../auth/controller/auth_controller.dart';
+import '../../../hidrocommerce/controller/hidrocommerce_controller.dart';
+import '../../../hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
+import '../../../notification/controller/notification_controller.dart';
+import '../../controller/order_controller.dart';
+import '../../model/order_model.dart';
+import '../payment_screen.dart';
+import '../../../../widgets/confirmation_dialog.dart';
+import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/LineSeparator.dart';
-import 'package:Apehipo/widgets/theme.dart';
-import 'package:Apehipo/widgets/app_text.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../../../widgets/LineSeparator.dart';
+import '../../../../widgets/theme.dart';
+import '../../../../widgets/app_text.dart';
+import '../../../../widgets/colors.dart';
 import 'package:get/get.dart';
 
 class OrderBelumBayarWidget extends StatefulWidget {

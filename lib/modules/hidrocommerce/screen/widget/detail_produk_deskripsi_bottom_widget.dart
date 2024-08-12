@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_text.dart';
+import '../../../../widgets/app_text.dart';
 
 import '../../../order/screen/order_failed_screen.dart';
 

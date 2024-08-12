@@ -1,8 +1,8 @@
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/auth/screen/login_screen.dart';
-import 'package:Apehipo/modules/auth/screen/role_screen.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../controller/auth_controller.dart';
+import 'login_screen.dart';
+import 'role_screen.dart';
+import '../../../widgets/colors.dart';
+import '../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

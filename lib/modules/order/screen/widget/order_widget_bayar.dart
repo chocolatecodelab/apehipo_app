@@ -1,13 +1,13 @@
-import 'package:Apehipo/modules/notification/controller/notification_controller.dart';
-import 'package:Apehipo/modules/order/controller/order_controller.dart';
-import 'package:Apehipo/modules/order/model/order_model.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../../../notification/controller/notification_controller.dart';
+import '../../controller/order_controller.dart';
+import '../../model/order_model.dart';
+import '../../../../widgets/confirmation_dialog.dart';
+import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/LineSeparator.dart';
-import 'package:Apehipo/widgets/theme.dart';
-import 'package:Apehipo/widgets/app_text.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../../../widgets/LineSeparator.dart';
+import '../../../../widgets/theme.dart';
+import '../../../../widgets/app_text.dart';
+import '../../../../widgets/colors.dart';
 import 'package:get/get.dart';
 
 class OrderWidgetBayar extends StatefulWidget {

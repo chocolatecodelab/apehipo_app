@@ -1,6 +1,6 @@
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
-import 'package:Apehipo/modules/hidrocommerce/model/hidrocommerce_model.dart';
-import 'package:Apehipo/modules/hidrocommerce/screen/widget/card_klasifikasi_widget.dart';
+import 'hidrocommerce_detail_produk_screen.dart';
+import '../model/hidrocommerce_model.dart';
+import 'widget/card_klasifikasi_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

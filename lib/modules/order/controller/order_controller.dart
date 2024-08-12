@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/order/model/order_model.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../model/order_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';

@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/report/controller/report_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/semai/model/semai_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/tanam/controller/tanam_controller.dart';
-import 'package:Apehipo/services/api.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../../../auth/controller/auth_controller.dart';
+import '../../report/controller/report_controller.dart';
+import '../model/semai_model.dart';
+import '../../tanam/controller/tanam_controller.dart';
+import '../../../../services/api.dart';
+import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -240,9 +240,7 @@ class SemaiController extends GetxController {
         print(imgLength);
         print(img.path);
         request.files.add(imgMultiPart);
-      } else {
-        
-      }
+      } else {}
       var response = await request.send();
       print("Respon ${response.statusCode}");
       if (response.statusCode == 200) {

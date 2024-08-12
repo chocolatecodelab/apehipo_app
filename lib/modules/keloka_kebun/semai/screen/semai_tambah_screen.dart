@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:Apehipo/modules/keloka_kebun/semai/controller/semai_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/semai/model/semai_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/widgets/app_bar.dart';
-import 'package:Apehipo/modules/keloka_kebun/widgets/button.dart';
-import 'package:Apehipo/modules/keloka_kebun/widgets/text_field.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../controller/semai_controller.dart';
+import '../model/semai_model.dart';
+import '../../widgets/app_bar.dart';
+import '../../widgets/button.dart';
+import '../../widgets/text_field.dart';
+import '../../../../widgets/colors.dart';
+import '../../../../widgets/confirmation_dialog.dart';
+import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';

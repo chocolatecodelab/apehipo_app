@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import 'colors.dart';
 
 class AppButton extends StatelessWidget {
   final String label;

@@ -1,6 +1,6 @@
-import 'package:Apehipo/modules/account/controller/account_controller.dart';
+import '../../account/controller/account_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_text.dart';
+import '../../../widgets/app_text.dart';
 import 'package:get/get.dart';
 
 class AddressBottomSheetScreen extends StatefulWidget {

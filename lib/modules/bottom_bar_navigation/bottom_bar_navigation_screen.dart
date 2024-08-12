@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../widgets/colors.dart';
 
 import 'models/navigator_item_model.dart';
 

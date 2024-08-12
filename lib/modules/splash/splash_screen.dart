@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/auth/screen/login_screen.dart';
-import 'package:Apehipo/modules/bottom_bar_navigation/bottom_bar_navigation_screen.dart';
-import 'package:Apehipo/modules/keloka_kebun/kelola_kebun_screen.dart';
+import '../auth/controller/auth_controller.dart';
+import '../auth/screen/login_screen.dart';
+import '../bottom_bar_navigation/bottom_bar_navigation_screen.dart';
+import '../keloka_kebun/kelola_kebun_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_text.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../widgets/app_text.dart';
+import '../../widgets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 

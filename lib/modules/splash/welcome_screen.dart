@@ -1,8 +1,8 @@
-import 'package:Apehipo/modules/auth/screen/login_screen.dart';
+import '../auth/screen/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_button.dart';
-import 'package:Apehipo/widgets/app_text.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../widgets/app_button.dart';
+import '../../widgets/app_text.dart';
+import '../../widgets/colors.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String imagePath = "./assets/images/IMG_20230813_155148.jpg";

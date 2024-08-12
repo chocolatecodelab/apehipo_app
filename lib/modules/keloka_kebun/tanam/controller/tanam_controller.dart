@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/report/controller/report_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/tanam/model/tanam_model.dart';
-import 'package:Apehipo/services/api.dart';
+import '../../../auth/controller/auth_controller.dart';
+import '../../report/controller/report_controller.dart';
+import '../model/tanam_model.dart';
+import '../../../../services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -73,6 +73,45 @@ class TanamController extends GetxController {
       map['keyword'] = search.text;
       map['id_kebun'] = auth.box.read("id_kebun");
       String baseUrl = '${Api().baseURL}/tanam/search';
+      var request = http.MultipartRequest('POST', Uri.tryParse(baseUrl)!);
+      map.forEach((key, value) {
+        request.fields[key] = value;
+      });
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var responseBody = await http.Response.fromStream(response);
+        dataTanamList!.clear();
+        var responjson = jsonDecode(responseBody.body);
+        print(responjson);
+        Map<String, dynamic> data = jsonDecode(responseBody.body);
+        print(data);
+        List<dynamic> hasilSearchJsonList = data['hasil_search'];
+        if (hasilSearchJsonList.isEmpty) {
+          // getAllData(auth.box.read("id_kebun"));
+          return "gagal";
+        }
+        for (var item in hasilSearchJsonList) {
+          TanamModel tanamModel = TanamModel.fromJson(item);
+          dataTanamList!.add(tanamModel);
+        }
+        return "sukses";
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      return "gagal";
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future getTanggal(tanggal) async {
+    try {
+      isLoading(true);
+      var map = <String, dynamic>{};
+      map['id_kebun'] = auth.box.read("id_kebun");
+      map['tanggal_tanam'] = tanggal;
+      String baseUrl = '${Api().baseURL}/tanam/searchTgl';
       var request = http.MultipartRequest('POST', Uri.tryParse(baseUrl)!);
       map.forEach((key, value) {
         request.fields[key] = value;

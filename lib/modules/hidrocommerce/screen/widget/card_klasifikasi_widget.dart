@@ -1,9 +1,9 @@
-import 'package:Apehipo/modules/hidrocommerce/model/hidrocommerce_model.dart';
-import 'package:Apehipo/widgets/LineSeparator.dart';
-import 'package:Apehipo/widgets/app_text.dart';
+import '../../model/hidrocommerce_model.dart';
+import '../../../../widgets/LineSeparator.dart';
+import '../../../../widgets/app_text.dart';
 import 'package:flutter/material.dart';
 
-import 'package:Apehipo/widgets/colors.dart';
+import '../../../../widgets/colors.dart';
 
 class CardKlasifikasiWidget extends StatelessWidget {
   CardKlasifikasiWidget(

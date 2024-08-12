@@ -1,6 +1,6 @@
-import 'package:Apehipo/modules/transaction/controller/transaction_controller.dart';
-import 'package:Apehipo/modules/transaction/model/transaction_model.dart';
-import 'package:Apehipo/modules/transaction/screen/widget/transaction_widget.dart';
+import '../controller/transaction_controller.dart';
+import '../model/transaction_model.dart';
+import 'widget/transaction_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

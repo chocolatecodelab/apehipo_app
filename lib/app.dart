@@ -1,7 +1,7 @@
-import 'package:Apehipo/modules/splash/splash_screen.dart';
+import 'modules/splash/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/theme.dart';
+import 'widgets/theme.dart';
 
 
 class MyApp extends StatelessWidget {

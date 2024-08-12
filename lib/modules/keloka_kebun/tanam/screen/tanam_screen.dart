@@ -1,10 +1,12 @@
-import 'package:Apehipo/modules/keloka_kebun/tanam/controller/tanam_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/tanam/model/tanam_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/tanam/screen/tanam_panen_screen.dart';
-import 'package:Apehipo/modules/keloka_kebun/widgets/search_bar.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../controller/tanam_controller.dart';
+import '../model/tanam_model.dart';
+import '../../monitoring/screen/monitoring_screen.dart';
+import 'tanam_panen_screen.dart';
+import '../../widgets/search_bar.dart';
+import '../../../../widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -151,6 +153,12 @@ class _TanamScreenState extends State<TanamScreen> {
                         difference.inDays == 0
                             ? "Ditanam hari ini"
                             : "Ditanam ${difference.inDays} hari yang lalu",
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
+                      Text(
+                        "Tanggal Semai : ${tanam.tanggalSemai}",
                         style: TextStyle(
                           fontSize: 10,
                         ),

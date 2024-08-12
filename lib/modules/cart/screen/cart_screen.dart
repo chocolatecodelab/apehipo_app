@@ -1,13 +1,13 @@
-import 'package:Apehipo/modules/cart/controller/cart_controller.dart';
-import 'package:Apehipo/modules/cart/model/cart_model.dart';
-import 'package:Apehipo/modules/hidrocommerce/controller/hidrocommerce_controller.dart';
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
-import 'package:Apehipo/modules/order/screen/order_accepted_screen.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../controller/cart_controller.dart';
+import '../model/cart_model.dart';
+import '../../hidrocommerce/controller/hidrocommerce_controller.dart';
+import '../../hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
+import '../../order/screen/order_accepted_screen.dart';
+import '../../../widgets/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_button.dart';
-import 'package:Apehipo/widgets/column_with_seprator.dart';
-import 'package:Apehipo/modules/cart/screen/widget/cart_item_widget.dart';
+import '../../../widgets/app_button.dart';
+import '../../../widgets/column_with_seprator.dart';
+import 'widget/cart_item_widget.dart';
 import 'package:get/get.dart';
 
 import 'checkout_bottom_sheet_screen.dart';

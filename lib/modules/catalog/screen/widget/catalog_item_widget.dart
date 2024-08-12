@@ -1,13 +1,13 @@
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import '../../../../widgets/confirmation_dialog.dart';
 
 import '../../controller/catalog_controller.dart';
-import 'package:Apehipo/modules/catalog/model/catalog_model.dart';
+import '../../model/catalog_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../widgets/LineSeparator.dart';
-import 'package:Apehipo/widgets/theme.dart';
-import 'package:Apehipo/widgets/app_text.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../../../widgets/theme.dart';
+import '../../../../widgets/app_text.dart';
+import '../../../../widgets/colors.dart';
 import '../catalog_edit_screen.dart';
 
 class CatalogItemWidget extends StatefulWidget {

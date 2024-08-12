@@ -1,4 +1,4 @@
-import 'package:Apehipo/modules/hidrocommerce/controller/hidrocommerce_controller.dart';
+import '../../controller/hidrocommerce_controller.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';

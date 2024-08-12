@@ -1,9 +1,9 @@
-import 'package:Apehipo/modules/notification/screen/notification_screen.dart';
+import '../notification/screen/notification_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'model/navigator_item_model.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../widgets/colors.dart';
 import 'package:flutter/material.dart';
 
 class KelolaKebunScreen extends StatefulWidget {
@@ -66,10 +66,10 @@ class _KelolaKebunScreenState extends State<KelolaKebunScreen> {
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
+          // borderRadius: BorderRadius.only(
+          //   topLeft: Radius.circular(15),
+          //   topRight: Radius.circular(15),
+          // ),
           child: BottomNavigationBar(
             backgroundColor: Colors.white,
             currentIndex: currentIndex,

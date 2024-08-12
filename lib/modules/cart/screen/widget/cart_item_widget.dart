@@ -1,8 +1,8 @@
-import 'package:Apehipo/modules/cart/controller/cart_controller.dart';
-import 'package:Apehipo/modules/cart/model/cart_model.dart';
-import 'package:Apehipo/modules/cart/screen/cart_change.dart';
+import '../../controller/cart_controller.dart';
+import '../../model/cart_model.dart';
+import '../cart_change.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/app_text.dart';
+import '../../../../widgets/app_text.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 

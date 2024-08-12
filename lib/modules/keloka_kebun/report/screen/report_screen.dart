@@ -1,9 +1,10 @@
-import 'package:Apehipo/modules/keloka_kebun/report/controller/report_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/report/model/data_sayur_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/report/model/report_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/widgets/search_bar.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../controller/report_controller.dart';
+import '../model/data_sayur_model.dart';
+import '../../semai/controller/semai_controller.dart';
+import '../../semai/model/semai_model.dart';
+import '../../../../widgets/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class _ReportScreenState extends State<ReportScreen> {
   GlobalKey<RefreshIndicatorState> _refreshKey =
       GlobalKey<RefreshIndicatorState>();
   var controller = Get.put(ReportController());
+
+  var semaiController = Get.put(SemaiController());
 
   Future<void> refreshData() async {
     await controller.refresh(); // Panggil metode refresh dari controller
@@ -71,7 +74,9 @@ class _ReportScreenState extends State<ReportScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            dataBibit(controller.dataSayurList!),
+                            dataBibit(
+                              controller.dataSayurList!,
+                            ),
                             SizedBox(
                               height: 30,
                             ),
@@ -84,89 +89,141 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
-  ListView dataBibit(List<DataSayurModel> items) {
+  ListView dataBibit(List<DataSayurModel> itemsSayur) {
     return ListView.separated(
       itemBuilder: (context, index) {
-        var sayur = items[index];
+        var sayur = itemsSayur[index];
         int minTanam =
             int.parse(sayur.jumlahSemai) - int.parse(sayur.jumlahTanam);
         int minPanen =
             int.parse(sayur.jumlahTanam) - int.parse(sayur.jumlahPanen);
         print(sayur.tanggalPanen);
         return Container(
-          height: 150,
-          margin: EdgeInsets.symmetric(horizontal: 25),
+          height: 145,
+          margin: EdgeInsets.symmetric(horizontal: 10),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.white,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Row(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    sayur.namaSayur,
-                    style: TextStyle(color: AppColors.primaryColor),
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.black26,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.5),
+                        spreadRadius: 0,
+                        blurRadius: 5,
+                        offset: Offset(0, 4)),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    sayur.gambar,
+                    fit: BoxFit.cover,
+                    width: 120,
+                    height: 110,
                   ),
-                  Text(
-                    sayur.tanggalPanen == "0000-00-00"
-                        ? "Belum dipanen"
-                        : sayur.tanggalPanen,
-                    style: TextStyle(
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          sayur.namaSayur,
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          sayur.tanggalPanen == "0000-00-00"
+                              ? "Belum dipanen"
+                              : sayur.tanggalPanen,
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(
                       color: AppColors.primaryColor,
+                      height: 1,
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Semai  : ${sayur.jumlahSemai} Bibit",
-                  ),
-                  Text(
-                    sayur.tanggalSemai,
-                  ),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Tanam : ${sayur.jumlahTanam} Bibit",
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    minTanam != 0 ? "-${minTanam}" : "",
-                    style: TextStyle(
-                      color: Colors.red,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Semai  : ${sayur.jumlahSemai} Bibit",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        Text(
+                          sayur.tanggalSemai,
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Panen  : ${sayur.jumlahPanen} Sayur",
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    minPanen != 0 ? "-${minPanen}" : "",
-                    style: TextStyle(
-                      color: Colors.red,
+                    Row(
+                      children: [
+                        Text(
+                          "Tanam : ${sayur.jumlahTanam} Bibit",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          minTanam != 0 ? "(${minTanam} Bibit Gagal)" : "",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Panen  : ${sayur.jumlahPanen} Sayur",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          minPanen != 0 ? "(${minPanen} Sayur Rusak)" : "",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -175,7 +232,7 @@ class _ReportScreenState extends State<ReportScreen> {
       separatorBuilder: (context, index) => SizedBox(
         height: 20,
       ),
-      itemCount: items.length,
+      itemCount: itemsSayur.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
     );

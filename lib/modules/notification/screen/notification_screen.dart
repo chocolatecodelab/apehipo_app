@@ -1,10 +1,10 @@
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/notification/notification_change.dart';
-import 'package:Apehipo/modules/notification/controller/notification_controller.dart';
-import 'package:Apehipo/modules/notification/model/notif_model.dart';
-import 'package:Apehipo/modules/order/screen/order_screen.dart';
-import 'package:Apehipo/modules/transaction/screen/transaction_screen.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../notification_change.dart';
+import '../controller/notification_controller.dart';
+import '../model/notif_model.dart';
+import '../../order/screen/order_screen.dart';
+import '../../transaction/screen/transaction_screen.dart';
+import '../../../widgets/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';

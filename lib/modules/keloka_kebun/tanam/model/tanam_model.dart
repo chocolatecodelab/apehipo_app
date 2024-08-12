@@ -1,5 +1,5 @@
 class TanamModel {
-  String id, namaSayur, gambar, tanggal, jumlah, masaTanam, keterangan;
+  String id, namaSayur, gambar, tanggal, jumlah, masaTanam, keterangan, ppm, ph, tanggalSemai;
 
   TanamModel({
     required this.id,
@@ -9,6 +9,9 @@ class TanamModel {
     required this.jumlah,
     required this.masaTanam,
     required this.keterangan,
+    required this.ppm,
+    required this.ph,
+    required this.tanggalSemai,
   });
 
   factory TanamModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,9 @@ class TanamModel {
       jumlah: json['jumlah_bibit'],
       masaTanam: json['masa_tanam'],
       keterangan: json['keterangan'],
+      ppm: json['ppm'],
+      ph: json['ph'],
+      tanggalSemai: json['tanggal_semai'],
     );
   }
 }

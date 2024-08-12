@@ -1,3 +1,4 @@
+import '../monitoring/screen/monitoring_screen.dart';
 import 'package:flutter/material.dart';
 import '../semai/screen/semai_screen.dart';
 import '../tanam/screen/tanam_screen.dart';
@@ -13,12 +14,28 @@ class NavigatorItem {
 }
 
 List<NavigatorItem> navigatorItemsKebun = [
-  NavigatorItem("Semai", "assets/icons/semai-icon.svg", 0, SemaiScreen()),
+  NavigatorItem(
+    "Semai",
+    "assets/icons/semai-icon.svg",
+    0,
+    SemaiScreen(),
+  ),
   NavigatorItem(
     "Tanam",
     "assets/icons/tanam-icon.svg",
     1,
     TanamScreen(),
   ),
-  NavigatorItem("Report", "assets/icons/report-icon.svg", 2, ReportScreen()),
+  NavigatorItem(
+    "Report",
+    "assets/icons/report-icon.svg",
+    2,
+    ReportScreen(),
+  ),
+  NavigatorItem(
+    "Monitoring",
+    "assets/icons/monitoring-icon.svg",
+    3,
+    MonitoringScreen(),
+  ),
 ];

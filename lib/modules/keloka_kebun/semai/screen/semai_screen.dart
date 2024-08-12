@@ -1,12 +1,12 @@
-import 'package:Apehipo/modules/keloka_kebun/semai/controller/semai_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/semai/model/semai_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/semai/screen/semai_edit_screen.dart';
-import 'package:Apehipo/modules/keloka_kebun/semai/screen/semai_tambah_screen.dart';
-import 'package:Apehipo/modules/keloka_kebun/semai/screen/semai_tanam_screen.dart';
-import 'package:Apehipo/modules/keloka_kebun/widgets/search_bar.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../controller/semai_controller.dart';
+import '../model/semai_model.dart';
+import 'semai_edit_screen.dart';
+import 'semai_tambah_screen.dart';
+import 'semai_tanam_screen.dart';
+import '../../widgets/search_bar.dart';
+import '../../../../widgets/colors.dart';
+import '../../../../widgets/confirmation_dialog.dart';
+import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -209,7 +209,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Get.to(() => SemaiEditScreen(items[index]));
+                                  Get.to(() => SemaiEditScreen(items[index]));  
                                 },
                                 child: Text(
                                   "Edit",

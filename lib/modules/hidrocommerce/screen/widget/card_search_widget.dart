@@ -1,11 +1,11 @@
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/cart/screen/cart_change.dart';
-import 'package:Apehipo/modules/hidrocommerce/controller/hidrocommerce_controller.dart';
-import 'package:Apehipo/modules/hidrocommerce/model/hidrocommerce_model.dart';
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_detail_produk_screen.dart';
-import 'package:Apehipo/modules/hidrocommerce/screen/widget/card_klasifikasi_widget.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../../../auth/controller/auth_controller.dart';
+import '../../../cart/screen/cart_change.dart';
+import '../../controller/hidrocommerce_controller.dart';
+import '../../model/hidrocommerce_model.dart';
+import '../hidrocommerce_detail_produk_screen.dart';
+import 'card_klasifikasi_widget.dart';
+import '../../../../widgets/colors.dart';
+import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 

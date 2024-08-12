@@ -1,7 +1,7 @@
-import 'package:Apehipo/modules/hidrocommerce/screen/hidrocommerce_screen.dart';
-import 'package:Apehipo/modules/vtrends/vtrends.dart';
+import '../../hidrocommerce/screen/hidrocommerce_screen.dart';
+import '../../vtrends/vtrends.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/modules/account/screens/account_screen.dart';
+import '../../account/screens/account_screen.dart';
 // import 'package:Apehipo/screens/cart/cart_screen.dart';
 
 class NavigatorItem {

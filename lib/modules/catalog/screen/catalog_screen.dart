@@ -1,12 +1,12 @@
 import '../controller/catalog_controller.dart';
-import 'package:Apehipo/modules/catalog/model/catalog_model.dart';
-import 'package:Apehipo/modules/catalog/screen/catalog_tambah_screen.dart';
+import '../model/catalog_model.dart';
+import 'catalog_tambah_screen.dart';
 import 'package:get/get.dart';
 import 'catalog_edit_screen.dart';
-import 'package:Apehipo/widgets/theme.dart';
+import '../../../widgets/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/modules/catalog/screen/widget/catalog_item_widget.dart';
+import '../../../widgets/colors.dart';
+import 'widget/catalog_item_widget.dart';
 
 class CatalogScreen extends StatefulWidget {
   @override

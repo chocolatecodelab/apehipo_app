@@ -1,10 +1,10 @@
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/account/controller/account_controller.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/dynamic_button.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../controller/account_controller.dart';
+import '../../../widgets/confirmation_dialog.dart';
+import '../../../widgets/dynamic_button.dart';
+import '../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../../widgets/colors.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../widgets/theme.dart';

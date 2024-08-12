@@ -4,7 +4,8 @@ class DataSayurModel {
       tanggalPanen,
       jumlahSemai,
       jumlahTanam,
-      jumlahPanen;
+      jumlahPanen,
+      gambar;
 
   DataSayurModel({
     required this.namaSayur,
@@ -13,6 +14,7 @@ class DataSayurModel {
     required this.jumlahSemai,
     required this.jumlahTanam,
     required this.tanggalPanen,
+    required this.gambar,
   });
 
   factory DataSayurModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class DataSayurModel {
       jumlahSemai: json['jumlah_semai'],
       jumlahTanam: json['jumlah_tanam'],
       jumlahPanen: json['jumlah_panen'],
+      gambar: json['gambar'],
     );
   }
 }

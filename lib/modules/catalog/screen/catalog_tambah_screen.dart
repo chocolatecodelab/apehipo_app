@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import '../controller/catalog_controller.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/dynamic_button.dart';
+import '../../../widgets/confirmation_dialog.dart';
+import '../../../widgets/colors.dart';
+import '../../../widgets/dynamic_button.dart';
 import 'package:flutter/material.dart';
-import 'package:Apehipo/widgets/theme.dart';
+import '../../../widgets/theme.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

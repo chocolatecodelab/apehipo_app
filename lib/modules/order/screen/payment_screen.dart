@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:Apehipo/modules/order/controller/order_controller.dart';
-import 'package:Apehipo/widgets/app_text.dart';
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/dynamic_button.dart';
-import 'package:Apehipo/widgets/success_confirmation_dialog.dart';
-import 'package:Apehipo/widgets/theme.dart';
+import '../controller/order_controller.dart';
+import '../../../widgets/app_text.dart';
+import '../../../widgets/colors.dart';
+import '../../../widgets/confirmation_dialog.dart';
+import '../../../widgets/dynamic_button.dart';
+import '../../../widgets/success_confirmation_dialog.dart';
+import '../../../widgets/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

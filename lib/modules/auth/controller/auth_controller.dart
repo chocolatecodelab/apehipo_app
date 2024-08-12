@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/auth/model/auth_model.dart';
-import 'package:Apehipo/widgets/popup_loading_widget.dart';
+import '../model/auth_model.dart';
+import '../../../widgets/popup_loading_widget.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 

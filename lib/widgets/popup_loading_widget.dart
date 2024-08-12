@@ -1,5 +1,5 @@
-import 'package:Apehipo/widgets/colors.dart';
-import 'package:Apehipo/widgets/theme.dart';
+import 'colors.dart';
+import 'theme.dart';
 import 'package:flutter/material.dart';
 
 class PopUpWidget extends StatelessWidget {

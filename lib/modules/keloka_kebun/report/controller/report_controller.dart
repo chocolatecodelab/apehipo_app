@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/keloka_kebun/report/model/data_sayur_model.dart';
-import 'package:Apehipo/modules/keloka_kebun/report/model/report_model.dart';
-import 'package:Apehipo/services/api.dart';
+import '../../../auth/controller/auth_controller.dart';
+import '../model/data_sayur_model.dart';
+import '../model/report_model.dart';
+import '../../../../services/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 

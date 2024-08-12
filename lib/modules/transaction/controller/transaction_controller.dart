@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/auth/controller/auth_controller.dart';
-import 'package:Apehipo/modules/transaction/model/transaction_model.dart';
-import 'package:Apehipo/services/api.dart';
+import '../../auth/controller/auth_controller.dart';
+import '../model/transaction_model.dart';
+import '../../../services/api.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 

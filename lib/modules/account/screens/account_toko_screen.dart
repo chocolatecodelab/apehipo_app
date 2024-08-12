@@ -1,6 +1,6 @@
-import 'package:Apehipo/widgets/confirmation_dialog.dart';
-import 'package:Apehipo/widgets/app_button.dart';
-import 'package:Apehipo/widgets/colors.dart';
+import '../../../widgets/confirmation_dialog.dart';
+import '../../../widgets/app_button.dart';
+import '../../../widgets/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../widgets/theme.dart';

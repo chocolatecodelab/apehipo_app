@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:Apehipo/modules/cart/model/cart_model.dart';
-import 'package:Apehipo/modules/order/controller/order_controller.dart';
-import 'package:Apehipo/services/api.dart';
+import '../model/cart_model.dart';
+import '../../order/controller/order_controller.dart';
+import '../../../services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
