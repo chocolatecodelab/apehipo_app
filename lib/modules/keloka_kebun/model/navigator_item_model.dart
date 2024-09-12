@@ -27,8 +27,8 @@ List<NavigatorItem> navigatorItemsKebun = [
     TanamScreen(),
   ),
   NavigatorItem(
-    "Report",
-    "assets/icons/report-icon.svg",
+    "Panen",
+    "assets/icons/panen-icon.svg",
     2,
     ReportScreen(),
   ),

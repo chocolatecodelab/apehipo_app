@@ -1,18 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 
 import '../../../auth/controller/auth_controller.dart';
 import '../../report/controller/report_controller.dart';
 import '../model/semai_model.dart';
 import '../../tanam/controller/tanam_controller.dart';
 import '../../../../services/api.dart';
-import '../../../../widgets/success_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 class SemaiController extends GetxController {
   var controller = Get.put(TanamController());
@@ -47,6 +44,29 @@ class SemaiController extends GetxController {
     keterangan = TextEditingController();
     gambar = TextEditingController();
     search = TextEditingController();
+  }
+
+  String formatTanggal(DateTime tanggal) {
+    List<String> namaBulan = [
+      'Januari',
+      'Februari',
+      'Maret',
+      'April',
+      'Mei',
+      'Juni',
+      'Juli',
+      'Agustus',
+      'September',
+      'Oktober',
+      'November',
+      'Desember'
+    ];
+
+    int tanggalNum = tanggal.day;
+    String bulan = namaBulan[tanggal.month - 1];
+    int tahun = tanggal.year;
+
+    return '$tanggalNum $bulan $tahun';
   }
 
   getAllData(id) async {

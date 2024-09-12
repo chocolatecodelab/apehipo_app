@@ -118,9 +118,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
         var semai = items[index];
         final dateString = DateFormat('yyyy-MM-dd').parse(semai.tanggal);
         final difference = DateTime.now().difference(dateString);
-        int waktu = int.parse(semai.waktu) + 1;
-        DateTime target = DateTime.now().add(Duration(days: waktu));
-        hariTersisa = target.difference(DateTime.now()).inDays;
+        final dateFormatID = controller.formatTanggal(dateString);
         return Stack(
           children: [
             Container(
@@ -171,7 +169,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                               // tanamModels[index].nama
                               semai.jenisSayur,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.primaryColor,
                               ),
@@ -179,29 +177,140 @@ class _SemaiScreenState extends State<SemaiScreen> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Text(
-                            // {DateFormat.yMMMMd().format(tanamModels[index].tanggal)}
-                            "Tanggal Disemai : ${semai.tanggal}",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                          Text(
-                            // {tanamModels[index].bibit}
-                            "${semai.jumlah} Bibit",
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
-                          ),
-                          Text(
-                            hariTersisa == 0
-                                ? "Ditanam hari ini"
-                                : "Ditanam dalam ${hariTersisa} hari",
-                            // tanamModels[index].hari == 0
-                            //     ? "Ditanam hari ini"
-                            //     : "Ditanam dalam ${tanamModels[index].hari} hari"
-                            style: TextStyle(
-                              fontSize: 10,
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.amber,
+                                    border: Border.all(
+                                      color: Color(0xFFD9D9D9),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      100,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${semai.jumlah}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Bibit",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.amber,
+                                    border: Border.all(
+                                      color: Color(0xFFD9D9D9),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      100,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${difference.inDays}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Hari",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 70,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.amber,
+                                    border: Border(
+                                      left: BorderSide(
+                                        color: Color(0xFFD9D9D9),
+                                      ),
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${dateFormatID.split(" ")[0]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${dateFormatID.split(" ")[1]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${dateFormatID.split(" ")[2]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                            color: Color(0xFF6F6F6F),
+                                            height: 0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Row(
@@ -209,7 +318,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  Get.to(() => SemaiEditScreen(items[index]));  
+                                  Get.to(() => SemaiEditScreen(items[index]));
                                 },
                                 child: Text(
                                   "Edit",
@@ -245,11 +354,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  backgroundColor: hariTersisa < 0
-                                      ? Color(0xFFEE4646)
-                                      : hariTersisa == 0
-                                          ? Color(0xFFEFCE5A)
-                                          : AppColors.primaryColor,
+                                  backgroundColor: AppColors.primaryColor,
                                   minimumSize: Size(40, 30),
                                 ),
                               ),

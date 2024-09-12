@@ -64,7 +64,7 @@ class _MonitoringTambahScreenState extends State<MonitoringTambahScreen> {
                         height: 30,
                       ),
                       TextFieldKelolaKebun(
-                        label: "Nama",
+                        label: "Nama Modul",
                         controller: controller.namaController,
                         sufixText: null,
                         sufixIcon: null,
@@ -75,7 +75,7 @@ class _MonitoringTambahScreenState extends State<MonitoringTambahScreen> {
                         height: 25,
                       ),
                       TextFieldKelolaKebun(
-                        label: "Kapasitas",
+                        label: "Kapasitas (Pot/Lubang)",
                         controller: controller.kapasistasController,
                         sufixText: null,
                         sufixIcon: null,
@@ -101,9 +101,10 @@ class _MonitoringTambahScreenState extends State<MonitoringTambahScreen> {
                             message: "Apakah anda yakin?");
                       },
                     );
-                    if(confimationResult == true) {
-                      String hasil = await controller.sendDataRumah(_selectedImage);
-                      if(hasil == "sukses") {
+                    if (confimationResult == true) {
+                      String hasil =
+                          await controller.sendDataRumah(_selectedImage);
+                      if (hasil == "sukses") {
                         await showDialog(
                           context: context,
                           builder: (BuildContext context) {
