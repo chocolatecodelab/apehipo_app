@@ -17,38 +17,7 @@ class _KelolaKebunScreenState extends State<KelolaKebunScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Kelola Kebun",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
-        elevation: 0,
-        toolbarHeight: 80,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.to(() => NotificationScreen());
-            },
-            icon: Icon(
-              Icons.notifications,
-              color: Colors.white,
-            ),
-          )
-        ],
-      ),
+      
       backgroundColor: AppColors.primaryColor,
       body: navigatorItemsKebun[currentIndex].screen,
       bottomNavigationBar: Container(

@@ -24,7 +24,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CartChange()),
-        ChangeNotifierProvider(create: (_) => NotificationChange())
+        ChangeNotifierProvider(create: (_) => NotificationChange()),
       ],
       child: MyApp(),
     ),

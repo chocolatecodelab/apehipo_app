@@ -1,3 +1,5 @@
+import 'package:Apehipo/modules/notification/screen/notification_screen.dart';
+
 import '../controller/semai_controller.dart';
 import '../model/semai_model.dart';
 import 'semai_edit_screen.dart';
@@ -42,6 +44,38 @@ class _SemaiScreenState extends State<SemaiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Kelola Kebun",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.primaryColor,
+        elevation: 0,
+        toolbarHeight: 80,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(() => NotificationScreen());
+            },
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
       backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         child: RefreshIndicator(
@@ -283,7 +317,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                                           "${dateFormatID.split(" ")[0]}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 11,
+                                            fontSize: 12,
                                             color: Color(0xFF6F6F6F),
                                             height: 0,
                                           ),
@@ -292,7 +326,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                                           "${dateFormatID.split(" ")[1]}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 11,
+                                            fontSize: 12,
                                             color: Color(0xFF6F6F6F),
                                             height: 0,
                                           ),
@@ -301,7 +335,7 @@ class _SemaiScreenState extends State<SemaiScreen> {
                                           "${dateFormatID.split(" ")[2]}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 11,
+                                            fontSize: 12,
                                             color: Color(0xFF6F6F6F),
                                             height: 0,
                                           ),

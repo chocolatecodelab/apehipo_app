@@ -1,3 +1,5 @@
+import 'package:Apehipo/modules/notification/screen/notification_screen.dart';
+
 import '../controller/report_controller.dart';
 import '../model/data_sayur_model.dart';
 import '../../semai/controller/semai_controller.dart';
@@ -34,6 +36,38 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Kelola Kebun",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.primaryColor,
+        elevation: 0,
+        toolbarHeight: 80,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(() => NotificationScreen());
+            },
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
       backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         child: RefreshIndicator(
@@ -168,7 +202,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Semai  : ${sayur.jumlahSemai} Bibit",
+                          "Tanggal Semai :",
                           style: TextStyle(
                             fontSize: 12,
                           ),
@@ -180,6 +214,12 @@ class _ReportScreenState extends State<ReportScreen> {
                           ),
                         ),
                       ],
+                    ),
+                    Text(
+                      "Semai  : ${sayur.jumlahSemai} Bibit",
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
                     ),
                     Row(
                       children: [

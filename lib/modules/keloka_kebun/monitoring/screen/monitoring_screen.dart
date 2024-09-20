@@ -1,3 +1,6 @@
+import 'package:Apehipo/modules/keloka_kebun/monitoring/screen/history_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../controllers/rumah_controller.dart';
 import '../model/monitoring_model.dart';
 import '../model/rumah_model.dart';
@@ -31,6 +34,38 @@ class _MonitoringScreenState extends State<MonitoringScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Kelola Kebun",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.primaryColor,
+        elevation: 0,
+        toolbarHeight: 80,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(() => HistoryScreen());
+            },
+            icon: SvgPicture.asset(
+              "assets/icons/history-icon.svg",
+              height: 20,
+            ),
+          )
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
